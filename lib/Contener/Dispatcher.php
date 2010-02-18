@@ -1,7 +1,20 @@
 <?php
 
-class Contener_Dispatcher extends k_Component {
-  function execute() {
+class Contener_Dispatcher extends Contener_Component {
+    function renderHtml()
+    {
+        return 'Strona użytkownika';
+    }
+    
+    function map($name)
+    {
+        if ($name == 'admin') {
+            return 'Contener_Context_Admin';
+        }
+        
+        return 'Contener_Context_Default';
+    }
+  /*function execute() {
     return $this->wrap(parent::execute());
   }
   function wrapHtml($content) {
@@ -33,5 +46,5 @@ class Contener_Dispatcher extends k_Component {
   function dispatch()
   {
       return parent::dispatch();
-  }
+  }*/
 }

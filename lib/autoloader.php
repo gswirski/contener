@@ -2,6 +2,10 @@
 
 function __autoload($classname)
 {
-    $filename = str_replace('_', '/', strtolower($classname)).'.php';
+    if (substr($classname, 0,2) == 'sf') {
+        require_once('Doctrine/Parser/sfYaml/' . $classname . '.php');
+        return;
+    }
+    $filename = str_replace('_', '/', $classname).'.php';
     require_once($filename);
 }
