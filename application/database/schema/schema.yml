@@ -1,0 +1,44 @@
+---
+User:
+  columns:
+    login: string
+    password: string
+    name: string
+    email: string
+    language: string
+    use_wysiwyg: boolean
+
+Page:
+  actAs:
+    Timestampable:
+    NestedSet:
+  columns:
+    class: string
+    title: string
+    filtered_title: string
+    in_navigation: boolean
+    navigation: string
+    permalink: string
+    publish_status: integer
+    author_id: integer(8)
+  relations:
+    User:
+      local: author_id
+      foreign: id
+      alias: Author
+      foreignAlias: Pages
+
+Slot:
+  actAs:
+    NestedSet:
+      hasManyRoots: true
+      rootColumnName: page_id
+  columns:
+    page_id: integer(8)
+    class: string
+    name: string
+    body: clob
+  relations:
+    Page:
+      foreignAlias: Slots
+      onDelete: CASCADE

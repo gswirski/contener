@@ -1,0 +1,9 @@
+---
+Contener_Domain_User:
+  Root:
+    login: admin
+    password: c8cdccd7eda8d8ae4847b11bd8e769ea
+    name: "Grzegorz Świrski"
+    email: me@sognat.com
+    language: pl_PL
+    use_wysiwyg: true

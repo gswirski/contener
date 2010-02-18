@@ -1,0 +1,33 @@
+---
+Contener_Domain_Slot:
+  HomepageTemplate:
+    page_id: 7
+    class: Contener_Slot_Manager_Template
+    name: root
+    body: 'a:1:{s:4:"name";s:8:"homepage";}'
+    children: []
+  ProjectsTemplate:
+    page_id: 5
+    class: Contener_Slot_Manager_Template
+    name: root
+    body: 'a:1:{s:4:"name";s:8:"projects";}'
+  WebLeaderTemplate:
+    page_id: 6
+    class: Contener_Slot_Manager_Template
+    name: root
+    body: 'a:1:{s:4:"name";s:7:"project";}'
+  BlogTemplate:
+    page_id: 3
+    class: Contener_Slot_Manager_Template
+    name: root
+    body: 'a:1:{s:4:"name";s:4:"blog";}'
+  HelloWorldTemplate:
+    page_id: 4
+    class: Contener_Slot_Manager_Template
+    name: root
+    body: 'a:1:{s:4:"name";s:9:"blog_post";}'
+  ContactTemplate:
+    page_id: 2
+    class: Contener_Slot_Manager_Template
+    name: root
+    body: 'a:1:{s:4:"name";s:7:"contact";}'
