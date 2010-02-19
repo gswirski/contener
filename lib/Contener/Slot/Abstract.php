@@ -201,4 +201,17 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
     {
         $this->setOption($name, $value);
     }
+    
+    public function editable()
+    {
+        return array();
+    }
+    
+    public function spec()
+    {
+        return array('name' => 'string', 
+                     'label' => 'string', 
+                     'validators' => 'array'
+               );
+    }
 }
