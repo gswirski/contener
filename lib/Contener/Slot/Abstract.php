@@ -192,11 +192,6 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
         return true;
     }
     
-    public function __toString()
-    {
-        return $this->render();
-    }
-    
     public function __get($name)
     {
         return $this->getOption($name);

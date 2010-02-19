@@ -8,8 +8,9 @@
 
 <?php
 
+
 foreach ($page->slots as $slot) {
-    echo $slot;
+    echo new Contener_Context_Admin_Includes_Editor($slot);
 }
 
 ?>

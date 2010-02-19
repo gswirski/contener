@@ -15,15 +15,6 @@ abstract class Contener_Slot_Inline extends Contener_Slot_Abstract
         return $this->value;
     }
     
-    public function renderSections(Contener_View $view)
-    {
-        if (is_string($this->getPlacement())) {
-            return array(
-                $this->getPlacement() => 'works'
-            );
-        }
-    }
-    
     public function isValid($data)
     {
         $valid = parent::isValid($data);
