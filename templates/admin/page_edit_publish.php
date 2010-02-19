@@ -9,14 +9,14 @@
 <dl class="line">
     <dt>Status</dt>
     <dd>
-        <input id="published" name="published" type="checkbox" /> <label for="published">opublikowany</label>
-        <span style="display: none;">o: <br /><a>18.02.2010 22:26</a></span>
+        <input id="publish_status" name="publish_status" type="checkbox"<?php echo ($context->publish_status)?' checked="checked"':''; ?> /> <label for="publish_status">opublikowany</label>
+        <span>o: <br /><input id="created_at" name="created_at" type="text" value="<?php echo $context->created_at; ?>" class="editable" /></span>
     </dd>
     
     <dt>Nawigacja</dt>
     <dd>
-        <input id="in_navigation" name="in_navigation" type="checkbox" /> <label for="in_navigation">pokazuj</label>
-        <span style="display: none;">jako:<br /><a>Strona główna</a></span>
+        <input id="in_navigation" name="in_navigation" type="checkbox"<?php echo ($context->in_navigation)?' checked="checked"':''; ?> /> <label for="in_navigation">pokazuj</label>
+        <span>jako:<br /><input id="navigation" name="navigation" type="text" value="<?php echo $context->navigation; ?>" class="editable" /></span>
     </dd>
     
     <dt>Autor</dt>

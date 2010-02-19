@@ -19,9 +19,13 @@ $(document).ready(function() {
         }
     });
     
-    $('#published, #in_navigation').change(function() {
-        $(this).next().next().toggle();
-    }).disableSelection().next().disableSelection();
+    $('#publish_status, #in_navigation').change(function() {
+        if ($(this).attr('checked')) {
+            $(this).next().next().css('display', 'inline');
+        } else {
+            $(this).next().next().css('display', 'none');
+        };
+    }).change().disableSelection().next().disableSelection();
     
     /*$('.left-sidebar .navigation li').each(function() {
         if ( $(this).find('ul li').length > 0 ) {
