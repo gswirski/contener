@@ -1,30 +1,41 @@
 <?php
 
 class Contener_Slot_Manager_Template extends Contener_Slot_Container
-{   
-    protected $options = array();
+{
+    protected $slotsConfiguration = array();
+    protected $file;
     
-    function __construct($options)
-    {   
-        $this->options = $options;
-        
-        if (file_exists($file = 'application/pages/' . $options['name'] . '.php')) {
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+    
+    public function getFile()
+    {
+        return ($this->file) ? $this->file : 'homepage.php';
+    }
+    
+    
+    function setSlots($slots)
+    {
+        $this->slotsConfiguration = $slots;
+        return $this;
+    }
+    
+    function manage()
+    {
+        if (file_exists($file = 'application/pages/' . $this->getFile() . '.php')) {
             include $file;
         } else {
             //throw new Exception('Unable to find slot schema for this page');
         }
-    }
-    
-    static function wakeUp($data)
-    {
-        $body = unserialize($data['body']);
-        $object = new self($body);
         
-        foreach ($data['__children'] as $child) {
-            $object->getSlot($child['name'])->wakeUp($child);
+        foreach ($this->slotsConfiguration as $slot) {
+            $this->slots[$slot['name']]->setData($slot);
         }
         
-        return $object;
+        unset($this->slotsConfiguration);
     }
     
     function sleep()
@@ -37,7 +48,7 @@ class Contener_Slot_Manager_Template extends Contener_Slot_Container
         return array(
             'class' => 'Contener_Slot_Manager_Template',
             'name' => 'root',
-            'body' => serialize($this->options),
+            'body' => serialize(array('file' => $this->getFile())),
             'children' => $children
         );
     }

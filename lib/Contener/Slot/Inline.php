@@ -1,7 +1,20 @@
 <?php
 
 abstract class Contener_Slot_Inline extends Contener_Slot_Abstract
-{    
+{
+    protected $value;
+    
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+    
+    public function getValue()
+    {
+        return $this->value;
+    }
+    
     public function renderSections(Contener_View $view)
     {
         if (is_string($this->getPlacement())) {

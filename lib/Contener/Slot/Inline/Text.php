@@ -2,11 +2,17 @@
 
 class Contener_Slot_Inline_Text extends Contener_Slot_Inline
 {
-    public function init()
+    protected $length;
+    
+    public function setLength($length)
     {
-        $defaults = array('length' => 'short', 'use_wysiwyg' => false);
-        
-        $this->setOptions(array_merge($defaults, $this->getOptions()));
+        $this->length = $length;
+        return $this;
+    }
+    
+    public function getLength()
+    {
+        return ($this->length) ? $this->length : 'short';
     }
     
     public function render($template = null, $view = null)

@@ -1,44 +1,60 @@
 <?php
 
 abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
-{
-    protected $options;
-    protected $value;
+{   
+    protected $name;
+    protected $label;
+    protected $validators = array();
+    
     protected $belongsTo = array();
     protected $errors = array();
     
-    public function __construct($options = array())
+    public function __construct($data = array(), $serialized = false)
     {
-        $defaults = array('name' => '', 'label' => '<em>Edytuj obszar</em>', 'placement' => 'main', 'validators' => array());
-        
-        $this->setOptions(array_merge($defaults, $options));
         $this->init();
+        
+        if ($data) {
+            if ($serialized) {
+                $this->setSerializedData($data);
+            } else {
+                $this->setData($data);
+            }
+        }
     }
     
     public function init() {}
     
-    public static function create($options)
+    public function setSerializedData($data)
     {
-        return new self($options);
-    }
-    
-    public function setOptions($options)
-    {
-        foreach ($options as $name => $value) {
-            $this->setOption($name, $value);
-        }
+        $data =  $this->_unserialize($data);
+        $this->setData($data);
         
         return $this;
     }
     
-    public function setOption($name, $value)
-    {
-        $method = 'set' . ucfirst($name);
-        if (method_exists($this, $method)) {
-            $this->$method($value);
-        } else {
-            $this->options[$name] = $value;
+    protected function _unserialize($data) {
+        foreach ($data['__children'] as $key => $child) {
+            $data['__children'][$key] = $this->_unserialize($child);
         }
+        
+        if (substr($data['body'], 0, 2) == 'a:') {
+            $new = unserialize($data['body']);
+        } else {
+            $new = array('value' => $data['body']);
+        }
+        
+        $data = array_merge($data, $new);
+        
+        return $data;
+    }
+    
+    public function setData($data)
+    {
+        foreach ($data as $key => $value) {
+            $this->setOption($key, $value);
+        }
+        
+        return $this;
     }
     
     public function getOption($name)
@@ -47,53 +63,72 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
         if (method_exists($this, $method)) {
             return $this->$method();
         } else {
-            return $this->options[$name];
+            //return $this->options[$name];
         }
     }
     
-    public function getOptions()
+    public function setOption($name, $value)
     {
-        return $this->options;
+        $method = 'set' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+        } else {
+            //$this->options[$name] = $value;
+        }
+        
+        return $this;
     }
     
     public function getName()
     {
-        return $this->options['name'];
+        return ($this->name)?$this->name:'';
     }
     
-    public function getLabel($name = null)
+    public function setName($name)
     {
-        if ($name) {
-            return $this->options['label']['name'];
-        }
-        return $this->options['label'];
-    }
-    
-    public function getPlacement($name = null)
-    {
-        if ($name) {
-            return $this->options['placement']['name'];
-        }
-        return $this->options['placement'];
-    }
-    
-    public function getValidators($name = null)
-    {
-        if ($name) {
-            return $this->options['validators']['name'];
-        }
-        return $this->options['validators'];
-    }
-    
-    public function setValue($value)
-    {
-        $this->value = $value;
+        $this->name = $name;
         return $this;
     }
     
-    public function getValue()
+    public function getLabel()
     {
-        return $this->value;
+        return ($this->label)?$this->label:'<em>Edytuj obszar</em>';
+    }
+    
+    public function setLabel($label)
+    {
+        $this->label = $label;
+        return $this;
+    }
+    
+    public function getValidators()
+    {
+        return $this->validators;
+    }
+    
+    public function setValidators($validators)
+    {
+        $this->validators = array();
+        $this->addValidators($validators);
+        return $this;
+    }
+    
+    public function addValidators($validators)
+    {
+        $this->validators = $this->validators + $validators;
+        return $this;
+    }
+    
+    public function addValidator($validator)
+    {
+        $this->validators[] = $validator;
+        return $this;
+    }
+    
+    public function removeValidators()
+    {
+        $this->validators = array();
+        return $this;
     }
     
     protected function setErrors($errors)
@@ -160,5 +195,15 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
     public function __toString()
     {
         return $this->render();
+    }
+    
+    public function __get($name)
+    {
+        return $this->getOption($name);
+    }
+    
+    public function __set($name, $value)
+    {
+        $this->setOption($name, $value);
     }
 }

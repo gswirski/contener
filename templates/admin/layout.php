@@ -34,6 +34,7 @@
     </div>
     <div class="line"><form method="post">
         <div class="left-sidebar">
+            <p>Dashboard Projekty Contener Blog</p>
             <?php echo $left; ?>
             
             <h3 class="opened">Dashboard</h3>

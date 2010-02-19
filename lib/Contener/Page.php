@@ -10,7 +10,10 @@ class Contener_Page extends Contener_Navigation_Node
         $this->database = $data;
         
         $data = $data->toArray();
-        $this->slots = $data['Slots'][0]['class']::wakeUp($data['Slots'][0]);
+        
+        $this->slots = new $data['Slots'][0]['class'];
+        $this->slots->setSerializedData($data['Slots'][0])->manage();
+        
         unset($data['Slots']);
         
         parent::__construct($data);

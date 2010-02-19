@@ -5,15 +5,32 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
 {
     protected $slots = array();
     
-    public function __construct($options = array())
-    {
-        parent::__construct($options);
+    public function setData($data) {
+        $data['slots'] = $data['__children'];
+        unset($data['__children']);
+        
+        parent::setData($data);
     }
     
     public function addSlot(Contener_Slot_Interface $slot)
     {
         $this->slots[$slot->getName()] = $slot;
         $slot->setBelongsTo(array_merge($this->getBelongsTo(), array($this->getName())));
+    }
+    
+    public function addSlots($slots)
+    {
+        foreach ($slots as $slot) {
+            if (is_array($slots)) {
+                if (array_key_exists($slot['name'], $this->slots)) {
+                    $this->slots[$slot['name']]->setData($slot);
+                } else {
+                    //$this->slots[$slot['name']] = new $slot['class']($slot);
+                }
+            } else {
+                $this->addSlot($slot);
+            }
+        }
     }
     
     public function removeSlot($name)
@@ -29,6 +46,14 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
     function getSlot($name)
     {
         return $this->slots[$name];
+    }
+    
+    public function setSlots($slots)
+    {
+        $this->slots = array();
+        $this->addSlots($slots);
+        
+        return $this;
     }
     
     public function isValid($data)

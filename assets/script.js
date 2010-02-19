@@ -19,6 +19,10 @@ $(document).ready(function() {
         }
     });
     
+    $('#published, #in_navigation').change(function() {
+        $(this).next().next().toggle();
+    }).disableSelection().next().disableSelection();
+    
     /*$('.left-sidebar .navigation li').each(function() {
         if ( $(this).find('ul li').length > 0 ) {
           $(this).prepend('<span class="indicator opened">-</span>');
