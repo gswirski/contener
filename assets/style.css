@@ -49,7 +49,7 @@ textarea { width: 100%; height: 200px; }
 .left-sidebar .navigation a { color: #666; display: block; padding: 3px 5px; font-size: 12px; float: left; }
 .left-sidebar .navigation a:hover { color: #000; }
 .left-sidebar .navigation li ul { margin: 0px 0px 0px 15px; clear: both; }
-.left-sidebar .navigation .active a.last  { color: #D4532E;  font-weight: bold; background: #F9F9F9; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+.left-sidebar .navigation .active_page > a{ color: #D4532E;  font-weight: bold; background: #F9F9F9; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
 /*.left-sidebar .navigation li { overflow: hidden; zoom: 1; }
 .left-sidebar .navigation a { position: relative; z-index: 50; font-size: 12px; padding: 5px 10px; display: block; color: #666; text-decoration: none; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; float: left; }
 .left-sidebar .navigation a:hover { color: #000; }

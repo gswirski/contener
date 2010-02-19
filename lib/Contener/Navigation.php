@@ -10,14 +10,4 @@ class Contener_Navigation extends Contener_Navigation_Container
         
         $this->addPages($pages);
     }
-    
-    function renderHtml()
-    {
-        return 'iha';
-    }
-    
-    function __toString()
-    {
-        return  $this->renderHtml();
-    }
 }
