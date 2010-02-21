@@ -4,6 +4,7 @@ abstract class Contener_Navigation_Container
     implements RecursiveIterator, Countable
 {
     protected $pages = array();
+    protected $subNavigations = array();
     protected $active = false;
     
     function addPage($page)
@@ -82,6 +83,12 @@ abstract class Contener_Navigation_Container
     function hasPages()
     {
         return count($this->pages) > 0;
+    }
+    
+    function addSubNavigation(Contener_Navigation_Container $navigation)
+    {
+        $this->subNavigations[] = $navigation;
+        return $this;
     }
     
     function current()
@@ -179,6 +186,13 @@ abstract class Contener_Navigation_Container
                 if ($sub['tree']) {
                     return array('page' => false, 'tree' => true);
                 }
+            }
+            
+            foreach ($this->subNavigations as $subNavigation) {
+                $sub = $subNavigation->isActive();
+                if ($sub['tree']) {
+                    return array('page' => false, 'tree' => true);
+                } 
             }
         }
         return array('page' => false, 'tree' => false);

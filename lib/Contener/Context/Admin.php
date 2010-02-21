@@ -9,6 +9,25 @@ class Contener_Context_Admin extends Contener_Context
         $this->areas['left'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '')->setName('left');
         $this->areas['right'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '')->setName('right');
         
+        $this->areas['menu'] = new Contener_Navigation(array(
+            array(
+                'title' => 'Zarządzaj',
+                'path' => '/admin'
+            ),
+            array(
+                'title' => 'Bloki',
+                'path' => '/admin/block'
+            ),
+            array(
+                'title' => 'Użytkownicy',
+                'path' => '/admin/user'
+            ),
+            array(
+                'title' => 'Konfiguracja',
+                'path' => '/admin/config'
+            )
+        ));
+        
         return parent::dispatch();
     }
     
@@ -18,25 +37,6 @@ class Contener_Context_Admin extends Contener_Context
     
     function wrapHtml($content)
     {
-        $menu = $this->createComponent('Contener_View_Helper_Navigation', '')
-            ->setNavigation(new Contener_Navigation(array(
-                array(
-                    'title' => 'Zarządzaj',
-                    'path' => '/admin'
-                ),
-                array(
-                    'title' => 'Bloki',
-                    'path' => '/admin/block'
-                ),
-                array(
-                    'title' => 'Użytkownicy',
-                    'path' => '/admin/user'
-                ),
-                array(
-                    'title' => 'Konfiguracja',
-                    'path' => '/admin/config'
-                )
-            )));
         
         $t = new Contener_View("admin/layout");
 
@@ -45,7 +45,7 @@ class Contener_Context_Admin extends Contener_Context
             $this,
             array(
               'content' => $content,
-              'menu' => $menu,
+              'menu' => $this->area('menu'),
               'left' => $this->area('left'),
               'right' => $this->area('right'),
               'title' => 'Panel administracyjny',

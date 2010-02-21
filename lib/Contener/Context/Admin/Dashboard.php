@@ -4,6 +4,9 @@ class Contener_Context_Admin_Dashboard extends Contener_Component
 {
     function dispatch()
     {
+        
+        $mainNode = $this->context->area('menu')->findOneBy('path', '/admin');
+        
         $navigation = new Contener_Navigation(array(
             array(
                 'title' => 'Dashboard',
@@ -15,10 +18,9 @@ class Contener_Context_Admin_Dashboard extends Contener_Component
             )
         ));
         
-        $helper = $this->createComponent('Contener_View_Helper_Navigation', '')
-            ->setNavigation($navigation);
+        $mainNode->addSubNavigation($navigation);
         
-        $this->context->area('left')->addModule('Dashboard', $helper);
+        $this->context->area('left')->addModule('Dashboard', $navigation);
         
         
         $data = Doctrine_Query::create()
@@ -29,10 +31,7 @@ class Contener_Context_Admin_Dashboard extends Contener_Component
             ->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);
         $navigation = new Contener_Navigation($data);
         
-        $helper = $this->createComponent('Contener_View_Helper_Navigation', '')
-            ->setNavigation($navigation);
-        
-        $this->context->area('left')->addModule('Zarządzaj stronami', $helper);
+        $this->context->area('left')->addModule('Zarządzaj stronami', $navigation);
         
         return parent::execute();
     }

@@ -31,4 +31,9 @@ class Contener_Component extends k_Component
     {
         return $GLOBALS['baseUrl'];
     }
+    
+    public function path()
+    {
+        return rtrim(str_replace($GLOBALS['baseUrl'], '', $this->requestUri()), '/');
+    }
 }

@@ -1,33 +1,19 @@
 <?php
 
-class Contener_View_Helper_Navigation extends Contener_Component
+class Contener_View_Widget_Navigation
 {
     protected $navigation;
     
-    public function setNavigation(Contener_Navigation_Container $navigation)
-    {
-        
+    public function setNavigation(Contener_Navigation_Container $navigation) {
         $this->navigation = $navigation;
-        
         return $this;
     }
     
-    public function renderHtml(Contener_Navigation_Container $navigation = null)
+    public function render(Contener_Navigation_Container $navigation = null)
     {
         $class = '';
         if (!$navigation) {
             $navigation = $this->navigation;
-            
-            $path = rtrim(str_replace($GLOBALS['baseUrl'], '', $this->requestUri()), '/');
-            if ($active = $navigation->findOneBy('path', $path)) {
-                
-                $active->setActive(true);
-            } else if ($this->query('id', false)) {
-                //if ($active = $navigation->findOneBy('path', ))
-                if ($active = $navigation->findOneBy('id', $this->query('id'))) {
-                    $active->setActive(true);
-                }
-            }
             $class = ' class="navigation"';
         }
         
@@ -58,12 +44,17 @@ class Contener_View_Helper_Navigation extends Contener_Component
             $return .= '<li'.$class.'><a href="'.$GLOBALS['baseUrl'].$path.'">'.$page->title.'</a>';
             
             if ($page->hasChildren()) {
-                $return .= $this->renderHtml($page);
+                $return .= $this->render($page);
             }
             
             $return .= '</li>';
         }
         $return .= '</ul>';
         return $return;
+    }
+    
+    public function __toString()
+    {
+        return $this->render();
     }
 }
