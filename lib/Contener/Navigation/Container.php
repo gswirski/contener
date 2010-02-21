@@ -131,7 +131,7 @@ abstract class Contener_Navigation_Container
                             RecursiveIteratorIterator::SELF_FIRST);
 
         foreach ($iterator as $page) {
-            if ($page->$property == $value) {
+            if (isset($page->$property) && $page->$property == $value) {
                 return $page;
             }
         }
@@ -147,7 +147,7 @@ abstract class Contener_Navigation_Container
                             RecursiveIteratorIterator::SELF_FIRST);
 
         foreach ($iterator as $page) {
-            if ($page->$property == $value) {
+            if (isset($page->$property) && $page->$property == $value) {
                 $found[] = $page;
             }
         }

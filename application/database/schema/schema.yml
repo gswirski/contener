@@ -42,3 +42,19 @@ Slot:
     Page:
       foreignAlias: Slots
       onDelete: CASCADE
+
+PageType:
+  columns:
+    class: string
+    body: clob
+
+PageTemplate:
+  columns:
+    name: string
+    type_id: integer(8)
+  relations:
+    PageType:
+      local: type_id
+      foreignAlias: Templates
+      onDelete: CASCADE
+  

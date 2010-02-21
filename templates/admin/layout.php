@@ -21,51 +21,21 @@
         </div>
         <a class="preview" href="http://phpgeek.pl/" title="Przejdź na stronę">Zobacz stronę</a>
 
-        <ul class="navigation">
+        <!--<ul class="navigation">
             <li class="active"><a href="#">Zarządzaj</a></li>
             <li><a href="#">Bloki</a></li>
             <li><a href="#">Użytkownicy</a></li>
             <li><a href="#">Konfiguracja</a></li>
-        </ul>
+        </ul>-->
+        <?php echo $menu; ?>
         <div class="user">
 
             sognat (<a href="#">profil</a> | <a href="#">wyloguj</a>)
         </div>
     </div>
     <div class="line"><form method="post">
-        <div class="left-sidebar">
-            <?php echo $left; ?>
-            
-            <h3 class="opened">Dashboard</h3>
-            <ul class="navigation">
-                <li>
-
-                    <a id="dashboard" title="Strona główna" class="Contener_Page" href="/Contener/index.php/admin/page/edit/id/7">Dashboard</a>
-                </li>
-                <li>
-                    <a id="add-page" title="Strona główna" class="Contener_Page" href="/Contener/index.php/admin/page/edit/id/7">Dodaj stronę</a>
-                </li>
-            </ul>
-        
-        </div>
-        <div class="right-sidebar">
-            <?php echo $right; ?>
-                
-                <h3 class="opened">Typ strony</h3>
-                <dl class="line">
-
-                    <dt>Typ</dt>
-                    <dd><select name="blah"><option>Jacht</option></select></dd>
-                    <dt>Szablon</dt>
-                    <dd><select name="blah"><option>Na sprzedaż</option><option>Do wynajęcia</option></select></dd>
-                </dl> 
-                
-                <h3 class="closed">Ustawienia SEO</h3>
-
-                <div></div>
-                <h3 class="closed">Wersje strony</h3>
-                <div></div>
-        </div>
+        <?php echo $left; ?>
+        <?php echo $right; ?>
         <div class="editor">
             <?php echo $content; ?>
         </div>

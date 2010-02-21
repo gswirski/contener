@@ -2,12 +2,12 @@
 
 class Contener_Context_Admin extends Contener_Context
 {
-    protected $sidebars = array();
+    protected $areas = array();
     
     function dispatch()
     {
-        $this->sidebars['left'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '');
-        $this->sidebars['right'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '');
+        $this->areas['left'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '')->setName('left');
+        $this->areas['right'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '')->setName('right');
         
         return parent::dispatch();
     }
@@ -17,19 +17,26 @@ class Contener_Context_Admin extends Contener_Context
     }
     
     function wrapHtml($content)
-    {   
-        $data = Doctrine_Query::create()
-            ->select()
-            ->from('Contener_Domain_Page p')
-            ->where('p.level != ?', 0)
-            ->orderBy('p.lft')
-            ->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);
-        $navigation = new Contener_Navigation($data);
-        
-        $helper = $this->createComponent('Contener_View_Helper_Navigation', '')
-            ->setNavigation($navigation);
-        
-        $this->sidebar('left')->addModule('Zarządzaj stronami', $helper);
+    {
+        $menu = $this->createComponent('Contener_View_Helper_Navigation', '')
+            ->setNavigation(new Contener_Navigation(array(
+                array(
+                    'title' => 'Zarządzaj',
+                    'path' => '/admin'
+                ),
+                array(
+                    'title' => 'Bloki',
+                    'path' => '/admin/block'
+                ),
+                array(
+                    'title' => 'Użytkownicy',
+                    'path' => '/admin/user'
+                ),
+                array(
+                    'title' => 'Konfiguracja',
+                    'path' => '/admin/config'
+                )
+            )));
         
         $t = new Contener_View("admin/layout");
 
@@ -38,8 +45,9 @@ class Contener_Context_Admin extends Contener_Context
             $this,
             array(
               'content' => $content,
-              'left' => $this->sidebar('left'),
-              'right' => $this->sidebar('right'),
+              'menu' => $menu,
+              'left' => $this->area('left'),
+              'right' => $this->area('right'),
               'title' => 'Panel administracyjny',
               'scripts' => $this->document->scripts(),
               'styles' => $this->document->styles(),
@@ -56,8 +64,8 @@ class Contener_Context_Admin extends Contener_Context
         return 'Contener_Context_Admin_' . ucfirst($name);
     }
     
-    function sidebar($name)
+    function area($name)
     {
-        return $this->sidebars[$name];
+        return $this->areas[$name];
     }
 }

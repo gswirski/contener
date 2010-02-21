@@ -2,6 +2,41 @@
 
 class Contener_Context_Admin_Dashboard extends Contener_Component
 {
+    function dispatch()
+    {
+        $navigation = new Contener_Navigation(array(
+            array(
+                'title' => 'Dashboard',
+                'path' => '/admin'
+            ),
+            array(
+                'title' => 'Dodaj stronę',
+                'path' => '/admin/page?add'
+            )
+        ));
+        
+        $helper = $this->createComponent('Contener_View_Helper_Navigation', '')
+            ->setNavigation($navigation);
+        
+        $this->context->area('left')->addModule('Dashboard', $helper);
+        
+        
+        $data = Doctrine_Query::create()
+            ->select()
+            ->from('Contener_Domain_Page p')
+            ->where('p.level != ?', 0)
+            ->orderBy('p.lft')
+            ->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);
+        $navigation = new Contener_Navigation($data);
+        
+        $helper = $this->createComponent('Contener_View_Helper_Navigation', '')
+            ->setNavigation($navigation);
+        
+        $this->context->area('left')->addModule('Zarządzaj stronami', $helper);
+        
+        return parent::execute();
+    }
+    
     function renderHtml()
     {
         return '<h2>Dashboard</h2>

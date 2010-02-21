@@ -13,11 +13,17 @@ class Contener_View_Helper_Navigation extends Contener_Component
     }
     
     public function renderHtml(Contener_Navigation_Container $navigation = null)
-    {   
+    {
         $class = '';
         if (!$navigation) {
             $navigation = $this->navigation;
-            if ($this->query('id', false)) {
+            
+            $path = rtrim(str_replace($GLOBALS['baseUrl'], '', $this->requestUri()), '/');
+            if ($active = $navigation->findOneBy('path', $path)) {
+                
+                $active->setActive(true);
+            } else if ($this->query('id', false)) {
+                //if ($active = $navigation->findOneBy('path', ))
                 if ($active = $navigation->findOneBy('id', $this->query('id'))) {
                     $active->setActive(true);
                 }
@@ -43,7 +49,13 @@ class Contener_View_Helper_Navigation extends Contener_Component
                 $class = '';
             }
             
-            $return .= '<li'.$class.'><a href="'.$GLOBALS['baseUrl'].'/admin/page?edit&id='.$page->id.'">'.$page->title.'</a>';
+            if (isset($page->path)) {
+                $path = $page->path;
+            } else {
+                $path = '/admin/page?edit&id='.$page->id;
+            }
+            
+            $return .= '<li'.$class.'><a href="'.$GLOBALS['baseUrl'].$path.'">'.$page->title.'</a>';
             
             if ($page->hasChildren()) {
                 $return .= $this->renderHtml($page);
