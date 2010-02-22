@@ -9,7 +9,17 @@ class Contener_Context_Admin_Page extends Contener_Context_Admin_Dashboard
     
     function renderHtmlAdd()
     {
-        return '<h2>Dodaj stronę</h2><p>To be implemented</p>';
+        ob_start();
+        
+        $configurator = new Contener_Domain_PageType_Configurator();
+        $configurator->setClass('Contener_Page');
+        $configurator->setSlotManager('Contener_Slot_Manager_Template', array('file' => 'homepage'));
+        $configurator->setTemplates(array());
+        print_r($configurator->getData());
+        
+        return '<h2>Dodaj stronę</h2>
+        <p>Under heavy development</p>
+        <pre>' . ob_get_clean() . '</pre>';
     }
     
     function renderHtmlEdit()

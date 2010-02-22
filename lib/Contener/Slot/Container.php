@@ -6,8 +6,10 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
     protected $slots = array();
     
     public function setData($data) {
-        $data['slots'] = $data['__children'];
-        unset($data['__children']);
+        if (array_key_exists('__children', $data)) {
+            $data['slots'] = $data['__children'];
+            unset($data['__children']);
+        }
         
         parent::setData($data);
     }

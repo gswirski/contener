@@ -57,4 +57,15 @@ class Contener_Slot_Manager_Template extends Contener_Slot_Container
     {
         return 'slots';
     }
+    
+    function spec()
+    {
+        if ($this->slotConfiguration) {
+            return array('slotConfiguration' => 'object');
+        }
+        
+        if ($this->file) {
+            return array('file' => 'string');
+        }
+    }
 }

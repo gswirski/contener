@@ -1,0 +1,5 @@
+---
+Contener_Domain_PageType:
+  Default:
+    class: Contener_Page
+    body: 
