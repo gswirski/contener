@@ -37,6 +37,17 @@ class Contener_Context_Admin extends Contener_Context
     
     function wrapHtml($content)
     {
+        if ($actives = $this->area('menu')->findAllBy('path', $this->path())) {
+            foreach ($actives as $active) {
+                $active->setActive(true);
+            }
+        } else if ($active = $this->area('menu')->findOneBy('id', $this->query('id'))){
+            $active->setActive(true);
+        }
+        
+        $menu = new Contener_View_Widget_Navigation(array(
+            'depth' => 1
+        ));
         
         $t = new Contener_View("admin/layout");
 
@@ -45,7 +56,7 @@ class Contener_Context_Admin extends Contener_Context
             $this,
             array(
               'content' => $content,
-              'menu' => $this->area('menu'),
+              'menu' => $menu->setNavigation($this->area('menu')),
               'left' => $this->area('left'),
               'right' => $this->area('right'),
               'title' => 'Panel administracyjny',

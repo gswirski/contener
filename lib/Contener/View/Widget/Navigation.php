@@ -3,6 +3,17 @@
 class Contener_View_Widget_Navigation
 {
     protected $navigation;
+    protected $params = array();
+    protected $_depth = 0;
+    
+    public function __construct(array $params = array())
+    {
+        $defaults = array(
+            'depth' => 10
+        );
+        
+        $this->params = array_merge($defaults, $params);
+    }
     
     public function setNavigation(Contener_Navigation_Container $navigation) {
         $this->navigation = $navigation;
@@ -15,6 +26,9 @@ class Contener_View_Widget_Navigation
         if (!$navigation) {
             $navigation = $this->navigation;
             $class = ' class="navigation"';
+            $this->_depth = 1;
+        } else {
+            $this->_depth += 1;
         }
         
         $return = '<ul'.$class.'>';
@@ -43,10 +57,13 @@ class Contener_View_Widget_Navigation
             
             $return .= '<li'.$class.'><a href="'.$GLOBALS['baseUrl'].$path.'">'.$page->title.'</a>';
             
-            if ($page->hasChildren()) {
-                $return .= $this->render($page);
-            }
+            if ($this->_depth < $this->params['depth']) {
             
+                if ($page->hasChildren()) {
+                    $return .= $this->render($page);
+                }
+            
+            }
             $return .= '</li>';
         }
         $return .= '</ul>';

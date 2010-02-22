@@ -39,8 +39,8 @@ textarea { width: 100%; height: 200px; }
 .main-navigation li { padding: 5px 10px; margin: 5px; }
 .main-navigation li a { display: block; }
 .main-navigation li a:hover { display: block; margin-bottom: -1px; }
-.main-navigation li.active_page { background:#5E5E5E; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; }
-.main-navigation li.active_page a { color:#FFF; border: none; margin: 0px; text-shadow: #000 0px -1px 0px;}
+.main-navigation li.active_tree { background:#5E5E5E; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; }
+.main-navigation li.active_tree a { color:#FFF; border: none; margin: 0px; text-shadow: #000 0px -1px 0px;}
 .main-navigation .user { float: right !important; margin: 8px 5px;}
 
 .left-sidebar { float: left; width: 230px; border-right: 1px solid #CCC; padding: 15px 10px; background: #DDD; height: 500px; overflow: auto; }
