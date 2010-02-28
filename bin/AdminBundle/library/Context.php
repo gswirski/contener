@@ -4,6 +4,12 @@ class AdminBundle_Context extends Contener_Context
 {
     protected $areas = array();
     
+    public function __construct()
+    {
+        $loader = new sfTemplateLoaderFilesystem(dirname(__FILE__) . '/../resources/template/%name%.php');
+        Contener_View::setEngine( new sfTemplateEngine($loader) );
+    }
+    
     function dispatch()
     {
         $this->areas['left'] = $this->createComponent('AdminBundle_Widget_Sidebar', '')->setName('left');
@@ -49,7 +55,7 @@ class AdminBundle_Context extends Contener_Context
             'depth' => 1
         ));
         
-        $t = new Contener_View("admin/layout");
+        $t = new Contener_View("layout");
 
         return
           $t->render(

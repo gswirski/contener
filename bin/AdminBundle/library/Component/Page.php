@@ -27,9 +27,9 @@ class AdminBundle_Component_Page extends AdminBundle_Component_Dashboard
         $page = Contener_Domain_Page::fetch($this->query('id'));
         $page = new $page['class']($page);
         
-        $this->context->area('right')->addModule('', Contener_View::create('admin/page_edit_publish')->render($page, array()));
+        $this->context->area('right')->addModule('', Contener_View::create('page_edit_publish')->render($page, array()));
         
-        $t = new Contener_View('admin/page_edit');
+        $t = new Contener_View('page_edit');
         return $t->render(
             $this,
             array('page' => $page)

@@ -7,11 +7,6 @@ class Contener_View
     
     public function __construct($path = '')
     {
-        if (!self::$engine) {
-            $loader = new sfTemplateLoaderFilesystem(APPLICATION_DIR . '/../templates/%name%.php');
-            self::$engine = new sfTemplateEngine($loader);
-        }
-        
         if ($path) {
             $this->path = $path;
         }
@@ -25,6 +20,16 @@ class Contener_View
     public static function create($path)
     {
         return new self($path);
+    }
+    
+    public static function getEngine()
+    {
+        return self::$engine;
+    }
+    
+    public static function setEngine($object)
+    {
+        self::$engine = $object;
     }
 }
 

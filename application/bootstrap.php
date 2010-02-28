@@ -30,7 +30,6 @@ class Application
         spl_autoload_register(array($loader, 'loadClass'));
         
         require_once('Konstrukt/konstrukt.inc.php');
-        define('APPLICATION_DIR', dirname(__FILE__));
         
         $app->initDatabase();
         
