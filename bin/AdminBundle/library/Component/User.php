@@ -1,6 +1,6 @@
 <?php
 
-class Contener_Context_Admin_User extends Contener_Component
+class AdminBundle_Component_User extends Contener_Component
 {
     function renderHtml()
     {

@@ -1,13 +1,13 @@
 <?php
 
-class Contener_Context_Admin extends Contener_Context
+class AdminBundle_Context extends Contener_Context
 {
     protected $areas = array();
     
     function dispatch()
     {
-        $this->areas['left'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '')->setName('left');
-        $this->areas['right'] = $this->createComponent('Contener_Context_Admin_Includes_Sidebar', '')->setName('right');
+        $this->areas['left'] = $this->createComponent('AdminBundle_Widget_Sidebar', '')->setName('left');
+        $this->areas['right'] = $this->createComponent('AdminBundle_Widget_Sidebar', '')->setName('right');
         
         $this->areas['menu'] = new Contener_Navigation(array(
             array(
@@ -67,12 +67,12 @@ class Contener_Context_Admin extends Contener_Context
     
     function renderHtml()
     {
-        return $this->forward('Contener_Context_Admin_Dashboard');
+        return $this->forward('AdminBundle_Component_Dashboard');
     }
     
     function map($name)
     {
-        return 'Contener_Context_Admin_' . ucfirst($name);
+        return 'AdminBundle_Component_' . ucfirst($name);
     }
     
     function area($name)

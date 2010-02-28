@@ -1,6 +1,6 @@
 <?php
 
-class Contener_Context_Admin_Includes_Sidebar extends Contener_Component
+class AdminBundle_Widget_Sidebar extends Contener_Component
 {
     protected $modules = array();
     protected $name;

@@ -1,6 +1,6 @@
 <?php
 
-class Contener_Context_Admin_Page extends Contener_Context_Admin_Dashboard
+class AdminBundle_Component_Page extends AdminBundle_Component_Dashboard
 {   
     function renderHtml()
     {

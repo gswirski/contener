@@ -1,6 +1,6 @@
 <?php
 
-class Contener_Context_Admin_Includes_Editor
+class AdminBundle_Widget_Editor
 {
     protected $slot;
     

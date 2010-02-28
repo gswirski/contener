@@ -1,6 +1,6 @@
 <?php
 
-class Contener_Context_Admin_Config extends Contener_Component
+class AdminBundle_Component_Config extends Contener_Component
 {
     function execute() {
         return $this->wrap(parent::execute());
@@ -28,7 +28,7 @@ class Contener_Context_Admin_Config extends Contener_Component
     function map($name)
     {
         $name = Doctrine_Inflector::classify($name);
-        $name = 'Contener_Context_Admin_Config_' . $name;
+        $name = 'AdminBundle_Component_Config_' . $name;
         return $name;
     }
 }
