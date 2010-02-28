@@ -2,7 +2,16 @@
 
 class Contener_Context_Admin_Config extends Contener_Component
 {
+    function execute() {
+        return $this->wrap(parent::execute());
+    }
+    
     function renderHtml()
+    {
+        return '';
+    }
+    
+    function wrapHtml($content)
     {
         $navigation = new Contener_Navigation(array(
             array('path' => '/admin/config', 'title' => 'Ogólne'),
@@ -13,6 +22,13 @@ class Contener_Context_Admin_Config extends Contener_Component
         ));
         $this->context->area('left')->addModule('Konfiguruj', $navigation);
         
-        return '<h2>Konfiguracja</h2>';
+        return '<h2>Konfiguracja</h2>' . $content;
+    }
+    
+    function map($name)
+    {
+        $name = Doctrine_Inflector::classify($name);
+        $name = 'Contener_Context_Admin_Config_' . $name;
+        return $name;
     }
 }
