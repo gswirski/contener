@@ -19,6 +19,7 @@ $baseUrl = preg_replace('~(.*)/.*~', '$1', $_SERVER['SCRIPT_NAME']);
 $conn = Doctrine_Manager::connection($config['database']['dsn']);
 Doctrine_Manager::getInstance()->registerHydrator('Contener_Database_Hydrator', 'Contener_Database_Hydrator');
 
+define('APPLICATION_DIR', dirname(__FILE__));
 
 k()
   // Enable file logging
