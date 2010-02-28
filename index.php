@@ -9,7 +9,7 @@ function microtime_float()
 
 $script_start = microtime_float();
 
-set_include_path(dirname(__FILE__) . '/lib');
+set_include_path(dirname(__FILE__) . '/library');
 require_once('autoloader.php');
 require_once('Konstrukt/konstrukt.inc.php');
 
