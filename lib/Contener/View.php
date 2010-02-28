@@ -8,9 +8,6 @@ class Contener_View
     public function __construct($path = '')
     {
         if (!self::$engine) {
-            require_once 'Templating/sfTemplateAutoloader.php';
-            sfTemplateAutoloader::register();
-            
             $loader = new sfTemplateLoaderFilesystem(APPLICATION_DIR . '/templates/%name%.php');
             self::$engine = new sfTemplateEngine($loader);
         }
