@@ -9,9 +9,9 @@ class Contener_Dispatcher extends Contener_Component {
     function map($name)
     {
         if ($name == 'admin') {
-            return 'Contener_Context_Admin';
+            return 'AdminBundle_Context';
         }
         
-        return 'Contener_Context_Default';
+        return 'WebBundle_Context';
     }
 }
