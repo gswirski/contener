@@ -1,9 +1,11 @@
-body { background: #F0F0F0; color: #333; font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; position: relative; text-shadow: #FFF 0px 1px 0px; }
+body { background: #F5F5F5; color: #333; font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; position: relative; text-shadow: #FFF 0px 1px 0px; overflow: hidden;}
 
 h1, .main-navigation .preview { font: italic 20px Georgia, serif; color: #FFF; display: block; margin: 5px; }
 h2 { font: italic 22px Georgia, serif; letter-spacing: 0.5px; margin-bottom: 15px; }
-h3, .editor label { display: block; color: #555; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-h3 { margin-bottom: 15px; cursor: pointer; }
+h3, .editor label { display: block; font-size: 11px; font-weight: bold; font-family: Helvetica; text-transform: uppercase;}
+h3 { margin-bottom: 15px; cursor: pointer;   }
+.editor label { color: #333; margin: 17px 0px 3px 0px; }
+.left-sidebar h3 { color: #FFF; text-shadow: #313639 0px 1px 0px;}
 
 a { color: #28759A; text-decoration: none; }
 a:hover { color: #D34A23 }
@@ -17,17 +19,17 @@ dl input { margin: 0px; }
 
 ul { margin-bottom: 15px; }
 
-.input {  max-width: 100%; overflow: hidden; margin-bottom: 15px; }
+/*.input {  max-width: 100%; overflow: hidden; margin-bottom: 15px; }
 .input input, .input textarea { font: 11px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background: #F9F9F9; border: none; border-top: 1px solid #DDD; border-bottom: 1px solid #FFF; padding: 4px 6px 3px 6px; display: block; outline: none; color: #888; text-shadow: #FFF 0px 1px 0px; }
-textarea { width: 100%; height: 200px; }
+textarea { width: 100%; height: 200px; }*/
 
 .button { display: block; float: left; background: url('http://webleader.pl/cms/assets/admin/images/button_gradient.png'); border: 0px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -moz-box-shadow: 0px 0px 2px #333; -webkit-box-shadow: 0px 0px 2px #333; padding: 2px 5px; margin: 0px 5px; cursor: pointer; line-height: 16px; }
 .button:first-child { margin-left: 0px; }
 
 .editable { background: #FEFBCE; padding: 2px; }
-.editable input { border: none; background: none; color: inherit; }
+.editable input { border: none; background: none; color: inherit; padding: 0px; margin: 0px;}
 
-.main-navigation { background: #454545; color: #999; padding: 3px; text-shadow: none; }
+.main-navigation { background: url('http://grab.by/2IHH') #2B3036; color: #999; padding: 3px; text-shadow: none; }
 .main-navigation .select-site, .main-navigation .preview, .main-navigation ul, .main-navigation li, .main-navigation .user { float:  left; display: block; }
 .main-navigation a { color: #CCC; }
 .main-navigation a:hover { color: #FFF; border-bottom: 1px solid #FFF; }
@@ -43,21 +45,23 @@ textarea { width: 100%; height: 200px; }
 .main-navigation li.active_tree a { color:#FFF; border: none; margin: 0px; text-shadow: #000 0px -1px 0px;}
 .main-navigation .user { float: right !important; margin: 8px 5px;}
 
-.left-sidebar { float: left; width: 230px; border-right: 1px solid #CCC; padding: 15px 10px; background: #DDD; height: 500px; overflow: auto; }
+.left-sidebar { float: left; width: 230px; border-right: 1px solid #2B2F35; border-top: 1px solid #6E6E70; padding: 15px 10px; background: #555B60; height: 500px; overflow: auto; }
 .left-sidebar .navigation { margin-left: 9px; }
 .left-sidebar .navigation li { overflow: hidden; zoom: 1; }
-.left-sidebar .navigation a { color: #666; display: block; padding: 3px 5px; font-size: 12px; float: left; }
-.left-sidebar .navigation a:hover { color: #000; }
+.left-sidebar a { color: #A7ABAD; font-weight: bold; display: inline-block; padding: 3px 5px; font-size: 12px; text-shadow: #313639 0px 1px 0px;}
+.left-sidebar a:hover { color: #FFF; }
 .left-sidebar .navigation li ul { margin: 0px 0px 0px 15px; clear: both; }
-.left-sidebar .navigation .active_page > a{ color: #D4532E;  font-weight: bold; background: #F9F9F9; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+.left-sidebar .navigation .active_page > a { color: #EEE; /*color: #D4532E;  font-weight: bold; background: #F9F9F9; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;*/ }
 /*.left-sidebar .navigation li { overflow: hidden; zoom: 1; }
 .left-sidebar .navigation a { position: relative; z-index: 50; font-size: 12px; padding: 5px 10px; display: block; color: #666; text-decoration: none; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; float: left; }
 .left-sidebar .navigation a:hover { color: #000; }
 .left-sidebar .navigation li ul { margin: 0px 0px 0px 15px; clear: both; }
 .left-sidebar .navigation .active > a  { color: #333; color: #D4532E;  font-weight: bold; background-color: #F9F9F9; }*/
 
-.right-sidebar { float: right; width: 230px; border-left: 1px solid #CCC; padding: 15px 10px; background: #DEE4EA; height: 500px; overflow: auto; }
+.right-sidebar { float: right; width: 230px; border-left: 1px solid #CCC; padding: 15px 10px; background: #DFE1E3; height: 500px; overflow: auto; }
 .right-sidebar .line { margin-bottom: 15px;}
+
+.left-sidebar { font-family: Helvetica; }
 
 .editor { padding: 15px 20px; border-right: 1px solid #F9F9F9; border-left: 1px solid #F9F9F9; display: block !important; overflow: auto;}
 .editor .page-title { background: #FFF; padding: 2px 5px; border: 1px solid #CCC; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; }
@@ -75,8 +79,8 @@ textarea { width: 100%; height: 200px; }
 .navigation li a.add { padding: 1px 6px 1px 5px; float: right; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; color: #FFF; font-weight: normal; font-size: 10px; background: #777; text-shadow: none; }
 .navigation li a.add:hover { background: #333; color: #FFF; }
 
-h3.opened:before { content: "▼"; display: inline-block; width: 13px; }
-h3.closed:before { content: "▶"; display: inline-block; width: 13px; }
+h3.opened:before { content: "▼"; display: inline-block; width: 13px; font: 9px "Lucida Grande"; }
+h3.closed:before { content: "▶"; display: inline-block; width: 13px; font: 9px "Lucida Grande"; }
 
 input.editable {
     background: none; border: none; color: #28759A; text-shadow: #FFF 0px 1px 0px; margin: 0px; padding: 0px;

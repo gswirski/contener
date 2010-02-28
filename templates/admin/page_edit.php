@@ -1,4 +1,5 @@
 <h2>Edytuj stronę</h2>
+
 <div class="page-title"><input type="text" id="title" name="title" value="<?php echo $page->title; ?>" /></div>
 <p class="permament-link">
 
