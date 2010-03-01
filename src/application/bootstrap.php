@@ -4,8 +4,8 @@ class Application
 {   
     public function initLoader(Contener_Loader $loader)
     {
-        $loader->registerBundle('WebBundle', '../bin/WebBundle')
-               ->registerBundle('AdminBundle', '../bin/AdminBundle');
+        $loader->registerBundle('WebBundle', '../application/bundles/WebBundle')
+               ->registerBundle('AdminBundle', '../application/bundles/AdminBundle');
     }
     
     public function initDatabase()
@@ -22,7 +22,7 @@ class Application
         
         $app = new self;
         
-        set_include_path(dirname(__FILE__) . '/../library');
+        set_include_path(dirname(__FILE__) . '/../framework');
         
         require_once('Contener/Loader.php');
         $loader = new Contener_Loader();

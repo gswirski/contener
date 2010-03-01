@@ -34,7 +34,7 @@ class Contener_View
 }
 
 function asset($file, $render = true) {
-    $file = $GLOBALS['baseUrl']. '/assets/' . $file;
+    $file = $GLOBALS['baseUrl']. '/' . $file;
     if ($render) {
         echo $file;
     }

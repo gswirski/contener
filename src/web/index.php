@@ -8,7 +8,7 @@ function microtime_float()
 
 $script_start = microtime_float();
 
-require_once 'application/bootstrap.php';
+require_once '../application/bootstrap.php';
 Application::run();
 
 $script_end = microtime_float();

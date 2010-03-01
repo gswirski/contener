@@ -25,7 +25,7 @@ class Contener_Slot_Manager_Template extends Contener_Slot_Container
     
     function manage()
     {
-        if (file_exists($file = 'application/pages/' . $this->getFile() . '.php')) {
+        if (file_exists($file = '../application/pages/' . $this->getFile() . '.php')) {
             include $file;
         } else {
             //throw new Exception('Unable to find slot schema for this page');
