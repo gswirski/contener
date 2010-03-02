@@ -52,7 +52,7 @@ class Contener_View_Widget_Navigation
             if (isset($page->path)) {
                 $path = $page->path;
             } else {
-                $path = '/admin/page?edit&id='.$page->id;
+                $path = '/admin/node?edit&id='.$page->id;
             }
             
             $return .= '<li'.$class.'><a href="'.$GLOBALS['baseUrl'].$path.'">'.$page->title.'</a>';

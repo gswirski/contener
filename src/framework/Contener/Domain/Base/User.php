@@ -11,7 +11,7 @@
  * @property string $email
  * @property string $language
  * @property boolean $use_wysiwyg
- * @property Doctrine_Collection $Pages
+ * @property Doctrine_Collection $Nodes
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -46,7 +46,7 @@ abstract class Contener_Domain_Base_User extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Contener_Domain_Page as Pages', array(
+        $this->hasMany('Contener_Domain_Node as Nodes', array(
              'local' => 'id',
              'foreign' => 'author_id'));
     }

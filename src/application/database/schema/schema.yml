@@ -8,7 +8,7 @@ User:
     language: string
     use_wysiwyg: boolean
 
-Page:
+Node:
   actAs:
     Timestampable:
     NestedSet:
@@ -26,34 +26,48 @@ Page:
       local: author_id
       foreign: id
       alias: Author
-      foreignAlias: Pages
+      foreignAlias: Nodes
+
+Node_Page:
+  inheritance:
+    extends: Node
+    type: column_aggregation
+    keyField: class
+    keyValue: Contener_Domain_Node_Page
+
+Node_Link:
+  inheritance:
+    extends: Node
+    type: column_aggregation
+    keyField: class
+    keyValue: Contener_Domain_Node_Link
 
 Slot:
   actAs:
     NestedSet:
       hasManyRoots: true
-      rootColumnName: page_id
+      rootColumnName: node_id
   columns:
-    page_id: integer(8)
+    node_id: integer(8)
     class: string
     name: string
     body: clob
   relations:
-    Page:
+    Node:
       foreignAlias: Slots
       onDelete: CASCADE
 
-PageType:
+NodeType:
   columns:
     class: string
     body: clob
 
-PageTemplate:
+NodeTemplate:
   columns:
     name: string
     type_id: integer(8)
   relations:
-    PageType:
+    NodeType:
       local: type_id
       foreignAlias: Templates
       onDelete: CASCADE

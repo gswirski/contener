@@ -11,13 +11,13 @@ class AdminBundle_Component_Dashboard extends Contener_Component
             ),
             array(
                 'title' => 'Dodaj stronę',
-                'path' => '/admin/page?add'
+                'path' => '/admin/node?add'
             )
         ));
         
         $data = Doctrine_Query::create()
             ->select()
-            ->from('Contener_Domain_Page p')
+            ->from('Contener_Domain_Node p')
             ->where('p.level != ?', 0)
             ->orderBy('p.lft')
             ->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);

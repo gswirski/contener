@@ -1,5 +1,5 @@
 ---
-Contener_Domain_Page:
+Contener_Domain_Node:
   PageRoot:
     class: 
     title: 

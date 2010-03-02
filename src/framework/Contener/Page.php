@@ -70,12 +70,12 @@ class Contener_Page extends Contener_Navigation_Node
     
     protected function saveSlots()
     {
-        Doctrine_Query::create()->delete()->from('Contener_Domain_Slot s')->where('s.page_id = ?', $this->id)->execute();
+        Doctrine_Query::create()->delete()->from('Contener_Domain_Slot s')->where('s.node_id = ?', $this->id)->execute();
         
         $slots = $this->slots->sleep();
         
         $root = new Contener_Domain_Slot();
-        $root->page_id = $this->id;
+        $root->node_id = $this->id;
         $root->name = 'root';
         $root->class = $slots['class'];
         $root->body = $slots['body'];
@@ -94,7 +94,7 @@ class Contener_Page extends Contener_Navigation_Node
     protected function saveSlot($data, $parent)
     {
         $slot = new Contener_Domain_Slot();
-        $slot->page_id = $this->id;
+        $slot->node_id = $this->id;
         $slot->class = $data['class'];
         $slot->name = $data['name'];
         $slot->body = $data['body'];
