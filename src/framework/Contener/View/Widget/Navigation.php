@@ -15,12 +15,12 @@ class Contener_View_Widget_Navigation
         $this->params = array_merge($defaults, $params);
     }
     
-    public function setNavigation(Contener_Navigation_Container $navigation) {
+    public function setNavigation(Contener_Navigation_Interface $navigation) {
         $this->navigation = $navigation;
         return $this;
     }
     
-    public function render(Contener_Navigation_Container $navigation = null)
+    public function render(Contener_Navigation_Interface $navigation = null)
     {
         $class = '';
         if (!$navigation) {

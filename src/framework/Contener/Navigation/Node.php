@@ -17,9 +17,4 @@ class Contener_Navigation_Node extends Contener_Navigation_Container
             $this->$paramName = $paramValue;
         }
     }
-    
-    public function getClass()
-    {
-        
-    }
 }

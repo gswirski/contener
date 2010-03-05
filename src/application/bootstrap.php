@@ -4,8 +4,8 @@ class Application
 {   
     public function initLoader(Contener_Loader $loader)
     {
-        $loader->registerBundle('WebBundle', '../application/bundles/WebBundle')
-               ->registerBundle('AdminBundle', '../application/bundles/AdminBundle');
+        $loader->registerBundle('WebBundle', 'application/bundles/WebBundle')
+               ->registerBundle('AdminBundle', 'application/bundles/AdminBundle');
     }
     
     public function initDatabase()
@@ -22,14 +22,12 @@ class Application
         
         $app = new self;
         
-        set_include_path(dirname(__FILE__) . '/../framework');
-        
-        require_once('Contener/Loader.php');
+        require_once('../framework/Contener/Loader.php');
         $loader = new Contener_Loader();
         $app->initLoader($loader);
         spl_autoload_register(array($loader, 'loadClass'));
         
-        require_once('Konstrukt/konstrukt.inc.php');
+        require_once('../framework/Konstrukt/konstrukt.inc.php');
         
         $app->initDatabase();
         

@@ -1,7 +1,6 @@
 ---
-Contener_Domain_Node:
+Contener_Domain_Node_Page:
   PageRoot:
-    class: 
     title: 
     filtered_title:
     in_navigation: false
@@ -10,7 +9,6 @@ Contener_Domain_Node:
     author_id: 1
     children:
       Homepage:
-        class: Contener_Page
         title: Strona główna
         filtered_title: glowna
         in_navigation: true
@@ -24,7 +22,6 @@ Contener_Domain_Node:
 #            content: 'a:1:{s:4:"name";s:8:"homepage";}'
 #            children:
       Projects:
-        class: Contener_Page
         title: Projekty
         filtered_title: projekty
         in_navigation: true
@@ -33,7 +30,6 @@ Contener_Domain_Node:
         author_id: 1
         children:
           WebLeader:
-            class: Contener_Page
             title: WebLeader.pl
             filtered_title: webleader
             in_navigation: true
@@ -41,7 +37,6 @@ Contener_Domain_Node:
             permalink: '/projekty/webleader/'
             author_id: 1
       Blog:
-        class: Plugin_Blog_Page
         title: Blog
         filtered_title: blog
         in_navigation: true
@@ -50,7 +45,6 @@ Contener_Domain_Node:
         author_id: 1
         children:
           HelloWorld:
-            class: Plugin_Blog_Post_Page
             title: Witamy
             filtered_title: witamy
             in_navigation: false
@@ -58,7 +52,6 @@ Contener_Domain_Node:
             permalink: /blog/witamy/
             author_id: 1
       Contact:
-        class: Contener_Page
         title: Kontakt
         filtered_title: kontakt
         in_navigation: true

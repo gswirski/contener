@@ -13,7 +13,6 @@ Node:
     Timestampable:
     NestedSet:
   columns:
-    class: string
     title: string
     filtered_title: string
     in_navigation: boolean

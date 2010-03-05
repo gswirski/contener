@@ -1,7 +1,7 @@
 <?php
 
 abstract class Contener_Navigation_Container
-    implements RecursiveIterator, Countable
+    implements Contener_Navigation_Interface, RecursiveIterator, Countable
 {
     protected $pages = array();
     protected $subNavigations = array();
@@ -13,7 +13,7 @@ abstract class Contener_Navigation_Container
             $page = new Contener_Navigation_Node($page);
         }
         
-        if (!$page instanceof Contener_Navigation_Container) {
+        if (!$page instanceof Contener_Navigation_Interface) {
             throw new Exception('Invalid argument: $page must be an instance of ' .
             'Contener_Navigation_Node or an array');
         }
@@ -65,7 +65,7 @@ abstract class Contener_Navigation_Container
     }
     
     
-    function hasPage(Contener_Navigation_Container $page, $recursive = false)
+    function hasPage(Contener_Navigation_Interface $page, $recursive = false)
     {
         if (array_key_exists(spl_object_hash($page), $this->pages)) {
             return true;
@@ -85,7 +85,7 @@ abstract class Contener_Navigation_Container
         return count($this->pages) > 0;
     }
     
-    function addSubNavigation(Contener_Navigation_Container $navigation)
+    function addSubNavigation(Contener_Navigation_Interface $navigation)
     {
         $this->subNavigations[] = $navigation;
         return $this;

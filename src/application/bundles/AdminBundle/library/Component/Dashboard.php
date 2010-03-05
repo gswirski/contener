@@ -23,8 +23,6 @@ class AdminBundle_Component_Dashboard extends Contener_Component
             ->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);
         $pages = new Contener_Navigation($data);
         
-        
-        
         $mainNode = $this->context->area('menu')->findOneBy('path', '/admin');
         $mainNode->addPage($dashboard);
         $mainNode->addPage($pages);

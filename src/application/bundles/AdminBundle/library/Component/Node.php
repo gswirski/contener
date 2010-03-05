@@ -25,7 +25,8 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     function renderHtmlEdit()
     {
         $page = Contener_Domain_Node::fetch($this->query('id'));
-        $page = new $page['class']($page);
+        //echo get_class($page);
+        //$page = new $page['class']($page);
         
         $this->context->area('right')->addModule('', Contener_View::create('page_edit_publish')->render($page, array()));
         

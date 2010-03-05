@@ -1,9 +1,9 @@
 <?php
-require_once 'Konstrukt/adapter.inc.php';
-require_once 'Konstrukt/charset.inc.php';
-require_once 'Konstrukt/response.inc.php';
-require_once 'Konstrukt/logging.inc.php';
-require_once 'Konstrukt/template.inc.php';
+require_once 'adapter.inc.php';
+require_once 'charset.inc.php';
+require_once 'response.inc.php';
+require_once 'logging.inc.php';
+require_once 'template.inc.php';
 
 /**
  * A factory for creating components on-the-fly.

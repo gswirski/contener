@@ -1,5 +1,6 @@
 <?php
 
+chdir(dirname(__FILE__));
 set_include_path(dirname(__FILE__) . '/framework');
 
 require_once 'Konstrukt/konstrukt.inc.php';
