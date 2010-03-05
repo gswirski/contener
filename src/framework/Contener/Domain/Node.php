@@ -17,7 +17,8 @@ class Contener_Domain_Node
     public function getSlotManager()
     {
         if (!isset($this->slotManager)) {
-            $slots = $this->Slots->toArray();
+            $slots = $this->toArray();
+            $slots = $slots['Slots'];
             
             $this->mapValue('slotManager', new $slots[0]['class']);
             $this->slotManager->setSerializedData($slots[0])->manage();
