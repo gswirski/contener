@@ -12,7 +12,7 @@ class Contener_View
         }
     }
     
-    public function render($context, $model = array())
+    public function render($context = null, $model = array())
     {
         return self::$engine->render($this->path, array_merge(array('context' => $context), $model));
     }
