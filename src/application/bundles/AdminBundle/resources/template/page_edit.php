@@ -8,7 +8,7 @@
 
 <?php
 
-foreach ($page->Slots as $slot) {
+foreach ($page->getSlotManager() as $slot) {
     echo new AdminBundle_Widget_Editor($slot);
 }
 

@@ -14,6 +14,25 @@ class Contener_Domain_Node
     extends Contener_Domain_Base_Node 
     implements Contener_Navigation_Interface
 {
+    public function getSlotManager()
+    {
+        if (!isset($this->slotManager)) {
+            $slots = $this->Slots->toArray();
+            
+            $this->mapValue('slotManager', new $slots[0]['class']);
+            $this->slotManager->setSerializedData($slots[0])->manage();
+        }
+        
+        return $this->slotManager;
+    }
+    
+    public function postSave($event)
+    {
+        $record = $event->data;
+        
+        $this->saveSlots($record);
+    }
+    
     static function fetch($id)
     {
         $page = Doctrine_Query::create()
@@ -232,4 +251,80 @@ class Contener_Domain_Node
         return array('page' => false, 'tree' => false);
     }
     
+    protected function saveSlots($record = null)
+    {
+        if (!$record) {
+            $record = $this;
+        }
+        
+        Doctrine_Query::create()->delete()->from('Contener_Domain_Slot s')->where('s.node_id = ?', $record->id)->execute();
+        
+        $slots = $this->slotManager->sleep();
+        
+        $root = new Contener_Domain_Slot();
+        $root->node_id = $record->id;
+        $root->name = 'root';
+        $root->class = $slots['class'];
+        $root->body = $slots['body'];
+        $root->save();
+        
+        $treeObject = Doctrine_Core::getTable('Contener_Domain_Slot')->getTree();
+        $treeObject->createRoot($root, $record->id);
+        
+        //print_r($slots);
+        
+        foreach ($slots['children'] as $slot) {
+            $this->saveSlot($slot, $root, $record);
+        }
+    }
+    
+    protected function saveSlot($data, $parent, $record = null)
+    {
+        if (!$record) {
+            $record = $this;
+        }
+        
+        $slot = new Contener_Domain_Slot();
+        $slot->node_id = $record->id;
+        $slot->class = $data['class'];
+        $slot->name = $data['name'];
+        $slot->body = $data['body'];
+        
+        $slot->getNode()->insertAsLastChildOf($parent);
+        
+        if (array_key_exists('children', $data) and is_array($data['children'])) {
+            if ($data['children']) {
+                foreach ($data['children'] as $child) {
+                    $this->saveSlot($child, $slot);
+                }
+            }
+        }
+    }
+    
+    function isValid($deep = false, $hooks = true)
+    {
+        if (count(func_get_args()) > 1) {
+            return parent::isValid($deep, $hooks);
+        } else {
+            $data = $deep;
+        }
+        
+        $valid = true;
+        
+        foreach ($this->slotManager as $slot) {
+            $valid = $slot->isValid($data['slots'][$slot->getName()]) && $valid;
+        }
+        
+        unset($data['slots']);
+        
+        $columns = $this->getTable()->getColumns();
+        
+        foreach ($data as $name => $value) {
+            if (array_key_exists($name, $columns)) {
+                $this->__set($name, $value);
+            }
+        }
+        
+        return $valid;
+    }
 }

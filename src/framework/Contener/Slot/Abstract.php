@@ -33,8 +33,10 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
     }
     
     protected function _unserialize($data) {
-        foreach ($data['__children'] as $key => $child) {
-            $data['__children'][$key] = $this->_unserialize($child);
+        if (array_key_exists('__children', $data)) {
+            foreach ($data['__children'] as $key => $child) {
+                $data['__children'][$key] = $this->_unserialize($child);
+            }
         }
         
         if (substr($data['body'], 0, 2) == 'a:') {
