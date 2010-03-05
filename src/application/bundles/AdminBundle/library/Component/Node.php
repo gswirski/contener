@@ -41,7 +41,6 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         $_POST['publish_status'] = ($_POST['publish_status'] == 'on') ? true : false;
         
         $page = Contener_Domain_Node::fetch($this->query('id'));
-        //$page = new $page['class']($page);
         
         if ($page->isValid($_POST)) {
             $page->save();

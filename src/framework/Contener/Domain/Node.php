@@ -311,7 +311,9 @@ class Contener_Domain_Node
         
         $valid = true;
         
-        foreach ($this->slotManager as $slot) {
+        $slotManager = $this->getSlotManager();
+        
+        foreach ($slotManager as $slot) {
             $valid = $slot->isValid($data['slots'][$slot->getName()]) && $valid;
         }
         
