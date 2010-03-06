@@ -18,6 +18,8 @@ class Application
     
     public static function run()
     {
+        set_include_path('../framework');
+        
         $GLOBALS['baseUrl'] = preg_replace('~(.*)/.*~', '$1', $_SERVER['SCRIPT_NAME']);
         
         $app = new self;

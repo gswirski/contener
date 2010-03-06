@@ -1,6 +1,10 @@
 <?php
 
-$this->addSlot(new Contener_Slot_Inline_Text(array('name' => 'text', 'label' => 'Wartość tekstowa')));
+$this->addSlot(new Contener_Slot_Inline_Text(array(
+    'name' => 'text', 
+    'label' => 'E-mail',
+    'validators' => array( new Zend_Validate_EmailAddress() )
+)));
 
 $this->addSlot(new Contener_Slot_Inline_Text(array(
     'name' => 'long_text',

@@ -22,9 +22,11 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         <pre>' . ob_get_clean() . '</pre>';
     }
     
-    function renderHtmlEdit()
+    function renderHtmlEdit($page = null)
     {
-        $page = Contener_Domain_Node::fetch($this->query('id'));
+        if (!$page) {
+            $page = Contener_Domain_Node::fetch($this->query('id'));
+        }
         
         $this->context->area('right')->addModule('', Contener_View::create('page_edit_publish')->render($page, array()));
         
@@ -44,6 +46,9 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         
         if ($page->isValid($_POST)) {
             $page->save();
+            return new k_SeeOther($this->requestUri());
+        } else {
+            return $this->renderHtmlEdit($page);
         }
     }
 }

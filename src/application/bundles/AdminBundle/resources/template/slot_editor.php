@@ -1,6 +1,7 @@
 <label for="<?php echo $context->getId(); ?>"><?php echo $context->getLabel(); ?></label>
 <?php
     $error = '';
+    $class = '';
     if ($context->hasErrors()) {
         $class .= ' error';
         
