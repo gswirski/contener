@@ -20,11 +20,17 @@ Node:
     permalink: string
     publish_status: integer
     author_id: integer(8)
+    node_type_id: integer(8)
+    template_file: string
   relations:
     User:
       local: author_id
       foreign: id
       alias: Author
+      foreignAlias: Nodes
+    NodeType:
+      local: node_type_id
+      foreign: id
       foreignAlias: Nodes
 
 Node_Page:
@@ -58,11 +64,12 @@ Slot:
 
 NodeType:
   columns:
-    class: string
+    title: string
     body: clob
 
 NodeTemplate:
   columns:
+    title: string
     name: string
     type_id: integer(8)
   relations:

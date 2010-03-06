@@ -31,7 +31,9 @@ class Contener_Domain_Node
     {
         $record = $event->data;
         
-        $this->saveSlots($record);
+        if (isset($this->slotManager)) {
+            $this->saveSlots($record);
+        }
     }
     
     static function fetch($id)
@@ -304,7 +306,7 @@ class Contener_Domain_Node
     
     function isValid($deep = false, $hooks = true)
     {
-        if (count(func_get_args()) > 1) {
+        if (!is_array($deep)) {
             return parent::isValid($deep, $hooks);
         } else {
             $data = $deep;
