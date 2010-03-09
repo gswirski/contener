@@ -1,0 +1,1 @@
+ustawienia wybranego (domyślnego) szablonu

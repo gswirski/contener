@@ -21,8 +21,8 @@ class AdminBundle_Context extends Contener_Context
                 'path' => '/admin'
             ),
             array(
-                'title' => 'Bloki',
-                'path' => '/admin/block'
+                'title' => 'Media',
+                'path' => '/admin/media'
             ),
             array(
                 'title' => 'Użytkownicy',
