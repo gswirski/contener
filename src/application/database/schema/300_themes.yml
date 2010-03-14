@@ -1,0 +1,17 @@
+---
+Theme:
+  columns:
+    name: string
+    file_path: string
+
+Template:
+  columns:
+    theme_id: integer(8)
+    name: string
+    file_path: string
+  relations:
+    Theme:
+      local: theme_id
+      foreign: id
+      foreignAlias: Templates
+      onDelete: CASCADE

@@ -1,0 +1,27 @@
+---
+Slot_Node:
+  inheritance:
+    extends: Slot
+    type: concrete
+  relations:
+    Node:
+      foreignAlias: Slots
+      onDelete: CASCADE
+
+Slot_Theme:
+  inheritance:
+    extends: Slot
+    type: concrete
+  relations:
+    Theme:
+      foreignAlias: Slots
+      onDelete: CASCADE
+
+Slot_Template:
+  inheritance:
+    extends: Slot
+    type: concrete
+  relations:
+    Template:
+      foreignAlias: Slots
+      onDelete: CASCADE

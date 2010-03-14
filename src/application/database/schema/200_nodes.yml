@@ -1,0 +1,33 @@
+---
+Node:
+  actAs:
+    Timestampable:
+    NestedSet:
+  columns:
+    title: string
+    filtered_title: string
+    in_navigation: boolean
+    navigation: string
+    permalink: string
+    publish_status: integer
+    author_id: integer(8)
+  relations:
+    User:
+      local: author_id
+      foreign: id
+      alias: Author
+      foreignAlias: Nodes
+
+Node_Page:
+  inheritance:
+    extends: Node
+    type: column_aggregation
+    keyField: class
+    keyValue: Contener_Domain_Node_Page
+
+Node_Link:
+  inheritance:
+    extends: Node
+    type: column_aggregation
+    keyField: class
+    keyValue: Contener_Domain_Node_Link

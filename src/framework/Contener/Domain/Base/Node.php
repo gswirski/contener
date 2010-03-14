@@ -12,11 +12,8 @@
  * @property string $permalink
  * @property integer $publish_status
  * @property integer $author_id
- * @property integer $node_type_id
- * @property string $template_file
  * @property string $class
  * @property Contener_Domain_User $Author
- * @property Contener_Domain_NodeType $NodeType
  * @property Doctrine_Collection $Slots
  * 
  * @package    ##PACKAGE##
@@ -51,13 +48,6 @@ abstract class Contener_Domain_Base_Node extends Doctrine_Record
              'type' => 'integer',
              'length' => '8',
              ));
-        $this->hasColumn('node_type_id', 'integer', 8, array(
-             'type' => 'integer',
-             'length' => '8',
-             ));
-        $this->hasColumn('template_file', 'string', null, array(
-             'type' => 'string',
-             ));
         $this->hasColumn('class', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
@@ -82,11 +72,7 @@ abstract class Contener_Domain_Base_Node extends Doctrine_Record
              'local' => 'author_id',
              'foreign' => 'id'));
 
-        $this->hasOne('Contener_Domain_NodeType as NodeType', array(
-             'local' => 'node_type_id',
-             'foreign' => 'id'));
-
-        $this->hasMany('Contener_Domain_Slot as Slots', array(
+        $this->hasMany('Contener_Domain_Slot_Node as Slots', array(
              'local' => 'id',
              'foreign' => 'node_id'));
 

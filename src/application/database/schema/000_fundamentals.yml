@@ -1,0 +1,9 @@
+---
+User:
+  columns:
+    login: string
+    password: string
+    name: string
+    email: string
+    language: string
+    use_wysiwyg: boolean
