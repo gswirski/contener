@@ -5,6 +5,7 @@ Slot_Node:
     type: concrete
   relations:
     Node:
+      local: root_id
       foreignAlias: Slots
       onDelete: CASCADE
 
@@ -14,6 +15,7 @@ Slot_Theme:
     type: concrete
   relations:
     Theme:
+      local: root_id
       foreignAlias: Slots
       onDelete: CASCADE
 
@@ -23,5 +25,6 @@ Slot_Template:
     type: concrete
   relations:
     Template:
+      local: root_id
       foreignAlias: Slots
       onDelete: CASCADE

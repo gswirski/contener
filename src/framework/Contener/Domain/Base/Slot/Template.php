@@ -24,7 +24,7 @@ abstract class Contener_Domain_Base_Slot_Template extends Contener_Domain_Slot
     {
         parent::setUp();
         $this->hasOne('Contener_Domain_Template as Template', array(
-             'local' => 'template_id',
+             'local' => 'root_id',
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
     }

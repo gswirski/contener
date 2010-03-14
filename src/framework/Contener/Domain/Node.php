@@ -260,18 +260,18 @@ class Contener_Domain_Node
             $record = $this;
         }
         
-        Doctrine_Query::create()->delete()->from('Contener_Domain_Slot s')->where('s.node_id = ?', $record->id)->execute();
+        Doctrine_Query::create()->delete()->from('Contener_Domain_Slot_Node s')->where('s.root_id = ?', $record->id)->execute();
         
         $slots = $this->slotManager->sleep();
         
-        $root = new Contener_Domain_Slot();
-        $root->node_id = $record->id;
+        $root = new Contener_Domain_Slot_Node();
+        $root->root_id = $record->id;
         $root->name = 'root';
         $root->class = $slots['class'];
         $root->body = $slots['body'];
         $root->save();
         
-        $treeObject = Doctrine_Core::getTable('Contener_Domain_Slot')->getTree();
+        $treeObject = Doctrine_Core::getTable('Contener_Domain_Slot_Node')->getTree();
         $treeObject->createRoot($root, $record->id);
         
         //print_r($slots);
@@ -287,8 +287,8 @@ class Contener_Domain_Node
             $record = $this;
         }
         
-        $slot = new Contener_Domain_Slot();
-        $slot->node_id = $record->id;
+        $slot = new Contener_Domain_Slot_Node();
+        $slot->root_id = $record->id;
         $slot->class = $data['class'];
         $slot->name = $data['name'];
         $slot->body = $data['body'];

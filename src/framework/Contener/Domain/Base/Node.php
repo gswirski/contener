@@ -74,7 +74,7 @@ abstract class Contener_Domain_Base_Node extends Doctrine_Record
 
         $this->hasMany('Contener_Domain_Slot_Node as Slots', array(
              'local' => 'id',
-             'foreign' => 'node_id'));
+             'foreign' => 'root_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $nestedset0 = new Doctrine_Template_NestedSet();

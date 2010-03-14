@@ -24,7 +24,7 @@ abstract class Contener_Domain_Base_Slot_Theme extends Contener_Domain_Slot
     {
         parent::setUp();
         $this->hasOne('Contener_Domain_Theme as Theme', array(
-             'local' => 'theme_id',
+             'local' => 'root_id',
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
     }

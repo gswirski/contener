@@ -43,6 +43,6 @@ abstract class Contener_Domain_Base_Template extends Doctrine_Record
 
         $this->hasMany('Contener_Domain_Slot_Template as Slots', array(
              'local' => 'id',
-             'foreign' => 'template_id'));
+             'foreign' => 'root_id'));
     }
 }

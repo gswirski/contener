@@ -24,7 +24,7 @@ abstract class Contener_Domain_Base_Slot_Node extends Contener_Domain_Slot
     {
         parent::setUp();
         $this->hasOne('Contener_Domain_Node as Node', array(
-             'local' => 'node_id',
+             'local' => 'root_id',
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
     }

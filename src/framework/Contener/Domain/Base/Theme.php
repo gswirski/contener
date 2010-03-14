@@ -37,6 +37,6 @@ abstract class Contener_Domain_Base_Theme extends Doctrine_Record
 
         $this->hasMany('Contener_Domain_Slot_Theme as Slots', array(
              'local' => 'id',
-             'foreign' => 'theme_id'));
+             'foreign' => 'root_id'));
     }
 }
