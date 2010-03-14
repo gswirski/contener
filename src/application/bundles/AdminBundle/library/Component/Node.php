@@ -11,12 +11,6 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     {
         ob_start();
         
-        /*$configurator = new Contener_Domain_PageType_Configurator();
-        $configurator->setClass('Contener_Page');
-        $configurator->setSlotManager('Contener_Slot_Manager_Template', array('file' => 'homepage'));
-        $configurator->setTemplates(array());
-        print_r($configurator->getData());*/
-        
         return '<h2>Dodaj stronę</h2>
         <p>Under heavy development</p>
         <pre>' . ob_get_clean() . '</pre>';
@@ -39,8 +33,8 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     
     function postForm()
     {
-        $_POST['in_navigation'] = ($_POST['in_navigation'] == 'on') ? true : false;
-        $_POST['publish_status'] = ($_POST['publish_status'] == 'on') ? true : false;
+        $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
+        $_POST['publish_status'] = (array_key_exists('publish_status', $_POST) && $_POST['publish_status'] == 'on') ? true : false;
         
         $page = Contener_Domain_Node::fetch($this->query('id'));
         
