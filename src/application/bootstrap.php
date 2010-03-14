@@ -1,41 +1,49 @@
 <?php
 
-class Application
-{   
-    public function initLoader(Contener_Loader $loader)
+require_once dirname(__FILE__) . '/../framework/Contener/Application.php';
+require_once dirname(__FILE__) . '/../framework/Loader.php';
+
+class Application extends Contener_Application
+{
+    public function init()
     {
+        $this->config = include 'config.php';
+        $this->initLoader();
+        $this->initDatabase();
+    }
+    
+    public function initLoader()
+    {
+        $loader = new Loader($this->config['loader']);
+        
+        $loader->registerNamespace('Contener', 'framework/Contener')
+               ->registerNamespace('Doctrine', 'framework/Doctrine')
+               ->registerNamespace('Zend', 'framework/Zend');
+        
         $loader->registerBundle('WebBundle', 'application/bundles/WebBundle')
                ->registerBundle('AdminBundle', 'application/bundles/AdminBundle');
+        
+        $loader->registerExtension('Contener', array($this, 'loaderExtension'));
+        
+        $this->loader = $loader;
+        
+        spl_autoload_register(array($this->loader, 'loadClass'));
+    }
+    
+    public function loaderExtension($class, $loader)
+    {
+        if (substr($class, 0, 6) == 'sfYaml') {
+            return $loader->loadFile('framework/Doctrine/Parser/sfYaml/' . $class . '.php');
+        } else if (substr($class, 0, 10) == 'sfTemplate') {
+            return $loader->loadFile('framework/Templating/'.$class.'.php');
+        }
+        
+        return false;
     }
     
     public function initDatabase()
     {
-        $config = include('config.php');
-        
-        Doctrine_Manager::connection($config['database']['dsn']);
+        $this->connection = Doctrine_Manager::connection($this->config['database']['dsn']);
         Doctrine_Manager::getInstance()->registerHydrator('Contener_Database_Hydrator', 'Contener_Database_Hydrator');
-    }
-    
-    public static function run()
-    {
-        set_include_path('../framework');
-        
-        $GLOBALS['baseUrl'] = preg_replace('~(.*)/.*~', '$1', $_SERVER['SCRIPT_NAME']);
-        
-        $app = new self;
-        
-        require_once('../framework/Contener/Loader.php');
-        $loader = new Contener_Loader();
-        $app->initLoader($loader);
-        spl_autoload_register(array($loader, 'loadClass'));
-        
-        require_once('../framework/Konstrukt/konstrukt.inc.php');
-        
-        $app->initDatabase();
-        
-        k()
-          ->setLog(dirname(__FILE__) . '/log/debug.log')
-          ->run('Contener_Dispatcher')
-          ->out();
     }
 }

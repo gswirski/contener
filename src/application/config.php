@@ -1,26 +1,22 @@
 <?php
 
-return array(
-    'loader'=>array(
-        'library_dir'         =>  'framework',
-        'model_dir'           =>  'application/database/models',
-        'model_generated_dir' =>  'application/database/models/generated',
-        'context_dir'         =>  'application/context',
-        'pages_dir'           =>  'application/pages',
-        'plugin_dir'          =>  'plugins',
-        'cache_dir'           =>  'application/cache'
-    ),
-    'database'=>array(
-        'dsn'                 =>  'sqlite:../application/database/database.db',
-        'data_fixtures_path'  =>  'application/database/fixtures',
-        'models_path'         =>  'framework',
-        'yaml_schema_path'    =>  'application/database/schema',
-        'generate_models_options' => array(
-            'baseClassPrefix'     => 'Base_',
-            'classPrefix' => 'Contener_Domain_',
-            'baseClassesDirectory' => '',
-            'pearStyle' => true
-        )
-        
-    ),
+$config = array();
+
+$config['loader'] = array(
+    'base_dir' => '/Users/sognat/Sites/Kontener/src'
 );
+
+$config['database'] = array(
+    'dsn'                 =>  'sqlite:' . $config['loader']['base_dir'] . '/application/database/database.db',
+    'data_fixtures_path'  =>  'application/database/fixtures',
+    'models_path'         =>  'framework',
+    'yaml_schema_path'    =>  'application/database/schema',
+    'generate_models_options' => array(
+        'baseClassPrefix'     => 'Base_',
+        'classPrefix' => 'Contener_Domain_',
+        'baseClassesDirectory' => '',
+        'pearStyle' => true
+    )
+);
+
+return $config;
