@@ -3,7 +3,7 @@
 $config = array();
 
 $config['loader'] = array(
-    'base_dir' => '/Users/sognat/Sites/Kontener/src'
+    'base_dir' => dirname(__FILE__) . '/..'
 );
 
 $config['database'] = array(
