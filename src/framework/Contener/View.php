@@ -40,3 +40,11 @@ function asset($file, $render = true) {
     }
     return $file;
 }
+
+function url_for($file, $render = true) {
+    $file = $GLOBALS['baseUrl']. '/' . $file;
+    if ($render) {
+        echo $file;
+    }
+    return $file;
+}

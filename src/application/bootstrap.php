@@ -8,6 +8,7 @@ class Application extends Contener_Application
     public function init()
     {
         $this->config = include 'config.php';
+        $GLOBALS['config'] = $this->config;
         $this->initLoader();
         $this->initDatabase();
     }
