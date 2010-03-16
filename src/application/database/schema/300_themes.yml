@@ -3,6 +3,7 @@ Theme:
   columns:
     name: string
     file_path: string
+    is_active: boolean
 
 Template:
   columns:
