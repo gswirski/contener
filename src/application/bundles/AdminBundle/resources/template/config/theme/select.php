@@ -1,17 +1,11 @@
-<pre>
-<?php //print_r($themes); ?>
-</pre>
 <ul class="line">
-<?php foreach ($themes as $name => $theme) { ?>
+<?php foreach ($list as $name => $theme) { ?>
     <?php
     
     $style = '';
     
     if ($theme['is_selected']) {
         $style = 'background: #DDD;';
-        
-        $active = $theme;
-        $active['name'] = $name;
     }
     
     ?>
@@ -30,6 +24,6 @@
 <input type="submit" class="button" style="float: right; margin: -3px 0px;" value="Zapisz ustawienia szablonu" />
 <hr />
 
-<?php foreach ($active['slots'] as $slot) {
+<?php foreach ($active->getSlotManager() as $slot) {
     echo new AdminBundle_Widget_Editor($slot);
 } ?> 

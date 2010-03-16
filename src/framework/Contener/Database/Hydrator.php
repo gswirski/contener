@@ -14,6 +14,10 @@ class Contener_Database_Hydrator extends Doctrine_Hydrator_RecordDriver
             }
         }
         
-        return $data->toHierarchy();
+        if ($data->getTable()->hasTemplate('NestedSet')) {
+            return $data->toHierarchy();
+        }
+        
+        return $data;
     }
 }
