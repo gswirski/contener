@@ -12,5 +12,4 @@
  */
 class Contener_Domain_Theme extends Contener_Domain_Base_Theme
 {
-
 }

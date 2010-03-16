@@ -1,7 +1,15 @@
 <?php
 
 class Contener_Component extends k_Component 
-{   
+{
+    public function dispatch()
+    {
+        $this->init();
+        
+        return parent::dispatch();
+    }
+    public function init() {}
+    
     public function __toString()
     {
         return (string) $this->renderHtml();

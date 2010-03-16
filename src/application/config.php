@@ -12,6 +12,7 @@ $config['database'] = array(
     'models_path'         =>  'framework',
     'yaml_schema_path'    =>  'application/database/schema',
     'generate_models_options' => array(
+        'generateTableClasses'  =>  true, 
         'baseClassPrefix'     => 'Base_',
         'classPrefix' => 'Contener_Domain_',
         'baseClassesDirectory' => '',

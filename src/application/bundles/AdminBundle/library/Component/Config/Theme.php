@@ -2,47 +2,22 @@
 
 class AdminBundle_Component_Config_Theme extends Contener_Component
 {
-    protected function listThemes($active = null)
+    protected $domain;
+    
+    public function init()
     {
-        $themes = array();
-        $themesDirectory = $this->config('loader.base_dir') . '/themes';
-        $themesIterator = new DirectoryIterator($themesDirectory);
-        
-        foreach ($themesIterator as $theme) {
-            if ($theme->isDot() || !$theme->isDir()) { continue; }
-            if (!file_exists($themeFile = $theme->getPathname() . '/theme.php')) { continue; }
-            
-            $themeConfig = include $themeFile;
-            $themeConfig['is_active'] = false;
-            
-            $slots = new Contener_Slot_Container(array('name' => 'slots'));
-            
-            foreach($themeConfig['slots'] as $slotName => $slotObject) {
-                $slotObject->setName($slotName);
-                $slots->addSlot($slotObject);
-            }
-            
-            $themeConfig['slots'] = $slots;
-            
-            
-            $themes[$theme->getFilename()] = $themeConfig;
-        }
-        
-        if ($active) {
-            $themes[$active]['is_active'] = true;
-        }
-        
-        return $themes;
+        $GLOBALS['loader']->loadClass('Contener_Domain_ThemeTable');
+        $this->domain = Doctrine_Core::getTable('Contener_Domain_Theme');
     }
     
     function renderHtml()
     {
-        return Contener_View::create('config/theme/select')->render($this, array('themes' => $this->listThemes('default')));
+        return Contener_View::create('config/theme/select')->render($this, array('themes' => $this->domain->listThemes('default', $this->config('loader.base_dir'))));
     }
     
     function renderHtmlSelect()
     {
-        return Contener_View::create('config/theme/select')->render($this, array('themes' => $this->listThemes($this->query('name'))));
+        return Contener_View::create('config/theme/select')->render($this, array('themes' => $this->domain->listThemes($this->query('name'), $this->config('loader.base_dir'))));
     }
     
     function renderHtmlEdit()
@@ -57,5 +32,10 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $this->context->context->area('left')->addModule('Lista szablonów', $navigation);
         
         return 'ustawienia edytora';
+    }
+    
+    function postForm()
+    {
+        print_r($_POST);
     }
 }

@@ -23,8 +23,10 @@
 <hr />
 <a href="<?php url_for('admin/config/theme?activate&name=' . $active['name']) ?>">Aktywuj</a> | 
 <a href="<?php url_for('admin/config/theme?edit&name=' . $active['name']) ?>">Edytuj</a>
+
+<input type="submit" class="button" style="float: right; margin: -3px 0px;" value="Zapisz ustawienia szablonu" />
 <hr />
 
-<?php foreach ($theme['slots'] as $slot) {
+<?php foreach ($active['slots'] as $slot) {
     echo new AdminBundle_Widget_Editor($slot);
 } ?> 

@@ -27,7 +27,7 @@ class Application extends Contener_Application
         $loader->registerExtension('Contener', array($this, 'loaderExtension'));
         
         $this->loader = $loader;
-        
+        $GLOBALS['loader'] = $loader;
         spl_autoload_register(array($this->loader, 'loadClass'));
     }
     

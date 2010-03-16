@@ -7,6 +7,7 @@
  * 
  * @property string $name
  * @property string $file_path
+ * @property boolean $is_active
  * @property Doctrine_Collection $Templates
  * @property Doctrine_Collection $Slots
  * 
@@ -25,6 +26,9 @@ abstract class Contener_Domain_Base_Theme extends Doctrine_Record
              ));
         $this->hasColumn('file_path', 'string', null, array(
              'type' => 'string',
+             ));
+        $this->hasColumn('is_active', 'boolean', null, array(
+             'type' => 'boolean',
              ));
     }
 
