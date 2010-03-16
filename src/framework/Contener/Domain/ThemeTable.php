@@ -3,12 +3,16 @@
  */
 class Contener_Domain_ThemeTable extends Doctrine_Table
 {
-    public function listThemes($active, $baseDir)
+    public function listThemes($selected, $baseDir)
     {
         $databaseThemesData = Doctrine_Query::create()->select()->from('Contener_Domain_Theme t')->fetchArray();
         $databaseThemes = array();
         foreach ($databaseThemesData as $databaseThemeData) {
             $databaseThemes[$databaseThemeData['name']] = $databaseThemeData;
+            
+            if ($databaseThemeData['is_active'] == true) {
+                $activatedTheme = $databaseThemeData['name'];
+            }
         }
         
         $themes = array();
@@ -22,7 +26,13 @@ class Contener_Domain_ThemeTable extends Doctrine_Table
             if (!file_exists($themeFile = $theme->getPathname() . '/theme.php')) { continue; }
             
             $themeConfig = include $themeFile;
-            if ($active == $name) {
+            if ($selected == $name) {
+                $themeConfig['is_selected'] = true;
+            } else {
+                $themeConfig['is_selected'] = false;
+            }
+            
+            if ($activatedTheme == $name) {
                 $themeConfig['is_active'] = true;
             } else {
                 $themeConfig['is_active'] = false;
