@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__) . '/../framework/Contener/Application.php';
-require_once dirname(__FILE__) . '/../framework/Loader.php';
+require_once dirname(__FILE__) . '/../framework/library/Contener/Application.php';
+require_once dirname(__FILE__) . '/../framework/library/Loader.php';
 
 class Application extends Contener_Application
 {
@@ -17,12 +17,12 @@ class Application extends Contener_Application
     {
         $loader = new Loader($this->config['loader']);
         
-        $loader->registerNamespace('Contener', 'framework/Contener')
-               ->registerNamespace('Doctrine', 'framework/Doctrine')
-               ->registerNamespace('Zend', 'framework/Zend');
+        $loader->registerNamespace('Contener', 'framework/library/Contener')
+               ->registerNamespace('Doctrine', 'framework/library/Doctrine')
+               ->registerNamespace('Zend', 'framework/library/Zend');
         
-        $loader->registerBundle('WebBundle', 'application/bundles/WebBundle')
-               ->registerBundle('AdminBundle', 'application/bundles/AdminBundle');
+        $loader->registerBundle('WebBundle', 'framework/bundles/WebBundle')
+               ->registerBundle('AdminBundle', 'framework/bundles/AdminBundle');
         
         $loader->registerExtension('Contener', array($this, 'loaderExtension'));
         
@@ -34,9 +34,9 @@ class Application extends Contener_Application
     public function loaderExtension($class, $loader)
     {
         if (substr($class, 0, 6) == 'sfYaml') {
-            return $loader->loadFile('framework/Doctrine/Parser/sfYaml/' . $class . '.php');
+            return $loader->loadFile('framework/library/Doctrine/Parser/sfYaml/' . $class . '.php');
         } else if (substr($class, 0, 10) == 'sfTemplate') {
-            return $loader->loadFile('framework/Templating/'.$class.'.php');
+            return $loader->loadFile('framework/library/Templating/'.$class.'.php');
         }
         
         return false;

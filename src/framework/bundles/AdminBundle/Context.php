@@ -6,7 +6,7 @@ class AdminBundle_Context extends Contener_Context
     
     public function __construct()
     {
-        $loader = new sfTemplateLoaderFilesystem(dirname(__FILE__) . '/../resources/template/%name%.php');
+        $loader = new sfTemplateLoaderFilesystem(dirname(__FILE__) . '/Resources/template/%name%.php');
         Contener_View::setEngine( new sfTemplateEngine($loader) );
     }
     

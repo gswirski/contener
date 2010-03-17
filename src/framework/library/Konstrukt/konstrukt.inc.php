@@ -1,9 +1,9 @@
 <?php
-require_once 'adapter.inc.php';
-require_once 'charset.inc.php';
-require_once 'response.inc.php';
-require_once 'logging.inc.php';
-require_once 'template.inc.php';
+require_once dirname(__FILE__) . '/adapter.inc.php';
+require_once dirname(__FILE__) . '/charset.inc.php';
+require_once dirname(__FILE__) . '/response.inc.php';
+require_once dirname(__FILE__) . '/logging.inc.php';
+require_once dirname(__FILE__) . '/template.inc.php';
 
 /**
  * A factory for creating components on-the-fly.

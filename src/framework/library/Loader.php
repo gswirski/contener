@@ -17,7 +17,7 @@ class Loader
     
     public function registerBundle($name, $path)
     {
-        return $this->registerNamespace($name, $path . '/library');
+        return $this->registerNamespace($name, $path);
     }
     
     public function registerNamespace($name, $path)
