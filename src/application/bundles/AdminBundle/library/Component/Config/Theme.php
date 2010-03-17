@@ -28,7 +28,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $slots->setSlots($array['Slots'][0]['__children'])->manage();
         $theme->setSlotManager($slots);
         
-        return Contener_View::create('config/theme/select')->render($this, array('active' => $theme, 'list' => $this->domain->listThemes($this->query('name', 'default'), $this->config('loader.base_dir'))));
+        return Contener_View::create('config/theme/select')->render($this, array('selected' => $theme, 'list' => $this->domain->listThemes($this->query('name', null), $this->config('loader.base_dir'))));
     }
     
     function renderHtmlActivate()

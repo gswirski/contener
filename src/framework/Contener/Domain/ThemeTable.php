@@ -12,6 +12,10 @@ class Contener_Domain_ThemeTable extends Doctrine_Table
             
             if ($databaseThemeData['is_active'] == true) {
                 $activatedTheme = $databaseThemeData['name'];
+                
+                if (!$selected) {
+                    $selected = $databaseThemeData['name'];
+                }
             }
         }
         
