@@ -14,7 +14,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
     {
         $theme = Contener_Domain_Theme::fetch($this->query('name', null));
         
-        $config = include $this->config('loader.base_dir') . '/themes/' . $theme->name . '/theme.php';
+        $config = include $this->config('loader.base_dir') . '/application/themes/' . $theme->name . '/theme.php';
         
         $valid = true;
         
