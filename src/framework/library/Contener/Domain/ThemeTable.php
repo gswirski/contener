@@ -20,7 +20,7 @@ class Contener_Domain_ThemeTable extends Doctrine_Table
         }
         
         $themes = array();
-        $themesDirectory = $baseDir . '/themes';
+        $themesDirectory = $baseDir . '/application/themes';
         $themesIterator = new DirectoryIterator($themesDirectory);
         
         foreach ($themesIterator as $theme) {

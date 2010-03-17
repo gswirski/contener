@@ -33,10 +33,16 @@ class Application extends Contener_Application
     
     public function loaderExtension($class, $loader)
     {
-        if (substr($class, 0, 6) == 'sfYaml') {
+        $substr = substr($class, 0, 6);
+        
+        if ($substr == 'sfYaml') {
             return $loader->loadFile('framework/library/Doctrine/Parser/sfYaml/' . $class . '.php');
-        } else if (substr($class, 0, 10) == 'sfTemplate') {
-            return $loader->loadFile('framework/library/Templating/'.$class.'.php');
+        } else if ($substr == 'sfTemp') {
+            return $loader->loadFile('framework/library/sfTemplate/'.$class.'.php');
+        } else if ($substr == 'sfServ') {
+            return $loader->loadFile('framework/library/sfService/'.$class.'.php');
+        } else if ($substr == 'sfEven') {
+            return $loader->loadFile('framework/library/sfTemplate/'.$class.'.php');
         }
         
         return false;
