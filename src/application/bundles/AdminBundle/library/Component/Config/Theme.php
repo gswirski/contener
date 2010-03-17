@@ -49,17 +49,15 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
     }
     
     function renderHtmlEdit()
-    {   
-        $navigation = new Contener_Navigation(array(
-            array('path' => '&file=xxx', 'title' => 'Jakiś plik'),
-            array('path' => '&file=xxx', 'title' => 'Jakiś plik'),
-            array('path' => '&file=xxx', 'title' => 'Jakiś plik'),
-            array('path' => '&file=xxx', 'title' => 'Jakiś plik')
-        ));
+    {
+        $theme = Contener_Domain_Theme::fetch($this->query('name', null));
+        $config = include $theme->file_path . '/theme.php';
         
-        $this->context->context->area('left')->addModule('Lista szablonów', $navigation);
-        
-        return 'ustawienia edytora';
+        return Contener_View::create('config/theme/edit')
+            ->render($this, array(
+                'selected' => $theme,
+                'list' => $this->domain->listThemes($this->query('name', null), $this->config('loader.base_dir'))
+            ));
     }
     
     function postForm()
