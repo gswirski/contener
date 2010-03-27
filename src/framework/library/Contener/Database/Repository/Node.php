@@ -32,6 +32,7 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
     
     public function store($entity)
     {
+        $slotManager = $entity->getSlotManager();
         $entity = (array) $entity;
         
         if (isset($entity['id']) && $entity['id']) {
@@ -54,26 +55,28 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
             }
         }
         $model->save();
+        
+        $this->saveSlots($model, $slotManager);
     }
     
-    protected function saveSlots($record = null)
+    protected function saveSlots($record = null, $slotManager)
     {
         if (!$record) {
             $record = $this;
         }
         
-        Doctrine_Query::create()->delete()->from('Contener_Domain_Slot_Node s')->where('s.root_id = ?', $record->id)->execute();
+        Doctrine_Query::create()->delete()->from('Contener_Database_Model_Slot_Node s')->where('s.root_id = ?', $record->id)->execute();
         
-        $slots = $this->slotManager->sleep();
+        $slots = $slotManager->sleep();
         
-        $root = new Contener_Domain_Slot_Node();
+        $root = new Contener_Database_Model_Slot_Node();
         $root->root_id = $record->id;
         $root->name = 'root';
         $root->class = $slots['class'];
         $root->body = $slots['body'];
         $root->save();
         
-        $treeObject = Doctrine_Core::getTable('Contener_Domain_Slot_Node')->getTree();
+        $treeObject = Doctrine_Core::getTable('Contener_Database_Model_Slot_Node')->getTree();
         $treeObject->createRoot($root, $record->id);
         
         //print_r($slots);
@@ -89,7 +92,7 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
             $record = $this;
         }
         
-        $slot = new Contener_Domain_Slot_Node();
+        $slot = new Contener_Database_Model_Slot_Node();
         $slot->root_id = $record->id;
         $slot->class = $data['class'];
         $slot->name = $data['name'];

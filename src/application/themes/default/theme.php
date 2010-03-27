@@ -11,8 +11,10 @@ return array(
         'ipsum' => new Contener_Slot_Inline_Text(array('label' => 'działa'))
     ),
     'templates' => array(
-        'home' => array(
-            'slots' => array()
+        'homepage' => array(
+            'slots' => array(
+                new Contener_Slot_Inline_Text(array('name' => 'text', 'label' => 'Pole tekstowe'))
+            )
         )
     )
 );

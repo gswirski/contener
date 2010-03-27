@@ -25,10 +25,17 @@ class Contener_Slot_Manager_Template extends Contener_Slot_Container
     
     function manage()
     {
-        if (file_exists($file = '../application/pages/' . $this->getFile() . '.php')) {
-            include $file;
-        } else {
-            //throw new Exception('Unable to find slot schema for this page');
+        $repository = new Contener_Database_Repository_Theme();
+        $path = $repository->findOneBy('is_active', true)->file_path;
+        
+        if (file_exists($file = '../' . $path . '/theme.php')) {
+            $config = include $file;
+            
+            if (array_key_exists($this->getFile(), $config['templates'])) {
+                foreach ($config['templates'][$this->getFile()]['slots'] as $slot) {
+                    $this->addSlot($slot);
+                }
+            }
         }
         
         foreach ($this->slotsConfiguration as $slot) {
