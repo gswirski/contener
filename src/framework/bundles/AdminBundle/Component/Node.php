@@ -17,8 +17,10 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     }
     
     function renderHtmlEdit($page = null)
-    {
+    {   
         if (!$page) {
+            $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
+            $this->repository->setThemeConfig($themeConfig);
             $page = $this->repository->findOneBy('id', $this->query('id'));
         }
         
@@ -36,7 +38,9 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
         $_POST['publish_status'] = (array_key_exists('publish_status', $_POST) && $_POST['publish_status'] == 'on') ? true : false;
         
+        $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
         $page = $this->repository->findOneBy('id', $this->query('id'));
+        $page->getSlotManager()->addSlots($themeConfig['templates'][$page->template]['slots']);
         
         if ($page->isValid($_POST)) {
             $this->repository->store($page);

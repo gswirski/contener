@@ -10,6 +10,7 @@
  * @property boolean $in_navigation
  * @property string $navigation
  * @property string $permalink
+ * @property string $template
  * @property integer $publish_status
  * @property integer $author_id
  * @property string $class
@@ -39,6 +40,9 @@ abstract class Contener_Database_Model_Base_Node extends Doctrine_Record
              'type' => 'string',
              ));
         $this->hasColumn('permalink', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('template', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('publish_status', 'integer', null, array(

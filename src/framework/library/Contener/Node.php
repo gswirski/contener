@@ -7,10 +7,12 @@ class Contener_Node extends Contener_Navigation_Node
     public function getSlotManager()
     {
         if (!isset($this->slotManager)) {
-            $slots = $this->Slots;
+            $this->slotManager = new Contener_Slot_Manager();
             
-            $this->slotManager = new $slots[0]['class'];
-            $this->slotManager->setSerializedData($slots[0])->manage();
+            if ($this->Slots) {
+                $slots = $this->Slots;
+                $this->slotManager->setSerializedData($slots[0])->manage();
+            }
         }
         
         return $this->slotManager;

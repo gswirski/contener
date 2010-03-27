@@ -3,6 +3,7 @@
 class AdminBundle_Context extends Contener_Context
 {
     protected $areas = array();
+    protected $theme;
     
     public function __construct()
     {
@@ -84,5 +85,15 @@ class AdminBundle_Context extends Contener_Context
     function area($name)
     {
         return $this->areas[$name];
+    }
+    
+    public function getTheme()
+    {
+        if (!$this->theme) {
+            $repository = new Contener_Database_Repository_Theme();
+            $this->theme = $repository->findOneBy('is_active', true);
+        }
+        
+        return $this->theme;
     }
 }

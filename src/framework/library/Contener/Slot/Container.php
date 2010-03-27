@@ -23,14 +23,16 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
     public function addSlots($slots)
     {
         foreach ($slots as $slot) {
-            if (is_array($slots)) {
+            if ($slot instanceof Contener_Slot_Abstract) {
+                $this->addSlot($slot);
+            } else if (is_array($slots)) {
                 if (array_key_exists($slot['name'], $this->slots)) {
                     $this->slots[$slot['name']]->setData($slot);
                 } else {
                     //$this->slots[$slot['name']] = new $slot['class']($slot);
                 }
             } else {
-                $this->addSlot($slot);
+                throw new Exception('Slot must be array or instance of Contener_Slot_Abstract');
             }
         }
     }

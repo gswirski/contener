@@ -19,7 +19,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         
         $valid = true;
         
-        $slots = new Contener_Slot_Manager_Basic(array('name' => 'theme'));
+        $slots = new Contener_Slot_Manager(array('name' => 'theme'));
         foreach ($config['slots'] as $name => $slot) {
             $slot->setName($name);
             $slots->addSlot($slot);
@@ -61,7 +61,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         
         $valid = true;
         
-        $slots = new Contener_Slot_Manager_Basic(array('name' => 'theme'));
+        $slots = new Contener_Slot_Manager(array('name' => 'theme'));
         foreach ($config['slots'] as $name => $slot) {
             $slot->setName($name);
             $slots->addSlot($slot);

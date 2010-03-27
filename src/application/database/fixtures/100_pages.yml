@@ -14,6 +14,7 @@ Contener_Database_Model_Node_Page:
         in_navigation: true
         navigation: Strona główna
         permalink: /glowna/
+        template: homepage
         author_id: 1
 #        Slots:
 #          HomepageTemplate:
@@ -57,4 +58,5 @@ Contener_Database_Model_Node_Page:
         in_navigation: true
         navigation: Kontakt
         permalink: /kontakt/
+        template: contact
         author_id: 1

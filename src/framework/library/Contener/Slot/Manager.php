@@ -1,21 +1,9 @@
 <?php
 
-class Contener_Slot_Manager_Template extends Contener_Slot_Container
+class Contener_Slot_Manager extends Contener_Slot_Container
 {
     protected $slotsConfiguration = array();
     protected $file;
-    
-    public function setFile($file)
-    {
-        $this->file = $file;
-        return $this;
-    }
-    
-    public function getFile()
-    {
-        return ($this->file) ? $this->file : 'homepage.php';
-    }
-    
     
     function setSlots($slots)
     {
@@ -25,7 +13,8 @@ class Contener_Slot_Manager_Template extends Contener_Slot_Container
     
     function manage()
     {
-        $repository = new Contener_Database_Repository_Theme();
+        print_r($this->slotConfiguration);
+        /*$repository = new Contener_Database_Repository_Theme();
         $path = $repository->findOneBy('is_active', true)->file_path;
         
         if (file_exists($file = '../' . $path . '/theme.php')) {
@@ -42,7 +31,7 @@ class Contener_Slot_Manager_Template extends Contener_Slot_Container
             $this->slots[$slot['name']]->setData($slot);
         }
         
-        unset($this->slotsConfiguration);
+        unset($this->slotsConfiguration);*/
     }
     
     function sleep()
@@ -53,9 +42,9 @@ class Contener_Slot_Manager_Template extends Contener_Slot_Container
         }
         
         return array(
-            'class' => 'Contener_Slot_Manager_Template',
-            'name' => 'root',
-            'body' => serialize(array('file' => $this->getFile())),
+            'class' => 'Contener_Slot_Manager',
+            'name' => 'slots',
+            'body' => '',
             'children' => $children
         );
     }

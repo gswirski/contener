@@ -9,6 +9,7 @@ Node:
     in_navigation: boolean
     navigation: string
     permalink: string
+    template: string
     publish_status: integer
     author_id: integer(8)
   relations:

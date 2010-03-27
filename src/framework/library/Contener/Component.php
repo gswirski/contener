@@ -34,6 +34,11 @@ class Contener_Component extends k_Component
         return $search;
     }
     
+    public function getTheme()
+    {
+        return $this->context->getTheme();
+    }
+    
     // @todo: this one sucks too
     public function baseUrl()
     {

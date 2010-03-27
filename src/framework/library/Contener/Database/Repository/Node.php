@@ -2,9 +2,19 @@
 
 class Contener_Database_Repository_Node extends Contener_Database_Repository
 {
+    protected $themeConfig;
+    
+    public function setThemeConfig(array $themeConfig)
+    {
+        $this->themeConfig = $themeConfig;
+    }
+    
     public function buildEntity($data)
     {
         $node = new Contener_Node($data);
+        
+        $node->getSlotManager()->addSlots($this->themeConfig['templates'][$node->template]['slots']);
+        
         return $node;
     }
     
