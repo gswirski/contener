@@ -1,0 +1,6 @@
+---
+Contener_Database_Model_Theme:
+  Default:
+    name: default
+    file_path: application/themes/default
+    is_active: true

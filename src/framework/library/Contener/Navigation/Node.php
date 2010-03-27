@@ -2,7 +2,7 @@
 
 class Contener_Navigation_Node extends Contener_Navigation_Container
 {
-    public function __construct($page)
+    public function __construct($page = array())
     {
         if ($page instanceof Doctrine_Record) {
             $page = $page->toArray();

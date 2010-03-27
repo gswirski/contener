@@ -23,11 +23,11 @@ Node_Page:
     extends: Node
     type: column_aggregation
     keyField: class
-    keyValue: Contener_Domain_Node_Page
+    keyValue: Contener_Database_Model_Node_Page
 
 Node_Link:
   inheritance:
     extends: Node
     type: column_aggregation
     keyField: class
-    keyValue: Contener_Domain_Node_Link
+    keyValue: Contener_Database_Model_Node_Link

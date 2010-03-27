@@ -1,5 +1,5 @@
 ---
-Contener_Domain_Slot_Node:
+Contener_Database_Model_Slot_Node:
   HomepageTemplate:
     root_id: 7
     class: Contener_Slot_Manager_Template

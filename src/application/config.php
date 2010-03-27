@@ -9,12 +9,12 @@ $config['loader'] = array(
 $config['database'] = array(
     'dsn'                 =>  'sqlite:' . $config['loader']['base_dir'] . '/application/database/database.db',
     'data_fixtures_path'  =>  'application/database/fixtures',
-    'models_path'         =>  'framework',
+    'models_path'         =>  'framework/library',
     'yaml_schema_path'    =>  'application/database/schema',
     'generate_models_options' => array(
         'generateTableClasses'  =>  true, 
         'baseClassPrefix'     => 'Base_',
-        'classPrefix' => 'Contener_Domain_',
+        'classPrefix' => 'Contener_Database_Model_',
         'baseClassesDirectory' => '',
         'pearStyle' => true
     )

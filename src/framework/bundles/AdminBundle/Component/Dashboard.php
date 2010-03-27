@@ -2,6 +2,13 @@
 
 class AdminBundle_Component_Dashboard extends Contener_Component
 {
+    protected $repository;
+    
+    public function __construct()
+    {
+        $this->repository = new Contener_Database_Repository_Node;
+    }
+    
     function dispatch()
     {   
         $dashboard = new Contener_Navigation(array(
@@ -15,12 +22,7 @@ class AdminBundle_Component_Dashboard extends Contener_Component
             )
         ));
         
-        $data = Doctrine_Query::create()
-            ->select()
-            ->from('Contener_Domain_Node p')
-            ->where('p.level != ?', 0)
-            ->orderBy('p.lft')
-            ->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);
+        $data = $this->repository->listAll();
         $pages = new Contener_Navigation($data);
         
         $mainNode = $this->context->area('menu')->findOneBy('path', '/admin');

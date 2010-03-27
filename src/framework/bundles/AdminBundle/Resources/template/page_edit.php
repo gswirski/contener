@@ -3,7 +3,7 @@
 <p class="permament-link">
 
     <strong>Bezpośredni odnośnik</strong>:
-    http://localhost/<span class="editable"><input type="text" id="permalink" name="permalink" value="<?php echo $page->filtered_title; ?>" /></span>/
+    http://localhost/<?php echo $page->getParentPath(); ?><span class="editable"><input type="text" id="filtered_title" name="filtered_title" value="<?php echo $page->filtered_title; ?>" /></span>/
 </p>
 
 <?php

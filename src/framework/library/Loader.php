@@ -59,8 +59,6 @@ class Loader
         if (file_exists($file)) {
             include $file;
             return true;
-        } else {
-            echo $file;
         }
         
         return false;

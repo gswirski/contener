@@ -2,17 +2,18 @@
 
 class AdminBundle_Component_Config_Theme extends Contener_Component
 {
-    protected $domain;
+    protected $repository;
     
     public function init()
     {
         $GLOBALS['loader']->loadClass('Contener_Domain_ThemeTable');
-        $this->domain = Doctrine_Core::getTable('Contener_Domain_Theme');
+        $this->repository = new Contener_Database_Repository_Theme();
     }
     
     function renderHtml()
     {
-        $theme = Contener_Domain_Theme::fetch($this->query('name', null));
+        $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
+        $theme = $this->repository->findOneBy('name', $this->query('name', null));
         
         $config = include $this->config('loader.base_dir') . '/application/themes/' . $theme->name . '/theme.php';
         
@@ -25,45 +26,38 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         }
         
         $array = $theme->toArray();
-        $slots->setSlots($array['Slots'][0]['__children'])->manage();
+        
+        if ($array['Slots']) {
+            $slots->setSlots($array['Slots'][0]['__children'])->manage();
+        }
         $theme->setSlotManager($slots);
         
-        return Contener_View::create('config/theme/select')->render($this, array('selected' => $theme, 'list' => $this->domain->listThemes($this->query('name', null), $this->config('loader.base_dir'))));
+        return Contener_View::create('config/theme/select')->render($this, array('selected' => $theme, 'list' => $list));
     }
     
     function renderHtmlActivate()
     {
-        Doctrine_Query::create()
-            ->update('Contener_Domain_Theme t')
-            ->set('t.is_active', '?', false)
-            ->where('t.is_active = ?', true)
-            ->execute();
-        
-        Doctrine_Query::create()
-            ->update('Contener_Domain_Theme t')
-            ->set('t.is_active', '?', true)
-            ->where('t.name = ?', $this->query('name'))
-            ->execute();
-        
+        $this->repository->activate($this->query('name'));
         return new k_SeeOther(str_replace('activate', 'select', $this->requestUri()));
     }
     
     function renderHtmlEdit()
     {
-        $theme = Contener_Domain_Theme::fetch($this->query('name', null));
-        $config = include $theme->file_path . '/theme.php';
+        $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
+        $theme = $this->repository->findOneBy('name', $this->query('name', null));
+        $config = include $this->config('loader.base_dir') . '/' . $theme->file_path . '/theme.php';
         
         return Contener_View::create('config/theme/edit')
             ->render($this, array(
                 'selected' => $theme,
-                'list' => $this->domain->listThemes($this->query('name', null), $this->config('loader.base_dir'))
+                'list' => $list
             ));
     }
     
     function postForm()
     {
-        $theme = Contener_Domain_Theme::fetch($this->query('name', null));
-        $config = include $this->config('loader.base_dir') . '/themes/' . $theme->name . '/theme.php';
+        $theme = $this->repository->findOneBy('name', $this->query('name', null));
+        $config = include $this->config('loader.base_dir') . '/' . $theme->file_path . '/theme.php';
         
         $valid = true;
         
@@ -78,7 +72,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $theme->setSlotManager($slots);
         
         if ($valid) {
-            $theme->save();
+            $this->repository->store($theme);
         }
         
         return $this->renderHtml();

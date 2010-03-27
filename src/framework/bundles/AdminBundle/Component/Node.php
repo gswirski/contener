@@ -19,7 +19,7 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     function renderHtmlEdit($page = null)
     {
         if (!$page) {
-            $page = Contener_Domain_Node::fetch($this->query('id'));
+            $page = $this->repository->findOneBy('id', $this->query('id'));
         }
         
         $this->context->area('right')->addModule('', Contener_View::create('page_edit_publish')->render($page, array()));
@@ -36,10 +36,10 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
         $_POST['publish_status'] = (array_key_exists('publish_status', $_POST) && $_POST['publish_status'] == 'on') ? true : false;
         
-        $page = Contener_Domain_Node::fetch($this->query('id'));
+        $page = $this->repository->findOneBy('id', $this->query('id'));
         
         if ($page->isValid($_POST)) {
-            $page->save();
+            $this->repository->store($page);
             return new k_SeeOther($this->requestUri());
         } else {
             return $this->renderHtmlEdit($page);
