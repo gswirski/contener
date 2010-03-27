@@ -122,11 +122,11 @@ class Contener_Database_Repository_Theme extends Contener_Database_Repository
         
         Doctrine_Query::create()->delete()->from('Contener_Database_Model_Slot_Theme s')->where('s.root_id = ?', $record->id)->execute();
         
-        $slots = $slotManager->sleep();
+        $slots = $slotManager->getSerializedData();
         
         $root = new Contener_Database_Model_Slot_Theme();
         $root->root_id = $record->id;
-        $root->name = 'root';
+        $root->name = $slots['name'];
         $root->class = $slots['class'];
         $root->body = $slots['body'];
         $root->save();
@@ -134,9 +134,7 @@ class Contener_Database_Repository_Theme extends Contener_Database_Repository
         $treeObject = Doctrine_Core::getTable('Contener_Database_Model_Slot_Theme')->getTree();
         $treeObject->createRoot($root, $record->id);
         
-        //print_r($slots);
-        
-        foreach ($slots['children'] as $slot) {
+        foreach ($slots['slots'] as $slot) {
             $this->saveSlot($slot, $root, $record);
         }
     }
@@ -155,9 +153,9 @@ class Contener_Database_Repository_Theme extends Contener_Database_Repository
         
         $slot->getNode()->insertAsLastChildOf($parent);
         
-        if (array_key_exists('children', $data) and is_array($data['children'])) {
-            if ($data['children']) {
-                foreach ($data['children'] as $child) {
+        if (array_key_exists('slots', $data) and is_array($data['slots'])) {
+            if ($data['slots']) {
+                foreach ($data['slots'] as $child) {
                     $this->saveSlot($child, $slot);
                 }
             }

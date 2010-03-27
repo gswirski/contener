@@ -33,7 +33,7 @@ class Contener_Theme
             $slots = $slots['Slots'];
             
             $this->slotManager = new $slots[0]['class'];
-            $this->slotManager->setSerializedData($slots[0])->manage();
+            $this->slotManager->setSerializedData($slots[0]);
         }
         
         return $this->slotManager;

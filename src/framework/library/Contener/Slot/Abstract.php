@@ -32,7 +32,31 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
         return $this;
     }
     
-    protected function _unserialize($data) {
+    public function getSerializedData()
+    {
+        $data = $this->getData();
+        return $this->_serialize($data);
+    }
+    
+    protected function _serialize($data)
+    {
+        $slots = array();
+        
+        if (array_key_exists('slots', $data)) {
+            $slots = $data['slots'];
+            unset($data['slots']);
+        }
+        
+        foreach ($slots as $key => $value) {
+            if ($value instanceof Contener_Slot_Abstract) {
+                $slots[$key] = $value->getSerializedData();
+            }
+        }
+        return array('class' => get_class($this), 'name' => $data['name'], 'body' => serialize($data), 'slots' => $slots);
+    }
+    
+    protected function _unserialize($data)
+    {
         if (array_key_exists('__children', $data)) {
             foreach ($data['__children'] as $key => $child) {
                 $data['__children'][$key] = $this->_unserialize($child);
@@ -50,13 +74,41 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
         return $data;
     }
     
-    public function setData($data)
+    public function setData($data, $precedence = true)
     {
         foreach ($data as $key => $value) {
+            if ($key == 'slots' or $key == '__children') {
+                if ($value) {
+                    $this->setSlots($value);
+                }
+                continue;
+            }
+            if (!$precedence and $this->getOption($key)) {
+                continue;
+            } 
             $this->setOption($key, $value);
         }
-        
         return $this;
+    }
+    
+    public function getData()
+    {
+        $fields = array_merge($this->editable(), $this->spec());
+        $return = array();
+        
+        foreach ($fields as $fieldName => $fieldType) {
+            if ($fieldType == 'array') {
+                $children = $this->getOption($fieldName);
+                
+                foreach($children as $child) {
+                    $return[$fieldName][] = $child;
+                }
+            } else {
+                $return[$fieldName] = $this->getOption($fieldName);
+            }
+        }
+        
+        return $return;
     }
     
     public function getOption($name)
@@ -212,8 +264,7 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
     public function spec()
     {
         return array('name' => 'string', 
-                     'label' => 'string', 
-                     'validators' => 'array'
+                     'label' => 'string'
                );
     }
 }

@@ -5,14 +5,14 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
 {
     protected $slots = array();
     
-    public function setData($data) {
+    /*public function setData($data, $precedence = true) {
         if (array_key_exists('__children', $data)) {
             $data['slots'] = $data['__children'];
             unset($data['__children']);
         }
         
-        parent::setData($data);
-    }
+        parent::setData($data, $precedence);
+    }*/
     
     public function addSlot(Contener_Slot_Interface $slot)
     {
@@ -22,14 +22,15 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
     
     public function addSlots($slots)
     {
+        if (!$slots) { return $this; }
         foreach ($slots as $slot) {
             if ($slot instanceof Contener_Slot_Abstract) {
                 $this->addSlot($slot);
-            } else if (is_array($slots)) {
+            } else if (is_array($slot)) {
                 if (array_key_exists($slot['name'], $this->slots)) {
                     $this->slots[$slot['name']]->setData($slot);
                 } else {
-                    //$this->slots[$slot['name']] = new $slot['class']($slot);
+                    $this->addSlot(new $slot['class']($slot));
                 }
             } else {
                 throw new Exception('Slot must be array or instance of Contener_Slot_Abstract');
@@ -52,7 +53,7 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
         return $this->slots[$name];
     }
     
-    public function setSlots($slots)
+    public function setSlots(array $slots)
     {
         $this->slots = array();
         $this->addSlots($slots);
@@ -119,5 +120,10 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
     public function count()
     {
         return count($this->slots);
+    }
+    
+    public function spec()
+    {
+        return array_merge(parent::spec(), array('slots' => 'array'));
     }
 }

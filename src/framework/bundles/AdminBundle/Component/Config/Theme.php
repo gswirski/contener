@@ -20,17 +20,6 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $valid = true;
         
         $slots = new Contener_Slot_Manager(array('name' => 'theme'));
-        foreach ($config['slots'] as $name => $slot) {
-            $slot->setName($name);
-            $slots->addSlot($slot);
-        }
-        
-        $array = $theme->toArray();
-        
-        if ($array['Slots']) {
-            $slots->setSlots($array['Slots'][0]['__children'])->manage();
-        }
-        $theme->setSlotManager($slots);
         
         return Contener_View::create('config/theme/select')->render($this, array('selected' => $theme, 'list' => $list));
     }

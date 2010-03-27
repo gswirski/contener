@@ -4,6 +4,18 @@ class Contener_Node extends Contener_Navigation_Node
 {
     protected $slotManager;
     
+    public function __constuct($data = array())
+    {
+        if (isset($data['Slots']) && isset($data['Slots'][0])) {
+            $slots = $data['Slots'][0];
+            unset($data['Slots']);
+            
+            $this->getSlotManager()->setSerializedData($slots);
+        }
+        
+        parent::__construct($data);
+    }
+    
     public function getSlotManager()
     {
         if (!isset($this->slotManager)) {
@@ -11,7 +23,7 @@ class Contener_Node extends Contener_Navigation_Node
             
             if ($this->Slots) {
                 $slots = $this->Slots;
-                $this->slotManager->setSerializedData($slots[0])->manage();
+                $this->slotManager->setSerializedData($slots[0]);
             }
         }
         
