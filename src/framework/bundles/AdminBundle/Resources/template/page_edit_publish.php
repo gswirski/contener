@@ -7,6 +7,14 @@
 
 <h3 class="opened">Opcje publikacji</h3>
 <dl class="line">
+    <dt>Szablon</dt>
+    <dd>
+        <select id="template" name="template">
+            <option value="">Szablon domyślny</option>
+            <option value="homepage">Strona główna</option>
+        </select>
+    </dd>
+    
     <dt>Status</dt>
     <dd>
         <input id="publish_status" name="publish_status" type="checkbox"<?php echo ($context->publish_status)?' checked="checked"':''; ?> /> <label for="publish_status">opublikowany</label>
@@ -21,5 +29,4 @@
     
     <dt>Autor</dt>
     <dd>Grzegorz Świrski</dd>
-
 </dl>

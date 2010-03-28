@@ -10,9 +10,9 @@ a:hover { color: #D34A23 }
 
 p { font-size: 11px; margin-bottom: 15px; }
 
-dl { font-size: 11px; line-height: 20px; margin-bottom: 15px;}
-dt { width: 70px; float: left; clear: both; margin: 0px 5px 0px 0px; text-align: right; color: #999; }
-dd { width: 155px; float: left; }
+dl { font-size: 11px; line-height: 20px; margin: -2px 0px 15px 0px;}
+dt { width: 70px; float: left; clear: both; margin: 2px 5px 2px 0px; text-align: right; color: #999; }
+dd { width: 155px; float: left; margin: 2px 0px;}
 dl input { margin: 0px; }
 
 ul { margin-bottom: 15px; }
@@ -79,5 +79,5 @@ h3.opened:before { content: "▼"; display: inline-block; width: 13px; }
 h3.closed:before { content: "▶"; display: inline-block; width: 13px; }
 
 input.editable {
-    background: none; border: none; color: #28759A; text-shadow: #FFF 0px 1px 0px; margin: 0px; padding: 0px;
+    background: none; border: none; color: #28759A; text-shadow: #FFF 0px 1px 0px; margin: 0px; padding: 0px; display: block;
 }
