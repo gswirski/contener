@@ -13,7 +13,7 @@
         <select id="template" name="template">
             <option value="">Szablon domyślny</option>
             <?php foreach ($themeConfig['templates'] as $name => $options) { ?>
-            <option value="<?php echo $name; ?>"<?php echo ($context->template == $name)?' selected="selected"':''; ?>><?php echo $options['title']; ?></option>
+            <option value="<?php echo $name; ?>"<?php echo ($context->template === $name)?' selected="selected"':''; ?>><?php echo $options['title']; ?></option>
             <?php } ?>
         </select>
     </dd>

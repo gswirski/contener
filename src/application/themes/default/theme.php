@@ -24,6 +24,7 @@ return array(
     'templates' => array(
         'homepage' => array(
             'title' => 'Strona główna',
+            'is_open' => false,
             'slots' => array(
                 array(
                     'class' => 'Contener_Slot_Inline_Text',
@@ -40,6 +41,7 @@ return array(
         ),
         'contact' => array(
             'title' => 'Kontakt',
+            'is_open' => false,
             'slots' => array(
                 array(
                     'class' => 'Contener_Slot_Inline_Text',

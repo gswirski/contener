@@ -92,8 +92,16 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
     
     public function setSlots(array $slots)
     {
+        $old = $this->slots;
+        
         $this->slots = array();
         $this->addSlots($slots);
+        
+        foreach ($old as $name => $slot) {
+            if (isset($this->slots[$name])) {
+                $this->slots[$name]->setData($slot->getData());
+            }
+        }
         
         return $this;
     }

@@ -3,7 +3,7 @@
 class Contener_Database_Repository_Node extends Contener_Database_Repository
 {
     protected $themeConfig;
-    protected $template = '';
+    protected $template = null;
     
     public function setThemeConfig(array $themeConfig)
     {
@@ -26,7 +26,12 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
         }
         
         if (isset($this->themeConfig['templates']) && isset($this->themeConfig['templates'][$template]) && isset($this->themeConfig['templates'][$template]['slots'])) {
-            $node->getSlotManager()->addSlots($this->themeConfig['templates'][$template]['slots']);
+            $slots = $this->themeConfig['templates'][$template]['slots'];
+            if (isset($this->themeConfig['templates'][$template]['is_open']) && $this->themeConfig['templates'][$template]['is_open']) {
+                $node->getSlotManager()->addSlots($slots);
+            } else {
+                $node->getSlotManager()->setSlots($slots);
+            }
         }
         
         return $node;

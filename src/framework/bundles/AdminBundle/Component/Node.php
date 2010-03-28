@@ -19,7 +19,11 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     function renderHtmlEdit($page = null)
     {   
         if (!$page) {
-            $page = $this->getNode($this->query('id'), $this->query('template', null));
+            $page = $this->getNode($this->query('id'), $this->query('template'));
+        }
+        
+        if ($this->query('template') !== null) {
+            $page->template = $this->query('template');
         }
         
         $this->context->area('right')->addModule('', Contener_View::create('page_edit_publish')->render($page, array('theme' => $this->getTheme())));
@@ -36,7 +40,8 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
         $_POST['publish_status'] = (array_key_exists('publish_status', $_POST) && $_POST['publish_status'] == 'on') ? true : false;
         
-        $page = $this->getNode($this->query('id'), $this->query('template', false));
+        $page = $this->getNode($this->query('id'), $this->query('template'));
+        $page->template = $this->query('template', $page->template);
         
         if ($page->isValid($_POST)) {
             $this->repository->store($page);
