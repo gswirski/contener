@@ -56,4 +56,12 @@ class Contener_Node extends Contener_Navigation_Node
         
         return $path;
     }
+    
+    /**
+     * @todo: Bad way to hide notices
+     */
+    public function __get($key)
+    {
+        return '';
+    }
 }

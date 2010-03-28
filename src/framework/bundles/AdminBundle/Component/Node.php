@@ -2,19 +2,8 @@
 
 class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
 {   
-    function renderHtml()
-    {
-        return 'Podgląd strony?';
-    }
-    
-    function renderHtmlAdd()
-    {
-        ob_start();
-        
-        return '<h2>Dodaj stronę</h2>
-        <p>Under heavy development</p>
-        <pre>' . ob_get_clean() . '</pre>';
-    }
+    function renderHtml() {}
+    function renderHtmlAdd() {}
     
     function renderHtmlEdit($page = null)
     {   
@@ -51,13 +40,21 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         }
     }
     
-    protected function getNode($id, $template = null)
+    protected function getNode($id, $template = null, $buildEntity = true)
     {
         $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
         $this->repository->setThemeConfig($themeConfig);
         if ($template !== null) {
             $this->repository->setTemplate($template);
         }
-        return $this->repository->findOneBy('id', $id);
+        return $this->repository->findOneBy('id', $id, $buildEntity);
+    }
+    
+    public function renderHtmlDelete()
+    {
+        $node = $this->getNode($this->query('id'), null, false);
+        $before = $this->repository->findOneBy('lft', $node->lft - 1);
+        $node->getNode()->delete();
+        return new k_SeeOther(str_replace(array('delete', $this->query('id')), array('edit', $before->id), $this->requestUri()));
     }
 }

@@ -47,7 +47,7 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
             ->execute(array(), Doctrine_Core::HYDRATE_ARRAY_HIERARCHY);
     }
     
-    public function findOneBy($column, $value)
+    public function findOneBy($column, $value, $buildEntity = true)
     {
         $node = Doctrine_Query::create()
             ->select()
@@ -56,7 +56,11 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
             ->orderBy('s.lft')
             ->fetchOne(array(), 'Contener_Database_Hydrator');
         
-        return $this->buildEntity($node);
+        if ($buildEntity) {
+            return $this->buildEntity($node);
+        } else {
+            return $node;
+        }
     }
     
     public function store($entity)
