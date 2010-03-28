@@ -3,18 +3,30 @@
 class Contener_Database_Repository_Node extends Contener_Database_Repository
 {
     protected $themeConfig;
+    protected $template = '';
     
     public function setThemeConfig(array $themeConfig)
     {
         $this->themeConfig = $themeConfig;
     }
     
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+    
     public function buildEntity($data)
     {
         $node = new Contener_Node($data->toArray());
-        if (isset($this->themeConfig['templates']) && isset($this->themeConfig['templates'][$node->template]) && isset($this->themeConfig['templates'][$node->template]['slots'])) {
-            
-            $node->getSlotManager()->addSlots($this->themeConfig['templates'][$node->template]['slots']);
+        
+        if ($this->template !== null) {
+            $template = $this->template;
+        } else {
+            $template = $node->template;
+        }
+        
+        if (isset($this->themeConfig['templates']) && isset($this->themeConfig['templates'][$template]) && isset($this->themeConfig['templates'][$template]['slots'])) {
+            $node->getSlotManager()->addSlots($this->themeConfig['templates'][$template]['slots']);
         }
         
         return $node;
