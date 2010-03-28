@@ -26,4 +26,25 @@ $(document).ready(function() {
             $(this).next().next().css('display', 'none');
         };
     }).change().disableSelection().next().disableSelection();
+    
+    $('#template').change(function() {
+        var uri = window.location.href;
+        var parts = uri.split('&');
+        var done = false;
+        var value = $(this).val();
+        
+        parts.forEach(function(item, index) {
+            if (item.substring(0, 9) == 'template=') { 
+                parts[index] = 'template=' + value;
+                done = true;
+            } 
+        });
+        
+        if (done) {
+            uri = parts.join('&');
+        } else {
+            uri = window.location + '&template=' + value;
+        }
+        window.location = uri;
+    });
 });

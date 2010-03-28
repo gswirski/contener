@@ -11,9 +11,5 @@ return array(
             'label' => 'stopka'
         )
     ),
-    'templates' => array(
-        'home' => array(
-            'slots' => array()
-        )
-    )
+    'templates' => array()
 );

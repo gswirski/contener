@@ -22,7 +22,7 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
             $page = $this->getNode($this->query('id'));
         }
         
-        $this->context->area('right')->addModule('', Contener_View::create('page_edit_publish')->render($page, array()));
+        $this->context->area('right')->addModule('', Contener_View::create('page_edit_publish')->render($page, array('theme' => $this->getTheme())));
         
         $t = new Contener_View('page_edit');
         return $t->render(

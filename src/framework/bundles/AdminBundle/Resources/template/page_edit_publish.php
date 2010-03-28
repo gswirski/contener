@@ -7,11 +7,14 @@
 
 <h3 class="opened">Opcje publikacji</h3>
 <dl class="line">
+    <?php $themeConfig = $theme->getConfig(); ?>
     <dt>Szablon</dt>
     <dd>
         <select id="template" name="template">
             <option value="">Szablon domyślny</option>
-            <option value="homepage">Strona główna</option>
+            <?php foreach ($themeConfig['templates'] as $name => $options) { ?>
+            <option value="<?php echo $name; ?>"<?php echo ($context->template == $name)?' selected="selected"':''; ?>><?php echo $options['title']; ?></option>
+            <?php } ?>
         </select>
     </dd>
     

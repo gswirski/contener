@@ -23,6 +23,7 @@ return array(
     ),
     'templates' => array(
         'homepage' => array(
+            'title' => 'Strona główna',
             'slots' => array(
                 array(
                     'class' => 'Contener_Slot_Inline_Text',
@@ -38,6 +39,7 @@ return array(
             )
         ),
         'contact' => array(
+            'title' => 'Kontakt',
             'slots' => array(
                 array(
                     'class' => 'Contener_Slot_Inline_Text',
