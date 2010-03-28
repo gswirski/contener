@@ -3,7 +3,15 @@
 class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
 {   
     function renderHtml() {}
-    function renderHtmlAdd() {}
+    function renderHtmlAdd()
+    {
+        // Just to cache data [another thing that sucks and will be fixed when Dependency Injection Container implemented]
+        $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
+        $page = new Contener_Node();
+        
+        $t = new Contener_View('page_add');
+        return $t->render($this, array('page' => $page, 'list' => $this->repository->listAll('flat')));
+    }
     
     function renderHtmlEdit($page = null)
     {   

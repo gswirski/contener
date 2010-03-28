@@ -37,14 +37,20 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
         return $node;
     }
     
-    public function listAll()
+    public function listAll($style = 'tree')
     {
+        if ($style == 'tree') {
+            $hydration = Doctrine_Core::HYDRATE_ARRAY_HIERARCHY;
+        } else if ($style == 'flat') {
+            $hydration = Doctrine_Core::HYDRATE_ARRAY;
+        }
+        
         return Doctrine_Query::create()
             ->select()
             ->from('Contener_Database_Model_Node p')
             ->where('p.level != ?', 0)
             ->orderBy('p.lft')
-            ->execute(array(), Doctrine_Core::HYDRATE_ARRAY_HIERARCHY);
+            ->execute(array(), $hydration);
     }
     
     public function findOneBy($column, $value, $buildEntity = true)
