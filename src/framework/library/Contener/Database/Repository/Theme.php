@@ -2,9 +2,19 @@
 
 class Contener_Database_Repository_Theme extends Contener_Database_Repository
 {
+    protected $themeConfig;
+    
+    public function setThemeConfig(array $themeConfig)
+    {
+        $this->themeConfig = $themeConfig;
+    }
+    
     public function buildEntity($data)
     {
-        return new Contener_Theme($data);
+        $entity = new Contener_Theme($data);
+        $entity->getSlotManager()->addSlots($this->themeConfig['slots']);
+        
+        return $entity;
     }
     
     public function findOneBy($column, $value)
@@ -62,12 +72,12 @@ class Contener_Database_Repository_Theme extends Contener_Database_Repository
                 $themeConfig['is_active'] = false;
             }
             
-            $slots = new Contener_Slot_Container(array('name' => 'slots'));
+            /*$slots = new Contener_Slot_Manager();
             foreach($themeConfig['slots'] as $slotName => $slotObject) {
                 $slotObject->setName($slotName);
                 $slots->addSlot($slotObject);
             }
-            $themeConfig['slots'] = $slots;
+            $themeConfig['slots'] = $slots;*/
             
             if (array_key_exists($name, $databaseThemes)) {
                 unset($databaseThemes[$name]);
@@ -134,6 +144,7 @@ class Contener_Database_Repository_Theme extends Contener_Database_Repository
         $treeObject = Doctrine_Core::getTable('Contener_Database_Model_Slot_Theme')->getTree();
         $treeObject->createRoot($root, $record->id);
         
+        $slots['slots'] = array_reverse($slots['slots']);
         foreach ($slots['slots'] as $slot) {
             $this->saveSlot($slot, $root, $record);
         }
@@ -155,6 +166,7 @@ class Contener_Database_Repository_Theme extends Contener_Database_Repository
         
         if (array_key_exists('slots', $data) and is_array($data['slots'])) {
             if ($data['slots']) {
+                $data['slots'] = array_reverse($data['slots']);
                 foreach ($data['slots'] as $child) {
                     $this->saveSlot($child, $slot);
                 }

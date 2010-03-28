@@ -13,13 +13,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
     function renderHtml()
     {
         $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
-        $theme = $this->repository->findOneBy('name', $this->query('name', null));
-        
-        $config = include $this->config('loader.base_dir') . '/application/themes/' . $theme->name . '/theme.php';
-        
-        $valid = true;
-        
-        $slots = new Contener_Slot_Manager(array('name' => 'theme'));
+        $theme = $this->getSubject($this->query('name', false));
         
         return Contener_View::create('config/theme/select')->render($this, array('selected' => $theme, 'list' => $list));
     }
@@ -33,8 +27,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
     function renderHtmlEdit()
     {
         $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
-        $theme = $this->repository->findOneBy('name', $this->query('name', null));
-        $config = include $this->config('loader.base_dir') . '/' . $theme->file_path . '/theme.php';
+        $theme = $this->getSubject($this->query('name', false));
         
         return Contener_View::create('config/theme/edit')
             ->render($this, array(
@@ -45,25 +38,36 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
     
     function postForm()
     {
-        $theme = $this->repository->findOneBy('name', $this->query('name', null));
-        $config = include $this->config('loader.base_dir') . '/' . $theme->file_path . '/theme.php';
+        $theme = $this->getSubject($this->query('name', false));
+        $config = $theme->getConfig($this->config('loader.base_dir'));
         
         $valid = true;
         
         $slots = new Contener_Slot_Manager(array('name' => 'theme'));
-        foreach ($config['slots'] as $name => $slot) {
-            $slot->setName($name);
-            $slots->addSlot($slot);
-            
-            $valid = $slot->isValid($_POST['theme'][$name]) && $valid;
-        }
-        
+        $slots->addSlots($config['slots']);
         $theme->setSlotManager($slots);
+        
+        foreach ($slots as $name => $slot) {
+            $valid = $slot->isValid($_POST['slots'][$name]) && $valid;
+        }
         
         if ($valid) {
             $this->repository->store($theme);
+            return new k_SeeOther($this->requestUri());
         }
         
         return $this->renderHtml();
+    }
+    
+    protected function getSubject($name = false)
+    {
+        if ($name) {
+            $config = include $this->config('loader.base_dir') . '/application/themes/' . $name . '/theme.php';
+        } else {
+            $config = $this->getTheme()->getConfig($this->config('loader.base_dir'));
+        }
+        $this->repository->setThemeConfig($config);
+        
+        return $this->repository->findOneBy('name', $this->query('name', null));
     }
 }

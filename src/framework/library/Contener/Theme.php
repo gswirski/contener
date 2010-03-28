@@ -29,11 +29,13 @@ class Contener_Theme
     public function getSlotManager()
     {
         if (!isset($this->slotManager)) {
+            $this->slotManager = new Contener_Slot_Manager();
+            
             $slots = $this->toArray();
             $slots = $slots['Slots'];
-            
-            $this->slotManager = new $slots[0]['class'];
-            $this->slotManager->setSerializedData($slots[0]);
+            if ($slots) {
+                $this->slotManager->setSerializedData($slots[0]);
+            }
         }
         
         return $this->slotManager;
@@ -44,7 +46,7 @@ class Contener_Theme
         $this->slotManager = $manager;
     }
     
-    public function getConfig($dir)
+    public function getConfig($dir = null)
     {
         if (!$this->config) {
             $file = $dir . '/' . $this->data->file_path . '/theme.php';

@@ -40,35 +40,12 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
     
     protected function _serialize($data)
     {
-        $slots = array();
-        
-        if (array_key_exists('slots', $data)) {
-            $slots = $data['slots'];
-            unset($data['slots']);
-        }
-        
-        foreach ($slots as $key => $value) {
-            if ($value instanceof Contener_Slot_Abstract) {
-                $slots[$key] = $value->getSerializedData();
-            }
-        }
-        return array('class' => get_class($this), 'name' => $data['name'], 'body' => serialize($data), 'slots' => $slots);
+        return array('class' => get_class($this), 'name' => $data['name'], 'body' => serialize($data));
     }
     
     protected function _unserialize($data)
     {
-        if (array_key_exists('__children', $data)) {
-            foreach ($data['__children'] as $key => $child) {
-                $data['__children'][$key] = $this->_unserialize($child);
-            }
-        }
-        
-        if (substr($data['body'], 0, 2) == 'a:') {
-            $new = unserialize($data['body']);
-        } else {
-            $new = array('value' => $data['body']);
-        }
-        
+        $new = unserialize($data['body']);
         $data = array_merge($data, $new);
         
         return $data;
@@ -77,12 +54,6 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
     public function setData($data, $precedence = true)
     {
         foreach ($data as $key => $value) {
-            if ($key == 'slots' or $key == '__children') {
-                if ($value) {
-                    $this->setSlots($value);
-                }
-                continue;
-            }
             if (!$precedence and $this->getOption($key)) {
                 continue;
             } 
@@ -116,8 +87,6 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
         $method = 'get' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method();
-        } else {
-            //return $this->options[$name];
         }
     }
     
@@ -126,11 +95,14 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
             $this->$method($value);
-        } else {
-            //$this->options[$name] = $value;
         }
         
         return $this;
+    }
+    
+    public function setDefaults($data)
+    {
+        return $this->setData($data, false);
     }
     
     public function getName()

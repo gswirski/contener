@@ -12,8 +12,10 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
     public function buildEntity($data)
     {
         $node = new Contener_Node($data->toArray());
-        
-        //$node->getSlotManager()->addSlots($this->themeConfig['templates'][$node->template]['slots']);
+        if (isset($this->themeConfig['templates']) && isset($this->themeConfig['templates'][$node->template]) && isset($this->themeConfig['templates'][$node->template]['slots'])) {
+            
+            $node->getSlotManager()->addSlots($this->themeConfig['templates'][$node->template]['slots']);
+        }
         
         return $node;
     }
@@ -89,6 +91,7 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
         $treeObject = Doctrine_Core::getTable('Contener_Database_Model_Slot_Node')->getTree();
         $treeObject->createRoot($root, $record->id);
         
+        $slots['slots'] = array_reverse($slots['slots']);
         foreach ($slots['slots'] as $slot) {
             $this->saveSlot($slot, $root, $record);
         }
@@ -106,10 +109,11 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
         $slot->name = $data['name'];
         $slot->body = $data['body'];
         
-        $slot->getNode()->insertAsLastChildOf($parent);
+        $slot->getNode()->insertAsFirstChildOf($parent);
         
         if (array_key_exists('slots', $data) and is_array($data['slots'])) {
             if ($data['slots']) {
+                $data['slots'] = array_reverse($data['slots']);
                 foreach ($data['slots'] as $child) {
                     $this->saveSlot($child, $slot);
                 }
