@@ -117,16 +117,6 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
         return $valid;
     }
     
-    public function render($template = null, $view = null)
-    {
-        $return = '';
-        foreach ($this->slots as $slot) {
-            $return .= $slot->render(null, $view);
-        }
-        
-        return $return;
-    }
-    
     function current()
     {
         return current($this->slots);
