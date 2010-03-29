@@ -19,7 +19,17 @@ class Contener_Component extends k_Component
     
     public function config($path = null, $default = null)
     {
-        return $this->getContainer()->getParameter($path);
+        $container = $this->getContainer();
+        
+        if (!$path) {
+            $container->getParameters();
+        }
+        
+        if ($container->hasParameter($path)) {
+            return $container->getParameter($path);
+        }
+        
+        return $default;
     }
     
     public function getTheme()
