@@ -7,12 +7,8 @@ class Loader
     protected $namespaces = array();
     protected $extensions = array();
     
-    public function __construct($config = array()) {
-        $defaults = array(
-            'base_dir' => ''
-        );
-        
-        $this->config = array_merge($defaults, $config);
+    public function __construct($baseDir) {
+        $this->config = array('base_dir' => $baseDir);
     }
     
     public function registerBundle($name, $path)

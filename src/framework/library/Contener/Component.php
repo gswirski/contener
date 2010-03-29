@@ -2,6 +2,8 @@
 
 class Contener_Component extends k_Component 
 {
+    protected $container;
+    
     public function dispatch()
     {
         $this->init();
@@ -15,23 +17,9 @@ class Contener_Component extends k_Component
         return (string) $this->renderHtml();
     }
     
-    // @todo: okej, I know this sucks
     public function config($path = null, $default = null)
     {
-        $search = $GLOBALS['config'];
-        if ($path) {
-            $parts = explode('.', $path);
-            
-            foreach ($parts as $part) {
-                if (array_key_exists($part, $search)) {
-                    $search = $search[$part];
-                } else {
-                    return $default;
-                }
-            }
-        }
-        
-        return $search;
+        return $this->getContainer()->getParameter($path);
     }
     
     public function getTheme()
@@ -39,14 +27,24 @@ class Contener_Component extends k_Component
         return $this->context->getTheme();
     }
     
-    // @todo: this one sucks too
     public function baseUrl()
     {
-        return $GLOBALS['baseUrl'];
+        return $this->getContainer()->getParameter('request.base_url');
     }
     
     public function path()
     {
-        return rtrim(str_replace($GLOBALS['baseUrl'], '', $this->requestUri()), '/');
+        return rtrim(str_replace($this->baseUrl(), '', $this->requestUri()), '/');
+    }
+    
+    public function setContainer($container)
+    {
+        $this->container = $container;
+        return $this;
+    }
+    
+    public function getContainer()
+    {
+        return $this->container;
     }
 }

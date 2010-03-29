@@ -5,10 +5,23 @@ class AdminBundle_Context extends Contener_Context
     protected $areas = array();
     protected $theme;
     
-    public function __construct()
+    public function init()
     {
+        $container = $this->getContainer();
+        
         $loader = new sfTemplateLoaderFilesystem(dirname(__FILE__) . '/Resources/template/%name%.php');
-        Contener_View::setEngine( new sfTemplateEngine($loader) );
+        $engine = new sfTemplateEngine($loader);
+        
+        $helperSet = new sfTemplateHelperSet(array(
+            new sfTemplateHelperJavascripts(),
+            new sfTemplateHelperStylesheets(),
+            new sfTemplateHelperAssets($container->getParameter('request.base_url')),
+            new Contener_View_Helper_Url($container->getParameter('request.base_url'))
+        ));
+        $engine->setHelperSet($helperSet);
+        
+        Contener_View::setEngine($engine);
+        Contener_View::setBaseUrl($this->getContainer()->getParameter('request.base_url'));
     }
     
     function dispatch()
@@ -34,6 +47,8 @@ class AdminBundle_Context extends Contener_Context
                 'path' => '/admin/config'
             )
         ));
+        
+        $this->areas['menu'];
         
         return parent::dispatch();
     }

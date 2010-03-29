@@ -3,6 +3,7 @@
 class Contener_View
 {
     protected static $engine;
+    protected static $baseUrl = '/';
     protected $path;
     
     public function __construct($path = '')
@@ -31,20 +32,14 @@ class Contener_View
     {
         self::$engine = $object;
     }
-}
-
-function asset($file, $render = true) {
-    $file = $GLOBALS['baseUrl']. '/' . $file;
-    if ($render) {
-        echo $file;
+    
+    public static function getBaseUrl()
+    {
+        return self::$baseUrl;
     }
-    return $file;
-}
-
-function url_for($file, $render = true) {
-    $file = $GLOBALS['baseUrl']. '/' . $file;
-    if ($render) {
-        echo $file;
+    
+    public static function setBaseUrl($url)
+    {
+        self::$baseUrl = $url;
     }
-    return $file;
 }

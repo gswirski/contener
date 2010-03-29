@@ -7,28 +7,27 @@ class Application extends Contener_Application
 {
     public function init()
     {
-        $this->config = include 'config.php';
-        $GLOBALS['config'] = $this->config;
+        $this->setConfig(include 'config.php');
         $this->initLoader();
         $this->initDatabase();
+        
+        $GLOBALS['config'] = $this->config;
     }
     
     public function initLoader()
     {
-        $loader = new Loader($this->config['loader']);
+        $this->loader = new Loader($this->config['loader.base_dir']);
         
-        $loader->registerNamespace('Contener', 'framework/library/Contener')
-               ->registerNamespace('Doctrine', 'framework/library/Doctrine')
-               ->registerNamespace('Zend', 'framework/library/Zend');
+        $this->loader->registerNamespace('Contener', 'framework/library/Contener')
+                     ->registerNamespace('Doctrine', 'framework/library/Doctrine')
+                     ->registerNamespace('Zend', 'framework/library/Zend');
+        $this->loader->registerBundle('WebBundle', 'framework/bundles/WebBundle')
+                     ->registerBundle('AdminBundle', 'framework/bundles/AdminBundle');
+        $this->loader->registerExtension('Contener', array($this, 'loaderExtension'));
         
-        $loader->registerBundle('WebBundle', 'framework/bundles/WebBundle')
-               ->registerBundle('AdminBundle', 'framework/bundles/AdminBundle');
-        
-        $loader->registerExtension('Contener', array($this, 'loaderExtension'));
-        
-        $this->loader = $loader;
-        $GLOBALS['loader'] = $loader;
         spl_autoload_register(array($this->loader, 'loadClass'));
+        
+        $this->getContainer()->setService('loader', $this->loader);
     }
     
     public function loaderExtension($class, $loader)
@@ -50,7 +49,7 @@ class Application extends Contener_Application
     
     public function initDatabase()
     {
-        $this->connection = Doctrine_Manager::connection($this->config['database']['dsn']);
+        $this->connection = Doctrine_Manager::connection($this->config['database.dsn']);
         Doctrine_Manager::getInstance()->registerHydrator('Contener_Database_Hydrator', 'Contener_Database_Hydrator');
     }
 }

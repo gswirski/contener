@@ -1,7 +1,7 @@
 <div class="line">
 <input type="submit" class="button" id="publish" name="publish" value="Publikuj" />
 <input type="submit" class="button" id="save-draft" name="save-draft" value="Zachowaj szkic" />
-<a class="button delete" href="<?php url_for('admin/node?delete&id=' . $context->id); ?>">x</a>
+<a class="button delete" href="<?php echo $this->url->build('admin/node?delete&id=' . $context->id); ?>">x</a>
 </div>
 
 <h3 class="opened">Opcje publikacji</h3>

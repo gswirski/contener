@@ -6,7 +6,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
     
     public function init()
     {
-        $GLOBALS['loader']->loadClass('Contener_Domain_ThemeTable');
+        $this->getContainer()->getService('loader')->loadClass('Contener_Domain_ThemeTable');
         $this->repository = new Contener_Database_Repository_Theme();
     }
     

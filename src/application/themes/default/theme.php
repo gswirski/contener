@@ -28,14 +28,15 @@ return array(
             'slots' => array(
                 array(
                     'class' => 'Contener_Slot_Inline_Text',
-                    'name' => 'text',
-                    'label' => 'Pole tekstowe'
+                    'name' => 'default',
+                    'label' => 'Test działania',
+                    'defaults' => array('value' => 'Wartość domyślna')
                 ),
                 array(
                     'class' => 'Contener_Slot_Inline_Text',
-                    'name' => 'dupa',
-                    'label' => 'Test działania',
-                    'defaults' => array('value' => 'nice')
+                    'name' => 'text',
+                    'label' => 'Pole tekstowe',
+                    'length' => 'long'
                 )
             )
         ),

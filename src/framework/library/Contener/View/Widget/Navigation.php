@@ -19,7 +19,6 @@ class Contener_View_Widget_Navigation
         $this->navigation = $navigation;
         return $this;
     }
-    
     public function render(Contener_Navigation_Interface $navigation = null)
     {
         $class = '';
@@ -55,7 +54,7 @@ class Contener_View_Widget_Navigation
                 $path = '/admin/node?edit&id='.$page->id;
             }
             
-            $return .= '<li'.$class.'><a href="'.$GLOBALS['baseUrl'].$path.'">'.$page->title.'</a>';
+            $return .= '<li'.$class.'><a href="' . Contener_View::getBaseUrl() . $path.'">'.$page->title.'</a>';
             
             if ($this->_depth < $this->params['depth']) {
             

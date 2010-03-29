@@ -4,11 +4,11 @@
 <head>
 	<title><?php e($title); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href="<?php asset('styles/reset.css'); ?>" rel="stylesheet" type="text/css"  /> 
-    <link href="<?php asset('styles/style.css'); ?>" rel="stylesheet" type="text/css"  /> 
+	<link href="<?php echo $this->assets->getUrl('styles/reset.css'); ?>" rel="stylesheet" type="text/css"  /> 
+    <link href="<?php echo $this->assets->getUrl('styles/style.css'); ?>" rel="stylesheet" type="text/css"  /> 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" ></script>
-    <script type="text/javascript" src="<?php asset('scripts/script.js'); ?>" ></script>
+    <script type="text/javascript" src="<?php echo $this->assets->getUrl('scripts/script.js'); ?>" ></script>
 
 </head>
 <body>
