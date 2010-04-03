@@ -15,7 +15,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
         $theme = $this->getSubject($this->query('name', false));
         
-        return Contener_View::create('config/theme/select')->render($this, array('selected' => $theme, 'list' => $list));
+        return $this->getContainer()->view->render('config/theme/select', array('context' => $this, 'selected' => $theme, 'list' => $list));
     }
     
     function renderHtmlActivate()
@@ -29,11 +29,14 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
         $theme = $this->getSubject($this->query('name', false));
         
-        return Contener_View::create('config/theme/edit')
-            ->render($this, array(
+        return $this->getContainer()->view->render(
+            'config/theme/edit',
+            array(
+                'context' => $this,
                 'selected' => $theme,
                 'list' => $list
-            ));
+            )
+        );
     }
     
     function postForm()

@@ -19,10 +19,12 @@ class AdminBundle_Component_Config extends Contener_Component
             array('path' => '/admin/config/plugin', 'title' => 'Wtyczki'),
             array('path' => '/admin/config/editor', 'title' => 'Edytor wizualny'),
         ));
-        $this->context->area('left')->addModule('Konfiguruj', $navigation);
         
         $mainNode = $this->context->area('menu')->findOneBy('path', '/admin/config');
         $mainNode->addPage($navigation);
+        
+        $navigation = new Contener_View_Widget_Navigation($this->getContainer()->view, $navigation);
+        $this->context->area('left')->addModule('Konfiguruj', $navigation);
         
         return '<h2>Konfiguracja</h2>' . $content;
     }
