@@ -60,7 +60,7 @@ class AdminBundle_Context extends Contener_Context
             'depth' => 1
         ));
         
-        $view = $this->getContainer()->view;
+        $view = $this->getService('view');
         
         return
           $view->render(

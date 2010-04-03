@@ -23,7 +23,7 @@ class AdminBundle_Component_Config extends Contener_Component
         $mainNode = $this->context->area('menu')->findOneBy('path', '/admin/config');
         $mainNode->addPage($navigation);
         
-        $navigation = new Contener_View_Widget_Navigation($this->getContainer()->view, $navigation);
+        $navigation = new Contener_View_Widget_Navigation($this->getService('view'), $navigation);
         $this->context->area('left')->addModule('Konfiguruj', $navigation);
         
         return '<h2>Konfiguracja</h2>' . $content;

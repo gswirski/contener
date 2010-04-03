@@ -29,8 +29,8 @@ class AdminBundle_Component_Dashboard extends Contener_Component
         $mainNode->addPage($dashboard);
         $mainNode->addPage($pages);
         
-        $dashboard = new Contener_View_Widget_Navigation($this->getContainer()->view, $dashboard);
-        $pages = new Contener_View_Widget_Navigation($this->getContainer()->view, $pages);
+        $dashboard = new Contener_View_Widget_Navigation($this->getService('view'), $dashboard);
+        $pages = new Contener_View_Widget_Navigation($this->getService('view'), $pages);
         $this->context->area('left')->addModule('Dashboard', $dashboard);
         $this->context->area('left')->addModule('Zarządzaj stronami', $pages);
         
@@ -39,6 +39,6 @@ class AdminBundle_Component_Dashboard extends Contener_Component
     
     function renderHtml()
     {
-        return $this->getContainer()->view->render('release_notes');
+        return $this->getService('view')->render('release_notes');
     }
 }

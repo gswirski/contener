@@ -57,4 +57,9 @@ class Contener_Component extends k_Component
     {
         return $this->container;
     }
+    
+    public function getService($service)
+    {
+        return $this->getContainer()->getService($service);
+    }
 }

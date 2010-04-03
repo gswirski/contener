@@ -6,7 +6,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
     
     public function init()
     {
-        $this->getContainer()->getService('loader')->loadClass('Contener_Domain_ThemeTable');
+        $this->getService('loader')->loadClass('Contener_Domain_ThemeTable');
         $this->repository = new Contener_Database_Repository_Theme();
     }
     
@@ -15,7 +15,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
         $theme = $this->getSubject($this->query('name', false));
         
-        return $this->getContainer()->view->render('config/theme/select', array('context' => $this, 'selected' => $theme, 'list' => $list));
+        return $this->getService('view')->render('config/theme/select', array('context' => $this, 'selected' => $theme, 'list' => $list));
     }
     
     function renderHtmlActivate()
@@ -29,7 +29,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         $list = $this->repository->listAll($this->query('name', null), $this->config('loader.base_dir'));
         $theme = $this->getSubject($this->query('name', false));
         
-        return $this->getContainer()->view->render(
+        return $this->getService('view')->render(
             'config/theme/edit',
             array(
                 'context' => $this,

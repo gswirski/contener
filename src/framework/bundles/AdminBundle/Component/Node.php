@@ -5,22 +5,19 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     function renderHtml() {}
     function renderHtmlAdd()
     {
-        $sc = $this->getContainer();
         
         // Just to cache data [another thing that sucks and will be fixed when Dependency Injection Container implemented]
         $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
         $page = new Contener_Node();
         
-        return $sc->view->render(
+        return $this->getService('view')->render(
             'page_add',
             array('context' => $this, 'page' => $page, 'list' => $this->repository->listAll('flat'))
         );
     }
     
     function renderHtmlEdit($page = null)
-    {
-        $sc = $this->getContainer();
-        
+    {   
         if (!$page) {
             $page = $this->getNode($this->query('id'), $this->query('template'));
         }
@@ -29,12 +26,12 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
             $page->template = $this->query('template');
         }
         
-        $this->context->area('right')->addModule('', $sc->view->render(
+        $this->context->area('right')->addModule('', $this->getService('view')->render(
             'page_edit_publish', 
             array('context' => $page, 'theme' => $this->getTheme()))
         );
         
-        return $sc->view->render(
+        return $this->getService('view')->render(
             'page_edit',
             array('context' => $this, 'page' => $page)
         );
