@@ -32,10 +32,4 @@ class Contener_Navigation extends Contener_Navigation_Container
         }
         return array('page' => false, 'tree' => false);
     }
-    
-    public function __toString()
-    {
-        $view = new Contener_View_Widget_Navigation();
-        return $view->setNavigation($this)->render();
-    }
 }

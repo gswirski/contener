@@ -7,21 +7,12 @@ class AdminBundle_Context extends Contener_Context
     
     public function init()
     {
-        $container = $this->getContainer();
+        $sc = $this->getContainer();
         
-        $loader = new sfTemplateLoaderFilesystem(dirname(__FILE__) . '/Resources/template/%name%.php');
-        $engine = new sfTemplateEngine($loader);
+        $sc->setParameter(
+            'view.loader.paths', dirname(__FILE__) . '/Resources/template/%name%.php');
         
-        $helperSet = new sfTemplateHelperSet(array(
-            new sfTemplateHelperJavascripts(),
-            new sfTemplateHelperStylesheets(),
-            new sfTemplateHelperAssets($container->getParameter('request.base_url')),
-            new Contener_View_Helper_Url($container->getParameter('request.base_url'))
-        ));
-        $engine->setHelperSet($helperSet);
-        
-        Contener_View::setEngine($engine);
-        Contener_View::setBaseUrl($this->getContainer()->getParameter('request.base_url'));
+        $sc->view->setBaseUrl($sc->getParameter('request.base_url'));
     }
     
     function dispatch()
@@ -48,8 +39,6 @@ class AdminBundle_Context extends Contener_Context
             )
         ));
         
-        $this->areas['menu'];
-        
         return parent::dispatch();
     }
     
@@ -67,18 +56,19 @@ class AdminBundle_Context extends Contener_Context
             $active->setActive(true);
         }
         
-        $menu = new Contener_View_Widget_Navigation(array(
+        $menu = new Contener_View_Widget_Navigation(null, null, array(
             'depth' => 1
         ));
         
-        $t = new Contener_View("layout");
-
+        $view = $this->getContainer()->view;
+        
         return
-          $t->render(
-            $this,
+          $view->render(
+            'layout',
             array(
+              'context' => $this,
               'content' => $content,
-              'menu' => $menu->setNavigation($this->area('menu')),
+              'menu' => $menu->setView($view)->setNavigation($this->area('menu')),
               'left' => $this->area('left'),
               'right' => $this->area('right'),
               'title' => 'Panel administracyjny',

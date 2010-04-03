@@ -1,11 +1,17 @@
 <?php
 
-class AdminBundle_Widget_Editor
+class AdminBundle_Widget_Editor extends Contener_View_Widget
 {
     protected $slot;
     
-    public function __construct($slot) {
+    public function setSlot($slot) {
         $this->slot = $slot;
+        return $this;
+    }
+    
+    public function getSlot()
+    {
+        return $this->slot;
     }
     
     public function __toString()
@@ -13,8 +19,10 @@ class AdminBundle_Widget_Editor
         $editable = $this->slot->editable();
         
         try {
-            $t = new Contener_View('slot_editor');
-            return $t->render($this->slot, array('editable_areas' => $editable));
+            return $this->getView()->render(
+                'slot_editor', 
+                array('context' => $this->slot, 'editable_areas' => $editable)
+            );
         } catch (Exception $e) {
             return $e->getMessage();
         }

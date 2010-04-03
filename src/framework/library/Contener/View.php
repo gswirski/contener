@@ -1,45 +1,24 @@
 <?php
 
-class Contener_View
+class Contener_View extends sfTemplateEngine
 {
-    protected static $engine;
-    protected static $baseUrl = '/';
-    protected $path;
+    protected $baseUrl;
     
-    public function __construct($path = '')
+    public function getWidget($class)
     {
-        if ($path) {
-            $this->path = $path;
-        }
+        $widget = new $class;
+        $widget->setView($this);
+        return $widget;
     }
     
-    public function render($context = null, $model = array())
+    public function setBaseUrl($url)
     {
-        return self::$engine->render($this->path, array_merge(array('context' => $context), $model));
+        $this->baseUrl = $url;
+        return $this;
     }
     
-    public static function create($path)
+    public function getBaseUrl()
     {
-        return new self($path);
-    }
-    
-    public static function getEngine()
-    {
-        return self::$engine;
-    }
-    
-    public static function setEngine($object)
-    {
-        self::$engine = $object;
-    }
-    
-    public static function getBaseUrl()
-    {
-        return self::$baseUrl;
-    }
-    
-    public static function setBaseUrl($url)
-    {
-        self::$baseUrl = $url;
+        return $this->baseUrl;
     }
 }

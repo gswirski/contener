@@ -1,13 +1,21 @@
 <?php
 
-class Contener_View_Widget_Navigation
+class Contener_View_Widget_Navigation extends Contener_View_Widget
 {
     protected $navigation;
     protected $params = array();
     protected $_depth = 0;
     
-    public function __construct(array $params = array())
+    public function __construct($view = null, $navigation = null, array $params = array())
     {
+        if ($view) {
+            $this->setView($view);
+        }
+        
+        if ($navigation) {
+            $this->setNavigation($navigation);
+        }
+        
         $defaults = array(
             'depth' => 10
         );
@@ -54,7 +62,7 @@ class Contener_View_Widget_Navigation
                 $path = '/admin/node?edit&id='.$page->id;
             }
             
-            $return .= '<li'.$class.'><a href="' . Contener_View::getBaseUrl() . $path.'">'.$page->title.'</a>';
+            $return .= '<li'.$class.'><a href="' . $this->getView()->getBaseUrl() . $path.'">'.$page->title.'</a>';
             
             if ($this->_depth < $this->params['depth']) {
             

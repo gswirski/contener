@@ -3,11 +3,49 @@
 <container xmlns="http://symfony-project.org/2.0/container">
   <parameters>
     <parameter key="component.creator.class">Contener_ComponentCreator</parameter>
+    
+    <parameter key="view.class">Contener_View</parameter>
+    <parameter key="view.loader.class">sfTemplateLoaderFilesystem</parameter>
+    <parameter key="view.renderers" type="collection"></parameter>
+    <parameter key="view.helper.set.class">sfTemplateHelperSet</parameter>
+    <parameter key="view.helper.set.list" type="collection">
+      <parameter type="service" id="view.helper.javascripts" />
+      <parameter type="service" id="view.helper.stylesheets" />
+      <parameter type="service" id="view.helper.assets" />
+      <parameter type="service" id="view.helper.url" />
+    </parameter>
+    <parameter key="view.helper.javascripts.class">sfTemplateHelperJavascripts</parameter>
+    <parameter key="view.helper.stylesheets.class">sfTemplateHelperStylesheets</parameter>
+    <parameter key="view.helper.assets.class">sfTemplateHelperAssets</parameter>
+    <parameter key="view.helper.url.class">Contener_View_Helper_Url</parameter>
   </parameters>
   
   <services>
     <service id="component.creator" class="%component.creator.class%">
       <argument type="service" id="service_container" />
+    </service>
+    
+    <service id="view" class="%view.class%">
+      <argument type="service" id="view.loader" />
+      <argument>%view.renderers%</argument>
+      <argument type="service" id="view.helper.set" />
+    </service>
+    
+    <service id="view.loader" class="%view.loader.class%">
+      <argument>%view.loader.paths%</argument>
+    </service>
+    
+    <service id="view.helper.set" class="%view.helper.set.class%">
+      <argument>%view.helper.set.list%</argument>
+    </service>
+    
+    <service id="view.helper.javascripts" class="%view.helper.javascripts.class%" />
+    <service id="view.helper.stylesheets" class="%view.helper.stylesheets.class%" />
+    <service id="view.helper.assets" class="%view.helper.assets.class%">
+      <argument>%request.base_url%</argument>
+    </service>
+    <service id="view.helper.url" class="%view.helper.url.class%">
+      <argument>%request.base_url%</argument>
     </service>
   </services>
 </container>

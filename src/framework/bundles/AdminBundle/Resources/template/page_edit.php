@@ -9,7 +9,7 @@
 <?php
 
 foreach ($page->getSlotManager() as $slot) {
-    echo new AdminBundle_Widget_Editor($slot);
+    echo $this->getWidget('AdminBundle_Widget_Editor')->setSlot($slot);
 }
 
 ?>
