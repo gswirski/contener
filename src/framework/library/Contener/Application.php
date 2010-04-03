@@ -18,8 +18,32 @@ class Contener_Application
     
     public function run()
     {
-        $container = $this->getContainer();
-        $container->setParameter('request.base_url', preg_replace('~(.*)/.*~', '$1', $_SERVER['SCRIPT_NAME']));
+        $cache = $this->config['loader.base_dir'] . '/application/cache/service.php';
+        
+        if (file_exists($cache)) {
+            require_once $cache;
+            $container = new Application_Cache_ServiceContainer;
+            
+            $this->_run($container);
+        } else {
+            $container = $this->getContainer();
+            $container->setParameter(
+                'request.base_url', 
+                preg_replace('~(.*)/.*~', '$1', $_SERVER['SCRIPT_NAME'])
+            );
+            
+            $this->_run($container);
+            
+            $dumper = new sfServiceContainerDumperPhp($container);
+            file_put_contents($cache, $dumper->dump(array(
+                'class' => 'Application_Cache_ServiceContainer', 
+                'base_class' => 'Contener_ServiceContainer'
+            )));
+        }
+    }
+    
+    protected function _run($container)
+    {
         $creator = $container->getService('component.creator');
         
         k()

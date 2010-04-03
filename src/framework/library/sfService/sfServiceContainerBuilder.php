@@ -25,6 +25,20 @@ class sfServiceContainerBuilder extends sfServiceContainer
     $loading     = array();
 
   /**
+   * Gets a service container parameter.
+   *
+   * @param  string $name The parameter name
+   *
+   * @return mixed  The parameter value
+   *
+   * @throw  InvalidArgumentException if the parameter is not defined
+   */
+  public function getParameter($name)
+  {
+    return $this->resolveServices(parent::getParameter($name));
+  }
+  
+  /**
    * Sets a service.
    *
    * @param string $id      The service identifier
