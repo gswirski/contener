@@ -17,15 +17,15 @@ class Application extends Contener_Application
     public function initLoader()
     {
         $this->loader = new Loader($this->config['loader.base_dir']);
+        spl_autoload_register(array($this->loader, 'loadClass'));
         
         $this->loader->registerNamespace('Contener', 'framework/library/Contener')
                      ->registerNamespace('Doctrine', 'framework/library/Doctrine')
                      ->registerNamespace('Zend', 'framework/library/Zend');
         $this->loader->registerBundle('WebBundle', 'framework/bundles/WebBundle')
-                     ->registerBundle('AdminBundle', 'framework/bundles/AdminBundle');
+                     ->registerBundle('AdminBundle', 'framework/bundles/AdminBundle')
+                     ->registerBundle('WysiwygBundle', 'framework/bundles/WysiwygBundle');
         $this->loader->registerExtension('Contener', array($this, 'loaderExtension'));
-        
-        spl_autoload_register(array($this->loader, 'loadClass'));
         
         $this->getContainer()->setService('loader', $this->loader);
     }

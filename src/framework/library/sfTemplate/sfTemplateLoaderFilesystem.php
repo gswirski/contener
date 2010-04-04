@@ -29,6 +29,11 @@ class sfTemplateLoaderFilesystem extends sfTemplateLoader
    */
   public function __construct($templatePathPatterns)
   {
+    $this->setPaths($templatePathPatterns);
+  }
+
+  public function setPaths($templatePathPatterns)
+  {
     if (!is_array($templatePathPatterns))
     {
       $templatePathPatterns = array($templatePathPatterns);

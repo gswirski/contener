@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
-
 <container xmlns="http://symfony-project.org/2.0/container">
   <parameters>
     <parameter key="component.creator.class">Contener_ComponentCreator</parameter>
     
     <parameter key="view.class">Contener_View</parameter>
     <parameter key="view.loader.class">sfTemplateLoaderFilesystem</parameter>
+    <parameter key="view.loader.paths" type="collection"></parameter>
     <parameter key="view.renderers" type="collection"></parameter>
     <parameter key="view.helper.set.class">sfTemplateHelperSet</parameter>
     <parameter key="view.helper.set.list" type="collection">
@@ -29,6 +29,9 @@
       <argument type="service" id="view.loader" />
       <argument>%view.renderers%</argument>
       <argument type="service" id="view.helper.set" />
+      <call method="setContainer">
+        <argument type="service" id="service_container" />
+      </call>
     </service>
     
     <service id="view.loader" class="%view.loader.class%">

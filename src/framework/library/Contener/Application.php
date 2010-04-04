@@ -22,15 +22,11 @@ class Contener_Application
         
         if (file_exists($cache)) {
             require_once $cache;
-            $container = new Application_Cache_ServiceContainer;
+            $container = $this->getContainer(true);
             
             $this->_run($container);
         } else {
-            $container = $this->getContainer();
-            $container->setParameter(
-                'request.base_url', 
-                preg_replace('~(.*)/.*~', '$1', $_SERVER['SCRIPT_NAME'])
-            );
+            $container = $this->getContainer(false);
             
             $this->_run($container);
             
@@ -44,6 +40,13 @@ class Contener_Application
     
     protected function _run($container)
     {
+        $container->setParameter(
+            'request.base_url', 
+            preg_replace('~(.*)/.*~', '$1', $_SERVER['SCRIPT_NAME'])
+        );
+        
+        $loader = $container->getService('loader')->handleBundles($container);
+        
         $creator = $container->getService('component.creator');
         
         k()
@@ -58,12 +61,17 @@ class Contener_Application
         $this->config = $config;
     }
     
-    protected function getContainer()
+    protected function getContainer($fromCache = false)
     {
         if (!$this->container) {
-            $this->container = new Contener_ServiceContainer($this->config);
-            $loader = new sfServiceContainerLoaderFileXml($this->container);
-            $loader->load(dirname(__FILE__) . '/Resources/services.xml');
+            if ($fromCache) {
+                require_once $cache;
+                $container = new Application_Cache_ServiceContainer;
+            } else {
+                $this->container = new Contener_ServiceContainer($this->config);
+                $loader = new sfServiceContainerLoaderFileXml($this->container);
+                $loader->load(dirname(__FILE__) . '/Resources/services.xml');
+            }
         }
         
         return $this->container;

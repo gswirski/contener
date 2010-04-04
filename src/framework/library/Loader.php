@@ -4,6 +4,7 @@ class Loader
 {
     protected $config = array();
     
+    protected $bundles = array();
     protected $namespaces = array();
     protected $extensions = array();
     
@@ -13,7 +14,28 @@ class Loader
     
     public function registerBundle($name, $path)
     {
-        return $this->registerNamespace($name, $path);
+        $this->registerNamespace($name, $path);
+        
+        $bundle = $name . '_Bundle';
+        $this->bundles[$name] = new $bundle;
+        
+        return $this;
+    }
+    
+    public function handleBundles($container)
+    {
+        foreach ($this->bundles as $name => $bundle) {
+            $bundle->setContainer($container);
+            
+            if (!file_exists($file = $this->config['base_dir'] . '/application/cache/' . $name . '.php')) {
+                $bundle->install();
+                //file_put_contents($file, '');
+            }
+
+            $bundle->init();
+        }
+        
+        return $this;
     }
     
     public function registerNamespace($name, $path)
