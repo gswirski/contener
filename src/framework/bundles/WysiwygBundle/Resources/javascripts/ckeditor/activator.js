@@ -2,9 +2,13 @@ $(document).ready(function() {
     var config = {
     	toolbar:
     	[
-    		['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-    		['UIColor']
-    	]
+    	    ['Styles','-','Bold','Italic','Underline','Strike','-'],
+        	['Link','Unlink','Anchor','-'],
+        	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-'],
+        	['NumberedList','BulletedList','-'],
+            ['Source']
+        ],
+    	skin: 'contener'
     };
     $('textarea').ckeditor(config);
 })
