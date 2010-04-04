@@ -34,33 +34,56 @@ class Contener_View extends sfTemplateEngine
         return $this->baseUrl;
     }
     
-    public function registerStylesheet($name, $path)
+    public function installStylesheet($name, $path)
     {
-        return $this->registerAsset($name, $path, 'style');
+        return $this->installAsset($name, $path, 'style');
     }
     
-    public function unregisterStylesheet($name)
+    public function uninstallStylesheet($name)
     {
-        return $this->unregisterAsset($name, 'style');
+        return $this->uninstallAsset($name, 'style');
     }
     
-    public function registerJavascript($name, $path)
+    public function installJavascript($name, $path)
     {
-        return $this->registerAsset($name, $path, 'script');
+        return $this->installAsset($name, $path, 'script');
     }
     
-    public function unregisterJavascript($name)
+    public function uninstallJavascript($name)
     {
-        return $this->unregisterAsset($name, 'script');
+        return $this->uninstallAsset($name, 'script');
     }
     
-    public function registerAsset($name, $path, $namespace = '')
+    public function installAsset($name, $path, $namespace = '')
     {
-        
+        $destination = $this->getContainer()->getParameter('loader.base_dir').'/web/'.$namespace.'s/'.$name;
+        copy_directory($path, $destination);
     }
     
-    public function unregisterAsset($name, $namespace = '')
+    public function uninstallAsset($name, $namespace = '')
     {
-        
     }
 }
+
+function copy_directory( $source, $destination ) {
+    if ( is_dir( $source ) ) {
+        @mkdir( $destination );
+        $directory = dir( $source );
+        while ( FALSE !== ( $readdirectory = $directory->read() ) ) {
+            if ( $readdirectory == '.' || $readdirectory == '..' ) {
+                continue;
+            }
+            $PathDir = $source . '/' . $readdirectory; 
+            if ( is_dir( $PathDir ) ) {
+                copy_directory( $PathDir, $destination . '/' . $readdirectory );
+                continue;
+            }
+            copy( $PathDir, $destination . '/' . $readdirectory );
+        }
+        
+        $directory->close();
+    }else {
+        copy( $source, $destination );
+    }
+}
+

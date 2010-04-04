@@ -27,9 +27,10 @@ class Loader
         foreach ($this->bundles as $name => $bundle) {
             $bundle->setContainer($container);
             
-            if (!file_exists($file = $this->config['base_dir'] . '/application/cache/' . $name . '.php')) {
+            $file = $this->config['base_dir'] . '/application/cache/bundles/' . $name . '.php';
+            if (!file_exists($file)) {
                 $bundle->install();
-                //file_put_contents($file, '');
+                file_put_contents($file, '');
             }
 
             $bundle->init();
