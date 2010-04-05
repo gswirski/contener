@@ -25,6 +25,17 @@ foreach ($editable_areas as $editable => $type) {
             }
             echo '<textarea id="'.$context->getId().'"'.$class.' name="'.$context->getFullyQualifiedName().'">'.$context->getValue().'</textarea>';
             break;
+        case 'photo':
+            echo '<div class="line"><div class="preview" style="float: left; width: 75px; height: 75px; border: 1px solid black;">';
+            if ($photo = $context->getPhoto()) {
+                echo $photo;
+            } else {
+                echo 'Brak zdjęcia';
+            }
+            echo '</div>';
+            echo '<input style="display: block; float: left; margin: 25px 5px;" type="file" id="'.$context->getId().'" name="'.$context->getFullyQualifiedName().'" />';
+            echo '</div>';
+            break;
         default:
             echo 'brak edytora';
             break;

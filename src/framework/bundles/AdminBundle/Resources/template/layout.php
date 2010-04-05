@@ -35,7 +35,7 @@
             sognat (<a href="#">profil</a> | <a href="#">wyloguj</a>)
         </div>
     </div>
-    <div class="line"><form method="post">
+    <div class="line"><form enctype="multipart/form-data" method="post">
         <?php echo $left; ?>
         <?php echo $right; ?>
         <div class="editor">

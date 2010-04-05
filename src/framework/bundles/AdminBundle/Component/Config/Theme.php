@@ -39,7 +39,7 @@ class AdminBundle_Component_Config_Theme extends Contener_Component
         );
     }
     
-    function postForm()
+    function postMultipart()
     {
         $theme = $this->getSubject($this->query('name', false));
         $config = $theme->getConfig($this->config('loader.base_dir'));

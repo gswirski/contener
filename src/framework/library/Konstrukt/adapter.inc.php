@@ -74,7 +74,8 @@ class k_adapter_SafeGlobalsAccess implements k_adapter_GlobalsAccess {
     $tmp = array();
     foreach ($files as $key => $file) {
       if (isset($file['tmp_name']) && is_array($file['tmp_name'])) {
-        for ($i = 0; $i < count($file['tmp_name']); $i++) {
+        foreach ($file['tmp_name'] as $i => $notImportant) {
+        //for ($i = 0; $i < count($file['tmp_name']); $i++) {
           $tmp[$i] = array();
           $tmp[$i]['tmp_name'] = $file['tmp_name'][$i];
           $tmp[$i]['name'] = $file['name'][$i];

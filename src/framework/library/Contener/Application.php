@@ -18,6 +18,8 @@ class Contener_Application
     
     public function run()
     {
+        Contener_Application_Data::setManagedDir($this->config['loader.base_dir'] . '/web/uploads');
+        
         $cache = $this->config['loader.base_dir'] . '/application/cache/service.php';
         
         if (file_exists($cache)) {

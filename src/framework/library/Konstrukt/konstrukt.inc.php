@@ -473,8 +473,8 @@ class k_HttpRequest implements k_Context {
     $this->body = $superglobals->body();
     $this->rawHttpRequestBody = $superglobals->rawHttpRequestBody();
     $this->server = $superglobals->server();
-    $this->files = array();
-    foreach ($superglobals->files() as $key => $file_info) {
+    $this->files = $superglobals->files();
+    /*foreach ($superglobals->files() as $key => $file_info) {
       if (array_key_exists('name', $file_info)) {
         $this->files[$key] = new k_adapter_UploadedFile($file_info, $key, $file_access);
       } else {
@@ -483,7 +483,7 @@ class k_HttpRequest implements k_Context {
           $this->files[$key][] = new k_adapter_UploadedFile($file_info_struct, $key, $file_access);
         }
       }
-    }
+    }*/
     $this->headers = $this->lowerKeys($superglobals->headers());
     $this->cookie_access = $cookie_access ? $cookie_access : new k_adapter_DefaultCookieAccess($this->server['SERVER_NAME'], $superglobals->cookie());
     $this->session_access = $session_access ? $session_access : new k_adapter_DefaultSessionAccess($this->cookie_access);

@@ -37,7 +37,7 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         );
     }
     
-    function postForm()
+    function postMultipart()
     {
         $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
         $_POST['publish_status'] = (array_key_exists('publish_status', $_POST) && $_POST['publish_status'] == 'on') ? true : false;
@@ -45,7 +45,7 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         $page = $this->getNode($this->query('id'), $this->query('template'));
         $page->template = $this->query('template', $page->template);
         
-        if ($page->isValid($_POST)) {
+        if ($page->isValid($this->requestData())) {
             $this->repository->store($page);
             return new k_SeeOther($this->requestUri());
         } else {

@@ -47,6 +47,11 @@ class Contener_Component extends k_Component
         return rtrim(str_replace($this->baseUrl(), '', $this->requestUri()), '/');
     }
     
+    public function requestData()
+    {
+        return array_merge_recursive($this->body(), $this->file());
+    }
+    
     public function setContainer($container)
     {
         $this->container = $container;
