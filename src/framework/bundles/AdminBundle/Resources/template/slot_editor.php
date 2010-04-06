@@ -26,14 +26,18 @@ foreach ($editable_areas as $editable => $type) {
             echo '<textarea id="'.$context->getId().'"'.$class.' name="'.$context->getFullyQualifiedName().'">'.$context->getValue().'</textarea>';
             break;
         case 'photo':
-            echo '<div class="line"><div class="preview" style="float: left; width: 75px; height: 75px; border: 1px solid black;">';
+            echo '<div class="line"><div class="preview" style="float: left; width: 75px; height: 75px; -moz-box-shadow: 0 0 5px #888; margin: 5px;">';
             if ($photo = $context->getPhoto()) {
-                echo $photo;
+                echo '<img src="'.$this->assets->getUrl('/uploads/'.$photo). '" width="75" height="75" />';
             } else {
                 echo 'Brak zdjęcia';
             }
             echo '</div>';
-            echo '<input style="display: block; float: left; margin: 25px 5px;" type="file" id="'.$context->getId().'" name="'.$context->getFullyQualifiedName().'" />';
+            echo '<div style="float: left; margin: 5px;">';
+            echo '<p>Zmień zdjęcie:';
+            echo '<input style="display: block;" type="file" id="'.$context->getId().'" name="'.$context->getFullyQualifiedName().'" /></p>';
+            echo '<p>Zmianę zobaczysz po zapisaniu strony</p>';
+            echo '</div>';
             echo '</div>';
             break;
         default:
