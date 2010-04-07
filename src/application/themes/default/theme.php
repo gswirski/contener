@@ -33,15 +33,22 @@ return array(
                     'defaults' => array('value' => 'Wartość domyślna')
                 ),
                 array(
+                    'class' => 'Contener_Slot_Inline_Photo',
+                    'name' => 'photo',
+                    'label' => 'Zdjęcie nagłówkowe'
+                ),
+                array(
                     'class' => 'Contener_Slot_Inline_Text',
                     'name' => 'text',
                     'label' => 'Pole tekstowe',
                     'length' => 'long'
                 ),
+                
                 array(
-                    'class' => 'Contener_Slot_Inline_Photo',
-                    'name' => 'photo',
-                    'label' => 'Zdjęcie'
+                    'class' => 'Contener_Slot_Container_Stack',
+                    'name' => 'Gallery',
+                    'label' => 'Galeria',
+                    'stackType' => 'Contener_Slot_Inline_Photo'
                 )
             )
         ),
