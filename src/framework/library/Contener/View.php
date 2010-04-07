@@ -57,33 +57,13 @@ class Contener_View extends sfTemplateEngine
     public function installAsset($name, $path, $namespace = '')
     {
         $destination = $this->getContainer()->getParameter('loader.base_dir').'/web/'.$namespace.'s/'.$name;
-        copy_directory($path, $destination);
+        
+        $handler = new Contener_Application_Data($path, Contener_Application_Data::WEB);
+        $handler->copy($destination);
     }
     
     public function uninstallAsset($name, $namespace = '')
     {
-    }
-}
-
-function copy_directory( $source, $destination ) {
-    if ( is_dir( $source ) ) {
-        @mkdir( $destination );
-        $directory = dir( $source );
-        while ( FALSE !== ( $readdirectory = $directory->read() ) ) {
-            if ( $readdirectory == '.' || $readdirectory == '..' ) {
-                continue;
-            }
-            $PathDir = $source . '/' . $readdirectory; 
-            if ( is_dir( $PathDir ) ) {
-                copy_directory( $PathDir, $destination . '/' . $readdirectory );
-                continue;
-            }
-            copy( $PathDir, $destination . '/' . $readdirectory );
-        }
-        
-        $directory->close();
-    }else {
-        copy( $source, $destination );
     }
 }
 

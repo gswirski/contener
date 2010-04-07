@@ -18,12 +18,12 @@ class Contener_Application
     
     public function run()
     {
-        Contener_Application_Data::setManagedDir($this->config['loader.base_dir'] . '/web/uploads');
+        Contener_Application_Data::setBaseDir($this->config['loader.base_dir']);
         
-        $cache = $this->config['loader.base_dir'] . '/application/cache/service.php';
+        $cache = new Contener_Application_Data('cache/service.php');
         
-        if (file_exists($cache)) {
-            require_once $cache;
+        if ($cache->exists()) {
+            require_once $cache->getPath();
             $container = $this->getContainer(true);
             
             $this->_run($container);
@@ -33,7 +33,7 @@ class Contener_Application
             $this->_run($container);
             
             $dumper = new sfServiceContainerDumperPhp($container);
-            file_put_contents($cache, $dumper->dump(array(
+            $cache->write($dumper->dump(array(
                 'class' => 'Application_Cache_ServiceContainer', 
                 'base_class' => 'Contener_ServiceContainer'
             )));
@@ -51,8 +51,9 @@ class Contener_Application
         
         $creator = $container->getService('component.creator');
         
+        @mkdir($this->config['loader.base_dir'] . '/application/data/log', 0777);
         k()
-          ->setLog($this->config['loader.base_dir'] . '/application/log/debug.log')
+          ->setLog($this->config['loader.base_dir'] . '/application/data/log/debug.log')
           ->setComponentCreator($creator)
           ->run('Contener_Dispatcher')
           ->out();
