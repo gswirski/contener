@@ -449,6 +449,9 @@ class k_adapter_UploadedFile {
   function name() {
     return $this->name;
   }
+  function tmp_name() {
+      return $this->tmp_name;
+  }
   function type() {
     return $this->type;
   }

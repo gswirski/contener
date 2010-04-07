@@ -28,7 +28,7 @@ foreach ($editable_areas as $editable => $type) {
         case 'photo':
             echo '<div class="line"><div class="preview" style="float: left; width: 75px; height: 75px; -moz-box-shadow: 0 0 5px #888; margin: 5px;">';
             if ($photo = $context->getPhoto()) {
-                echo '<img src="'.$this->assets->getUrl('/uploads/'.$photo). '" width="75" height="75" />';
+                echo '<img src="'.$this->assets->getUrl('uploads/'.$photo). '" width="75" height="75" />';
             } else {
                 echo 'Brak zdjęcia';
             }

@@ -30,7 +30,8 @@ class Contener_Slot_Inline_Photo extends Contener_Slot_Inline_File
                 throw new Exception('Nieprzewidziana sytuacja');
             }
             
-            $file->writeTo(Contener_Application_Data::getManagedDir() . '/' . $file->name());
+            $handler = new Contener_Application_Data($file->tmp_name(), Contener_Application_Data::WEB);
+            $handler->copy('uploads/' . $file->name());
             $this->setPhoto($file->name());
         }
         
