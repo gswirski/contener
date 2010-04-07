@@ -10,7 +10,9 @@ class AdminBundle_Context extends Contener_Context
         $sc = $this->getContainer();
         
         $sc->getService('view.loader')->setPaths(dirname(__FILE__) . '/Resources/template/%name%.php');
-        $sc->view->setBaseUrl($sc->getParameter('request.base_url'));
+        
+        $view = $sc->getService('view');
+        $view->setBaseUrl($sc->getParameter('request.base_url'));
     }
     
     function dispatch()

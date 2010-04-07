@@ -7,9 +7,9 @@
 	<link href="<?php echo $this->assets->getUrl('styles/reset.css'); ?>" rel="stylesheet" type="text/css" />
     <link href="<?php echo $this->assets->getUrl('styles/style.css'); ?>" rel="stylesheet" type="text/css" />
     <?php echo $this->stylesheets; ?>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
+	<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" ></script>
-    <script type="text/javascript" src="<?php echo $this->assets->getUrl('scripts/script.js'); ?>" ></script>
+    <script type="text/javascript" src="<?php echo $this->assets->getUrl('scripts/script.js'); ?>" ></script>-->
     <?php echo $this->javascripts; ?>
 
 </head>

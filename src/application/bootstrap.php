@@ -22,7 +22,8 @@ class Application extends Contener_Application
         $this->loader->registerNamespace('Contener', 'framework/library/Contener')
                      ->registerNamespace('Doctrine', 'framework/library/Doctrine')
                      ->registerNamespace('Zend', 'framework/library/Zend');
-        $this->loader->registerBundle('WebBundle', 'framework/bundles/WebBundle')
+        $this->loader->registerBundle('CoreBundle', 'framework/bundles/CoreBundle')
+                     ->registerBundle('WebBundle', 'framework/bundles/WebBundle')
                      ->registerBundle('AdminBundle', 'framework/bundles/AdminBundle')
                      ->registerBundle('WysiwygBundle', 'framework/bundles/WysiwygBundle');
         $this->loader->registerExtension('Contener', array($this, 'loaderExtension'));
