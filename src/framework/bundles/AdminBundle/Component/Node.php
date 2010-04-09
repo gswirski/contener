@@ -47,7 +47,7 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         
         if ($page->isValid($this->requestData())) {
             $this->repository->store($page);
-            return new k_SeeOther($this->requestUri());
+            //return new k_SeeOther($this->requestUri());
         } else {
             return $this->renderHtmlEdit($page);
         }
