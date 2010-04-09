@@ -1,6 +1,6 @@
 function resizePanes(windowHeight) {
     
-    $('.left-sidebar, .editor, .right-sidebar').height(windowHeight-73);
+    $('.left-sidebar, .editor, .right-sidebar').height(windowHeight-90);
 }
 
 $(document).ready(function() {
