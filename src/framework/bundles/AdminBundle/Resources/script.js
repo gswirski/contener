@@ -5,6 +5,7 @@ function resizePanes(windowHeight) {
 
 $(document).ready(function() {
     resizePanes($(window).height());
+    $('a.preview').lightBox();
     
     $(window).resize(function() {
         resizePanes($(this).height());
