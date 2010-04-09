@@ -24,8 +24,6 @@ class Contener_Slot_Inline_Photo extends Contener_Slot_Inline_File
     public function setValue($value)
     {
         if (array_key_exists('tmp_name', $value) && $value['tmp_name']) {
-            print_r($value);
-            die();
             if (array_key_exists('name', $value)) {
                 $file = new k_adapter_UploadedFile($value, $this->getId, new k_adapter_DefaultUploadedFileAccess());
             } else {

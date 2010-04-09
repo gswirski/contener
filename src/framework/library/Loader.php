@@ -29,7 +29,7 @@ class Loader
             
             $handler = new Contener_Application_Data('cache/bundles/' . $name . '.php');
             
-            if ($handler->exists() != false) {
+            if (!$handler->exists()) {
                 $bundle->install();
                 $handler->write('');
             }

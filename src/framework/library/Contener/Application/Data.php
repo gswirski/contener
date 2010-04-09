@@ -52,7 +52,7 @@ class Contener_Application_Data
     
     public function exists()
     {
-        return file_exists($this->getSource());
+        return file_exists($this->getPath());
     }
     
     public function write($data)
