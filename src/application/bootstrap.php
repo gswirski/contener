@@ -27,8 +27,6 @@ class Application extends Contener_Application
                      ->registerBundle('AdminBundle', 'framework/bundles/AdminBundle')
                      ->registerBundle('WysiwygBundle', 'framework/bundles/WysiwygBundle');
         $this->loader->registerExtension('Contener', array($this, 'loaderExtension'));
-        
-        $this->getContainer()->setService('loader', $this->loader);
     }
     
     public function loaderExtension($class, $loader)
@@ -52,5 +50,11 @@ class Application extends Contener_Application
     {
         $this->connection = Doctrine_Manager::connection($this->config['database.dsn']);
         Doctrine_Manager::getInstance()->registerHydrator('Contener_Database_Hydrator', 'Contener_Database_Hydrator');
+    }
+    
+    protected function _run($container)
+    {
+        $this->getContainer()->setService('loader', $this->loader);
+        return parent::_run($container);
     }
 }

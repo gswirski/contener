@@ -51,9 +51,8 @@ class Contener_Application
         
         $creator = $container->getService('component.creator');
         
-        @mkdir($this->config['loader.base_dir'] . '/application/data/log', 0777);
         k()
-          ->setLog($this->config['loader.base_dir'] . '/application/data/log/debug.log')
+          ->setDebug(false)
           ->setComponentCreator($creator)
           ->run('Contener_Dispatcher')
           ->out();
@@ -68,8 +67,7 @@ class Contener_Application
     {
         if (!$this->container) {
             if ($fromCache) {
-                require_once $cache;
-                $container = new Application_Cache_ServiceContainer;
+                $this->container = new Application_Cache_ServiceContainer;
             } else {
                 $this->container = new Contener_ServiceContainer($this->config);
                 $loader = new sfServiceContainerLoaderFileXml($this->container);
