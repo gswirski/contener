@@ -10,6 +10,11 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
         $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
         $page = new Contener_Node();
         
+        $this->context->area('right')->addModule('', $this->getService('view')->render(
+            'page_edit_publish', 
+            array('context' => $page, 'theme' => $this->getTheme()))
+        );
+        
         return $this->getService('view')->render(
             'page_add',
             array('context' => $this, 'page' => $page, 'list' => $this->repository->listAll('flat'))

@@ -11,7 +11,7 @@
         <option value="<?php echo $parent['id']; ?>"><?php echo str_repeat('&nbsp;&nbsp;', $parent['level']) . $parent['title']; ?></option>
         <?php } ?>
     </select>
-    &nbsp;&nbsp; <input type="submit" value="Dodaj" />
+    &nbsp;&nbsp; <input type="submit" value="Uaktualnij edytor" />
 </p>
 
 <?php echo $this->render('page_edit', array('page' => $page, 'context' => $context)); ?>

@@ -7,6 +7,8 @@
 <h3 class="opened">Opcje publikacji</h3>
 <dl class="line">
     <?php $themeConfig = $theme->getConfig(); ?>
+    
+    <?php if ($context->template !== false) { ?>
     <dt>Szablon</dt>
     <dd>
         <select id="template" name="template">
@@ -16,7 +18,7 @@
             <?php } ?>
         </select>
     </dd>
-    
+    <?php } ?>
     <dt>Status</dt>
     <dd>
         <input id="publish_status" name="publish_status" type="checkbox"<?php echo ($context->publish_status)?' checked="checked"':''; ?> /> <label for="publish_status">opublikowany</label>

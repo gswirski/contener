@@ -62,6 +62,6 @@ class Contener_Node extends Contener_Navigation_Node
      */
     public function __get($key)
     {
-        return '';
+        return false;
     }
 }
