@@ -69,6 +69,7 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
             if (array_key_exists('new_node_reload', $data)) {
                 $node = new Contener_Node();
                 $node->template = $data['new_node_template'];
+                $node->parent = $data['new_node_parent'];
                 return $this->renderHtmlAdd($node);
             } else if (array_key_exists('publish', $data)) {
                 
