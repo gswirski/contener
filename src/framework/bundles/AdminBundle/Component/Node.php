@@ -76,6 +76,17 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
                 $node->template = $data['template'];
                 $node->parent = $data['parent'];
                 
+                $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
+                $template = $node->template;
+                if (isset($themeConfig['templates']) && isset($themeConfig['templates'][$template]) && isset($themeConfig['templates'][$template]['slots'])) {
+                    $slots = $themeConfig['templates'][$template]['slots'];
+                    if (isset($themeConfig['templates'][$template]['is_open']) && $themeConfig['templates'][$template]['is_open']) {
+                        $node->getSlotManager()->addSlots($slots);
+                    } else {
+                        $node->getSlotManager()->setSlots($slots);
+                    }
+                }
+                
                 $data['in_navigation'] = (array_key_exists('in_navigation', $data) && $data['in_navigation'] == 'on') ? true : false;
                 $data['publish_status'] = (array_key_exists('publish_status', $data) && $data['publish_status'] == 'on') ? true : false;
                 
