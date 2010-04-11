@@ -8,7 +8,7 @@
 <dl class="line">
     <?php $themeConfig = $theme->getConfig(); ?>
     
-    <?php if ($context->template !== false) { ?>
+    <?php if (!isset($show_template) or $show_template == true) { ?>
     <dt>Szablon</dt>
     <dd>
         <select id="template" name="template">

@@ -3,21 +3,36 @@
 class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
 {   
     function renderHtml() {}
-    function renderHtmlAdd()
+    function renderHtmlAdd($page = null)
     {
         
         // Just to cache data [another thing that sucks and will be fixed when Dependency Injection Container implemented]
         $themeConfig = $this->getTheme()->getConfig($this->config('loader.base_dir'));
-        $page = new Contener_Node();
+        if (!$page) {
+            $page = new Contener_Node();
+        }
+        
+        if ($template = $page->template) {
+            if (isset($themeConfig['templates']) && isset($themeConfig['templates'][$template]) && isset($themeConfig['templates'][$template]['slots'])) {
+                $slots = $themeConfig['templates'][$template]['slots'];
+                if (isset($themeConfig['templates'][$template]['is_open']) && $themeConfig['templates'][$template]['is_open']) {
+                    $page->getSlotManager()->addSlots($slots);
+                } else {
+                    $page->getSlotManager()->setSlots($slots);
+                }
+            }
+        }
+        
+        $theme = $this->getTheme();
         
         $this->context->area('right')->addModule('', $this->getService('view')->render(
             'page_edit_publish', 
-            array('context' => $page, 'theme' => $this->getTheme()))
+            array('context' => $page, 'theme' => $theme, 'show_template' => false))
         );
         
         return $this->getService('view')->render(
             'page_add',
-            array('context' => $this, 'page' => $page, 'list' => $this->repository->listAll('flat'))
+            array('context' => $this, 'page' => $page, 'list' => $this->repository->listAll('flat'), 'theme' => $theme)
         );
     }
     
@@ -44,18 +59,39 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
     
     function postMultipart()
     {
-        $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
-        $_POST['publish_status'] = (array_key_exists('publish_status', $_POST) && $_POST['publish_status'] == 'on') ? true : false;
+        $data = $this->requestData();
+        $query = $this->query();
         
-        $page = $this->getNode($this->query('id'), $this->query('template'));
-        $page->template = $this->query('template', $page->template);
+        $queryKeys = array_keys($query);
+        $subtype = array_shift($queryKeys);
         
-        if ($page->isValid($this->requestData())) {
-            $this->repository->store($page);
-            return new k_SeeOther($this->requestUri());
-        } else {
-            return $this->renderHtmlEdit($page);
+        if ($subtype == 'add') {
+            if (array_key_exists('new_node_reload', $data)) {
+                $node = new Contener_Node();
+                $node->template = $data['new_node_template'];
+                return $this->renderHtmlAdd($node);
+            } else if (array_key_exists('publish', $data)) {
+                
+            }
+        } elseif ($subtype == 'edit') {
+            $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
+            $_POST['publish_status'] = (array_key_exists('publish_status', $_POST) && $_POST['publish_status'] == 'on') ? true : false;
+            
+            $page = $this->getNode($this->query('id'), $this->query('template'));
+            $page->template = $this->query('template', $page->template);
+            
+            if ($page->isValid($data)) {
+                $this->repository->store($page);
+                return new k_SeeOther($this->requestUri());
+            } else {
+                return $this->renderHtmlEdit($page);
+            }
         }
+    }
+    
+    public function postMultipartAdd()
+    {
+        echo 'działa';
     }
     
     protected function getNode($id, $template = null, $buildEntity = true)
