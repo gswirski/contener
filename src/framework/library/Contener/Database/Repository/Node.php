@@ -75,10 +75,10 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
         }
     }
     
-    public function store($entity)
+    public function store($node)
     {
-        $slotManager = $entity->getSlotManager();
-        $entity = (array) $entity;
+        $slotManager = $node->getSlotManager();
+        $entity = (array) $node;
         
         if (isset($entity['id']) && $entity['id']) {
             $model = Doctrine_Core::getTable('Contener_Database_Model_Node')->find($entity['id']);
@@ -113,6 +113,9 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
         }
         
         $this->saveSlots($model, $slotManager);
+        
+        $node->id = $model->id;
+        return $node;
     }
     
     protected function saveSlots($record = null, $slotManager)
