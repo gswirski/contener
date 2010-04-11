@@ -17,7 +17,13 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
     
     public function buildEntity($data)
     {
-        $node = new Contener_Node($data->toArray());
+        if ($data) {
+            $data = $data->toArray();
+        } else {
+            $data = array();
+        }
+        
+        $node = new Contener_Node($data);
         
         if ($this->template !== null) {
             $template = $this->template;
