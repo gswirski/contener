@@ -20,4 +20,7 @@
     &nbsp;&nbsp; <input type="submit" id="new_node_reload" name="new_node_reload" value="Uaktualnij edytor" />
 </p>
 
+<input type="hidden" id="template" name="template" value="<?php echo $page->template; ?>" />
+<input type="hidden" id="parent" name="parent" value="<?php echo $page->parent; ?>" />
+
 <?php echo $this->render('page_edit', array('page' => $page, 'context' => $context)); ?>

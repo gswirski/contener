@@ -80,6 +80,12 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
             $model = new Contener_Database_Model_Node;
         }
         
+        if (array_key_exists('parent', $entity)) {
+            $parent = Doctrine_Core::getTable('Contener_Database_Model_Node')->find($entity['parent']);
+            $permalink = $parent->permalink;
+            $entity['permalink'] = $permalink . $entity['filtered_title'] . '/';
+        }
+        
         if (array_key_exists('filtered_title', $entity)) {
             $permalink = explode('/', trim($entity['permalink'], '/'));
             array_pop($permalink);
@@ -93,7 +99,12 @@ class Contener_Database_Repository_Node extends Contener_Database_Repository
                 $model->$name = $value;
             }
         }
-        $model->save();
+        
+        if (isset($parent)) {
+            $model->getNode()->insertAsLastChildOf($parent);
+        } else {
+            $model->save();
+        }
         
         $this->saveSlots($model, $slotManager);
     }

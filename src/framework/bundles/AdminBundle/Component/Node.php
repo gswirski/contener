@@ -72,7 +72,16 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
                 $node->parent = $data['new_node_parent'];
                 return $this->renderHtmlAdd($node);
             } else if (array_key_exists('publish', $data)) {
+                $node = new Contener_Node();
+                $node->template = $data['template'];
+                $node->parent = $data['parent'];
                 
+                $data['in_navigation'] = (array_key_exists('in_navigation', $data) && $data['in_navigation'] == 'on') ? true : false;
+                $data['publish_status'] = (array_key_exists('publish_status', $data) && $data['publish_status'] == 'on') ? true : false;
+                
+                if ($node->isValid($data)) {
+                    $this->repository->store($node);
+                }
             }
         } elseif ($subtype == 'edit') {
             $_POST['in_navigation'] = (array_key_exists('in_navigation', $_POST) && $_POST['in_navigation'] == 'on') ? true : false;
