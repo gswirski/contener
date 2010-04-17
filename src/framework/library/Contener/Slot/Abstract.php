@@ -107,7 +107,7 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
     
     public function getName()
     {
-        return ($this->name)?$this->name:'';
+        return $this->name;
     }
     
     public function setName($name)

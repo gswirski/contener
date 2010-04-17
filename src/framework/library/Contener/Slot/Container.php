@@ -106,6 +106,22 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
         return $this;
     }
     
+    public function setName($name)
+    {
+        parent::setName($name);
+        $this->setBelongsTo($this->getBelongsTo());
+        return $this;
+    }
+    
+    public function setBelongsTo(array $belongs)
+    {
+        parent::setBelongsTo($belongs);
+        foreach ($this->getSlots() as $slot) {
+            $slot->setBelongsTo(array_merge($this->getBelongsTo(), array($this->getName())));
+        }
+        return $this;
+    }
+    
     public function isValid($data)
     {
         $valid = true;
@@ -160,5 +176,12 @@ class Contener_Slot_Container extends Contener_Slot_Abstract
     public function spec()
     {
         return array_merge(parent::spec(), array('slots' => 'array'));
+    }
+    
+    public function __clone()
+    {
+        foreach ($this->slots as $name => $slot) {
+            $this->slots[$name] = clone $slot;
+        }
     }
 }

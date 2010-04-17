@@ -4,11 +4,6 @@ class Contener_View_Helper_Slot extends sfTemplateHelper
 {
     protected $renderers = array();
     
-    public function __construct()
-    {
-        $this->renderers['Contener_Slot_Container']['*'] = new Contener_View_SlotRenderer_Container;
-    }
-    
     public function getName()
     {
         return 'slot';
@@ -21,6 +16,12 @@ class Contener_View_Helper_Slot extends sfTemplateHelper
             return $renderer->display($slot, $view, $this);
         } else if (is_callable($renderer)) {
             return call_user_func($renderer, $slot, $view, $this);
+        } else {
+            ob_start();
+            
+            include dirname(__FILE__) . '/../../Resources/slots/' . get_class($slot) . '/' . $view . '.php';
+            
+            return ob_get_clean();
         }
         
         throw new Exception('Couldn\'t display slot');
@@ -34,15 +35,19 @@ class Contener_View_Helper_Slot extends sfTemplateHelper
             $wasObject = true;
         }
         
-        $group = $this->findRendererGroup($slot, $wasObject);
-        
-        if (array_key_exists($view, $group)) {
-            $callback = $group[$view];
-        } else {
-            $callback = $group['*'];
+        try {
+            $group = $this->findRendererGroup($slot, $wasObject);
+            
+            if (array_key_exists($view, $group)) {
+                $callback = $group[$view];
+            } else {
+                $callback = $group['*'];
+            }
+            
+            return $callback;
+        } catch (Exception $e) {
+            return false;
         }
-        
-        return $callback;
     }
     
     protected function findRendererGroup($slot, $wasObject = false)

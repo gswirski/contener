@@ -37,24 +37,30 @@ class AdminBundle_Component_Media extends Contener_Component
         return parent::dispatch();
     }
     
-    public function renderHtml()
+    public function renderHtml($data = array())
     {
         ob_start();
-        $slotManager = new Contener_Slot_Manager();
-        
-        $file = new Contener_Slot_Inline_File();
-        $slotManager->addSlot($file);
         
         $view = $this->getService('view');
         $view->getHelperSet()->set(new Contener_View_Helper_Slot);
         
-        $view->slot->addRenderer('Contener_Slot_Inline_File', array($this, 'renderFile'));
+        $stackElement = new Contener_Slot_Container();
+        //$stackElement->addSlot(new Contener_Slot_Inline_File(array('name' => 'file', 'label' => 'Plik')));
+        $stackElement->addSlot(new Contener_Slot_Inline_Text(array('name' => 'title', 'label' => 'Tytuł')));
         
+        $slot = new Contener_Slot_Container_Stack(array('name' => 'files', 'label' => 'Wybierz pliki'));
+        $slot->setStackType($stackElement);
         
+        $manager = new Contener_Slot_Manager();
+        $manager->addSlot($slot);
         
-        $view->slot->display($slotManager);
+        if ($data) {
+            $manager->isValid($data['slots']);
+        }
         
-        return '<h2>Media</h2><p>Przeglądanie listy plików</p><pre>' . ob_get_clean() . '</pre>';
+        echo $view->slot->display($manager);
+        echo '<input type="submit" />';
+        return '<h2>Media</h2><p>Przeglądanie listy plików</p>' . ob_get_clean();
     }
     
     public function renderFile($slot, $view)
@@ -65,5 +71,10 @@ class AdminBundle_Component_Media extends Contener_Component
     public function renderHtmlAdd()
     {
         return '<h2>Dodaj media</h2>';
+    }
+    
+    public function postMultipart()
+    {
+        return $this->renderHtml($this->requestData());
     }
 }
