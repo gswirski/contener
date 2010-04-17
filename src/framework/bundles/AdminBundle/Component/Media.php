@@ -45,7 +45,7 @@ class AdminBundle_Component_Media extends Contener_Component
         $view->getHelperSet()->set(new Contener_View_Helper_Slot);
         
         $stackElement = new Contener_Slot_Container();
-        //$stackElement->addSlot(new Contener_Slot_Inline_File(array('name' => 'file', 'label' => 'Plik')));
+        $stackElement->addSlot(new Contener_Slot_Inline_File(array('name' => 'file', 'label' => 'Plik')));
         $stackElement->addSlot(new Contener_Slot_Inline_Text(array('name' => 'title', 'label' => 'Tytuł')));
         
         $slot = new Contener_Slot_Container_Stack(array('name' => 'files', 'label' => 'Wybierz pliki'));

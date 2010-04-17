@@ -69,9 +69,45 @@ class k_adapter_SafeGlobalsAccess implements k_adapter_GlobalsAccess {
   function files() {
     return $this->charset->decodeInput($this->unMagic($this->normalizeFiles($_FILES)));
   }
+  
+  protected $path;
+  function leaf($array, $r = false)
+  {
+    if ($r == false) {
+      $this->path = array();
+    }
+    foreach ($array as $key => $value) {
+      $this->path[] = $key;
+      if (is_array($value)) {
+        return $this->leaf($value, true);
+      } else {
+        return $value;
+      }
+    }
+  }
   function normalizeFiles($files) {
-    // Fix so $_FILES['userfile']['name'][$i] becomes $_FILES['userfile'][$i]['name']
-    $tmp = array();
+    $return = array();
+    foreach ($files as $key => $file) {
+      if (isset($file['tmp_name']) && is_array($file['tmp_name'])) {
+        $tmp = array();
+        $tmp['tmp_name'] = $this->leaf($file['tmp_name']);
+        $tmp['name'] = $this->leaf($file['name']);
+        $tmp['type'] = $this->leaf($file['type']);
+        $tmp['size'] = $this->leaf($file['size']);
+        $tmp['error'] = $this->leaf($file['error']);
+        
+        $pointer = & $return[$key];
+        foreach($this->path as $segment) {
+          $pointer[$segment] = array();
+          $pointer = & $pointer[$segment];
+        }
+        
+        $pointer = $tmp;
+      }
+    }
+    return $return;
+    
+    /*$tmp = array();
     foreach ($files as $key => $file) {
       if (isset($file['tmp_name']) && is_array($file['tmp_name'])) {
         foreach ($file['tmp_name'] as $i => $notImportant) {
@@ -87,7 +123,7 @@ class k_adapter_SafeGlobalsAccess implements k_adapter_GlobalsAccess {
         $tmp = array();
       }
     }
-    return $files;
+    return $files;*/
   }
   function cookie() {
     // Weird fact: Cookies - are _always_ singlebyte/latin1, unless explicitly encoded, and thus shouldn't be charset-decoded ???
