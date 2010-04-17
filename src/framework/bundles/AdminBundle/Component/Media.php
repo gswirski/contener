@@ -39,7 +39,27 @@ class AdminBundle_Component_Media extends Contener_Component
     
     public function renderHtml()
     {
-        return '<h2>Media</h2><p>Przeglądanie listy plików</p>';
+        ob_start();
+        $slotManager = new Contener_Slot_Manager();
+        
+        $file = new Contener_Slot_Inline_File();
+        $slotManager->addSlot($file);
+        
+        $view = $this->getService('view');
+        $view->getHelperSet()->set(new Contener_View_Helper_Slot);
+        
+        $view->slot->addRenderer('Contener_Slot_Inline_File', array($this, 'renderFile'));
+        
+        
+        
+        $view->slot->display($slotManager);
+        
+        return '<h2>Media</h2><p>Przeglądanie listy plików</p><pre>' . ob_get_clean() . '</pre>';
+    }
+    
+    public function renderFile($slot, $view)
+    {
+        echo $view . ': '; print_r($slot);
     }
     
     public function renderHtmlAdd()
