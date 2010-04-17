@@ -10,7 +10,6 @@ interface Contener_Navigation_Interface
     function removePages();
     function hasPage(Contener_Navigation_Interface $page, $recursive = false);
     function hasPages();
-    function addSubNavigation(Contener_Navigation_Interface $navigation);
     function findOneBy($property, $value);
     function findAllBy($property, $value);
     function findBy($property, $value, $all = false);

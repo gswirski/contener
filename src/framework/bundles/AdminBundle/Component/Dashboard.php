@@ -10,31 +10,29 @@ class AdminBundle_Component_Dashboard extends Contener_Component
     }
     
     function dispatch()
-    {   
-        $dashboard = new Contener_Navigation(array(
+    {
+        $navigation = $this->getService('view')->getNavigation();
+        $navigation->findOneBy('path', '/admin')->addPages(array(
             array(
-                'title' => 'Dashboard',
-                'path' => '/admin'
+                'title' => '<h3 class="opened">Dashboard</h3>',
+                'pages' => array(
+                    array(
+                        'title' => 'Dashboard',
+                        'path' => '/admin'
+                    ),
+                    array(
+                        'title' => 'Dodaj stronę',
+                        'path' => '/admin/node?add'
+                    )
+                )
             ),
             array(
-                'title' => 'Dodaj stronę',
-                'path' => '/admin/node?add'
+                'title' => '<h3 class="opened" style="margin-top: 15px;">Zarządzaj stronami</h3>',
+                'pages' => $this->repository->listAll()
             )
         ));
         
-        $data = $this->repository->listAll();
-        $pages = new Contener_Navigation($data);
-        
-        $mainNode = $this->context->area('menu')->findOneBy('path', '/admin');
-        $mainNode->addPage($dashboard);
-        $mainNode->addPage($pages);
-        
-        $dashboard = new Contener_View_Widget_Navigation($this->getService('view'), $dashboard);
-        $pages = new Contener_View_Widget_Navigation($this->getService('view'), $pages);
-        $this->context->area('left')->addModule('Dashboard', $dashboard);
-        $this->context->area('left')->addModule('Zarządzaj stronami', $pages);
-        
-        return parent::execute();
+        return parent::dispatch();
     }
     
     function renderHtml()

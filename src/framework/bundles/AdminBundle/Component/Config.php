@@ -13,18 +13,15 @@ class AdminBundle_Component_Config extends Contener_Component
     
     function wrapHtml($content)
     {
-        $navigation = new Contener_Navigation(array(
-            array('path' => '/admin/config', 'title' => 'Ogólne'),
-            array('path' => '/admin/config/theme', 'title' => 'Wygląd'),
-            array('path' => '/admin/config/plugin', 'title' => 'Wtyczki'),
-            array('path' => '/admin/config/editor', 'title' => 'Edytor wizualny'),
+        $navigation = $this->getService('view')->getNavigation();
+        $navigation->findOneBy('path', '/admin/config')->addPages(array(
+            array('title' => '<h3 class="opened">Konfiguruj</h3>', 'pages' => array(
+                array('path' => '/admin/config', 'title' => 'Ogólne'),
+                array('path' => '/admin/config/theme', 'title' => 'Wygląd'),
+                array('path' => '/admin/config/plugin', 'title' => 'Wtyczki'),
+                array('path' => '/admin/config/editor', 'title' => 'Edytor wizualny')
+            ))
         ));
-        
-        $mainNode = $this->context->area('menu')->findOneBy('path', '/admin/config');
-        $mainNode->addPage($navigation);
-        
-        $navigation = new Contener_View_Widget_Navigation($this->getService('view'), $navigation);
-        $this->context->area('left')->addModule('Konfiguruj', $navigation);
         
         return '<h2>Konfiguracja</h2>' . $content;
     }

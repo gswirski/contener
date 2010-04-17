@@ -22,14 +22,7 @@
             </div>
         </div>
         <a class="preview" href="http://phpgeek.pl/" title="Przejdź na stronę">Zobacz stronę</a>
-
-        <!--<ul class="navigation">
-            <li class="active"><a href="#">Zarządzaj</a></li>
-            <li><a href="#">Bloki</a></li>
-            <li><a href="#">Użytkownicy</a></li>
-            <li><a href="#">Konfiguracja</a></li>
-        </ul>-->
-        <?php echo $menu; ?>
+        <?php echo $this->navigation->menu(array('max_depth' => 1)); ?>
         <div class="user">
 
             sognat (<a href="#">profil</a> | <a href="#">wyloguj</a>)

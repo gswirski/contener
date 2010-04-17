@@ -4,6 +4,7 @@ class Contener_View extends sfTemplateEngine
 {
     protected $baseUrl;
     protected $container;
+    protected $navigation;
     
     public function getContainer()
     {
@@ -13,6 +14,17 @@ class Contener_View extends sfTemplateEngine
     public function setContainer($container)
     {
         $this->container = $container;
+        return $this;
+    }
+    
+    public function getNavigation()
+    {
+        return $this->navigation;
+    }
+    
+    public function setNavigation(Contener_Navigation_Container $navigation)
+    {
+        $this->navigation = $navigation;
         return $this;
     }
     

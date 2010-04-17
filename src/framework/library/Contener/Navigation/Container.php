@@ -1,21 +1,43 @@
 <?php
 
-abstract class Contener_Navigation_Container
+class Contener_Navigation_Container
     implements Contener_Navigation_Interface, RecursiveIterator, Countable
 {
     protected $pages = array();
-    protected $subNavigations = array();
     protected $active = false;
+    
+    public function __construct($page = array())
+    {
+        if ($page instanceof Doctrine_Record) {
+            $page = $page->toArray();
+        }
+        
+        foreach ($page as $paramName => $paramValue) {
+            if ($paramName == 'pages' or $paramName == '__children') {
+                $this->addPages($page[$paramName]);
+                continue;
+            }
+            
+            $this->$paramName = $paramValue;
+        }
+    }
     
     function addPage($page)
     {
         if (is_array($page)) {
-            $page = new Contener_Navigation_Node($page);
+            if (array_key_exists('class', $page)) {
+                $class = $page['class'];
+                $page = new $class($page);
+            } else if (array_key_exists('path', $page)) {
+                $page = new Contener_Navigation_Node($page);
+            } else {
+                $page = new Contener_Navigation_Container($page);
+            }
         }
         
         if (!$page instanceof Contener_Navigation_Interface) {
             throw new Exception('Invalid argument: $page must be an instance of ' .
-            'Contener_Navigation_Node or an array');
+            'Contener_Navigation_Interface or an array');
         }
         
         $hash = spl_object_hash($page);
@@ -34,6 +56,7 @@ abstract class Contener_Navigation_Container
         foreach ($pages as $page) {
             $this->addPage($page);
         }
+        return $this;
     }
     
     function setPages($pages)
@@ -83,12 +106,6 @@ abstract class Contener_Navigation_Container
     function hasPages()
     {
         return count($this->pages) > 0;
-    }
-    
-    function addSubNavigation(Contener_Navigation_Interface $navigation)
-    {
-        $this->subNavigations[] = $navigation;
-        return $this;
     }
     
     function current()
@@ -186,13 +203,6 @@ abstract class Contener_Navigation_Container
                 if ($sub['tree']) {
                     return array('page' => false, 'tree' => true);
                 }
-            }
-            
-            foreach ($this->subNavigations as $subNavigation) {
-                $sub = $subNavigation->isActive();
-                if ($sub['tree']) {
-                    return array('page' => false, 'tree' => true);
-                } 
             }
         }
         return array('page' => false, 'tree' => false);

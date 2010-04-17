@@ -13,6 +13,7 @@ class AdminBundle_Context extends Contener_Context
         
         $view = $sc->getService('view');
         $view->setBaseUrl($sc->getParameter('request.base_url'));
+        $view->getHelperSet()->set(new Contener_View_Helper_Navigation());
     }
     
     function dispatch()
@@ -39,6 +40,8 @@ class AdminBundle_Context extends Contener_Context
             )
         ));
         
+        $this->getService('view')->setNavigation($this->areas['menu']);
+        
         return parent::dispatch();
     }
     
@@ -56,11 +59,11 @@ class AdminBundle_Context extends Contener_Context
             $active->setActive(true);
         }
         
-        $menu = new Contener_View_Widget_Navigation(null, null, array(
-            'depth' => 1
-        ));
-        
         $view = $this->getService('view');
+        
+        if (($navigation = $view->navigation->menu(array('min_depth' => 2))) != '<ul class="navigation"></ul>') {
+            $this->area('left')->addModule('', $navigation);
+        }
         
         return
           $view->render(
@@ -68,7 +71,6 @@ class AdminBundle_Context extends Contener_Context
             array(
               'context' => $this,
               'content' => $content,
-              'menu' => $menu->setView($view)->setNavigation($this->area('menu')),
               'left' => $this->area('left'),
               'right' => $this->area('right'),
               'title' => 'Panel administracyjny',

@@ -4,36 +4,35 @@ class AdminBundle_Component_Media extends Contener_Component
 {
     public function dispatch()
     {
-        $media = new Contener_Navigation(array(
+        $navigation = $this->getService('view')->getNavigation();
+        $navigation->findOneBy('path', '/admin/media')->addPages(array(
             array(
-                'title' => 'Dodaj media',
-                'path' => '/admin/media?add'
-            )
-        ));
-        
-        $types = new Contener_Navigation(array(
-            array(
-                'title' => 'Wszystkie',
-                'path' => '/admin/media'
+                'title' => '<h3 class="opened">Media</h3>',
+                'pages' => array(
+                    array(
+                        'title' => 'Dodaj media',
+                        'path' => '/admin/media?add'
+                    )
+                )
             ),
             array(
-                'title' => 'Obrazki',
-                'path' => '/admin/media?type=image'
-            ),
-            array(
-                'title' => 'Pozostałe',
-                'path' => '/admin/media?type=other'
+                'title' => '<h3 class="opened" style="margin-top: 15px;">Przeglądaj</h3>',
+                'pages' => array(
+                    array(
+                        'title' => 'Wszystkie',
+                        'path' => '/admin/media'
+                    ),
+                    array(
+                        'title' => 'Obrazki',
+                        'path' => '/admin/media?type=image'
+                    ),
+                    array(
+                        'title' => 'Pozostałe',
+                        'path' => '/admin/media?type=other'
+                    )
+                )
             )
         ));
-        
-        $mainNode = $this->context->area('menu')->findOneBy('path', '/admin/media');
-        $mainNode->addPage($media);
-        $mainNode->addPage($types);
-        
-        $media = new Contener_View_Widget_Navigation($this->getService('view'), $media);
-        $types = new Contener_View_Widget_Navigation($this->getService('view'), $types);
-        $this->context->area('left')->addModule('Media', $media);
-        $this->context->area('left')->addModule('Przeglądaj', $types);
         
         return parent::dispatch();
     }
