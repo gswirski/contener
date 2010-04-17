@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/../Konstrukt/konstrukt.inc.php';
 
 class Contener_Application
 {
-    protected $config = array();
+    public $config = array();
     public $loader;
     public $connection;
     protected $container;

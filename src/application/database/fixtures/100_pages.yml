@@ -7,6 +7,7 @@ Contener_Database_Model_Node_Page:
     navigation:
     permalink:
     author_id: 1
+    class: Contener_Node_Page
     children:
       Homepage:
         title: Strona główna
@@ -16,6 +17,7 @@ Contener_Database_Model_Node_Page:
         permalink: /glowna/
         template: homepage
         author_id: 1
+        class: Contener_Node_Page
 #        Slots:
 #          HomepageTemplate:
 #            class: Contener_Slot_Manager_Template
@@ -29,6 +31,7 @@ Contener_Database_Model_Node_Page:
         navigation: Projekty
         permalink: /projekty/
         author_id: 1
+        class: Contener_Node_Page
         children:
           WebLeader:
             title: WebLeader.pl
@@ -37,6 +40,7 @@ Contener_Database_Model_Node_Page:
             navigation: WebLeader.pl
             permalink: '/projekty/webleader/'
             author_id: 1
+            class: Contener_Node_Page
       Blog:
         title: Blog
         filtered_title: blog
@@ -44,6 +48,7 @@ Contener_Database_Model_Node_Page:
         navigation: Blog
         permalink: /blog/
         author_id: 1
+        class: Contener_Node_Page
         children:
           HelloWorld:
             title: Witamy
@@ -52,6 +57,7 @@ Contener_Database_Model_Node_Page:
             navigation: 
             permalink: /blog/witamy/
             author_id: 1
+            class: Contener_Node_Page
       Contact:
         title: Kontakt
         filtered_title: kontakt
@@ -60,3 +66,4 @@ Contener_Database_Model_Node_Page:
         permalink: /kontakt/
         template: contact
         author_id: 1
+        class: Contener_Node_Page

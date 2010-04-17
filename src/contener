@@ -3,5 +3,13 @@
 require_once('application/bootstrap.php');
 $app = new Application('cli');
 
-$cli = new Doctrine_Cli($app->config['database']);
+$config['dsn'] = $app->config['database.dsn'];
+$config['data_fixtures_path'] = $app->config['database.data_fixtures_path'];
+$config['models_path'] = $app->config['database.models_path'];
+$config['yaml_schema_path'] = $app->config['database.yaml_schema_path'];
+$config['generate_models_options'] = $app->config['database.generate_models_options'];
+
+Doctrine_Manager::getInstance()->setAttribute('model_loading', 'aggresive');
+Doctrine_Core::loadModels(dirname(__FILE__) . '/framework/library/Contener/Database/Model');
+$cli = new Doctrine_Cli($config);
 $cli->run($_SERVER['argv']);

@@ -1,0 +1,8 @@
+---
+Asset:
+  actAs:
+    Timestampable:
+  columns:
+    title: string
+    file: string
+    type: string
