@@ -55,7 +55,18 @@ class AdminBundle_Component_Media extends Contener_Component
         $manager->addSlot($slot);
         
         if ($data) {
-            $manager->isValid($data['slots']);
+            if ($manager->isValid($data['slots'])) {
+                $assets = $slot->getSlots();
+                foreach ($assets as $asset) {
+                    $data = $asset->getData();
+                    //print_r($data);
+                    $toSave = new Contener_Database_Model_Asset;
+                    $toSave['title'] = $data['slots']['title']->getValue();
+                    $toSave['file']  = $data['slots']['file']->getFile();
+                    $toSave['type']  = $data['slots']['file']->getMimeType();
+                    $toSave->save();
+                }
+            }
         }
         
         echo $view->slot->display($manager);

@@ -3,6 +3,7 @@
 class Contener_Slot_Inline_File extends Contener_Slot_Inline
 {
     protected $file;
+    protected $mimeType;
     
     /**
      * Used when waking from database
@@ -16,6 +17,17 @@ class Contener_Slot_Inline_File extends Contener_Slot_Inline
     public function getFile()
     {
         return $this->file;
+    }
+    
+    public function setMimeType($mime)
+    {
+        $this->mimeType = $mime;
+        return $this;
+    }
+    
+    public function getMimeType()
+    {
+        return $this->mimeType;
     }
     
     /**
@@ -33,6 +45,7 @@ class Contener_Slot_Inline_File extends Contener_Slot_Inline
             $handler = new Contener_Application_Data($file->tmp_name(), Contener_Application_Data::WEB);
             $handler->copy('uploads/' . $file->name());
             $this->setFile($file->name());
+            $this->setMimeType($file->type());
         }
         
         return parent::setValue(null);

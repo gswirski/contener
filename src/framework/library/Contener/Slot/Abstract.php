@@ -71,8 +71,8 @@ abstract class Contener_Slot_Abstract implements Contener_Slot_Interface
             if ($fieldType == 'array') {
                 $children = $this->getOption($fieldName);
                 
-                foreach($children as $child) {
-                    $return[$fieldName][] = $child;
+                foreach($children as $key => $child) {
+                    $return[$fieldName][$key] = $child;
                 }
             } else {
                 $return[$fieldName] = $this->getOption($fieldName);
