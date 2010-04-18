@@ -97,12 +97,14 @@ class k_adapter_SafeGlobalsAccess implements k_adapter_GlobalsAccess {
         $tmp['error'] = $this->leaf($file['error']);
         
         $pointer = & $return[$key];
+        $last = array_pop($this->path);
         foreach($this->path as $segment) {
           $pointer[$segment] = array();
           $pointer = & $pointer[$segment];
         }
-        
-        $pointer = $tmp;
+        $pointer[$last] = $tmp;
+      } else {
+        $return[$key] = $file;
       }
     }
     return $return;
