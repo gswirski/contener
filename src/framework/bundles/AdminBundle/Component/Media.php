@@ -57,11 +57,11 @@ class AdminBundle_Component_Media extends Contener_Component
         $files = $files->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
         
         foreach ($files as $file) {
-            echo '<a href="'.$view->url->build('admin/media?edit&id='.$file['id']). '" style="float: left; width: 75px; height: 75px; -moz-box-shadow: 0 0 5px #888; margin: 5px; overflow: hidden;">';
+            echo '<a href="'.$view->url->build('admin/media?edit&id='.$file['id']). '" style="float: left; width: 75px; height: 75px; -moz-box-shadow: 0 0 5px #888; margin: 5px;">';
             if (substr($file['type'], 0, 5) == 'image') {
                 echo '<img src="'.$view->assets->getUrl('uploads/'.$file['file']). '" width="75" height="75" style="display: block" />';
             } else {
-                echo '<div style="height: 75px; width: 75px;">' . $file['type'] . '</div>';
+                echo '<div style="height: 75px; width: 75px; overflow: hidden; text-align: center;">' . $file['type'] . '</div>';
             }
             echo '<div style="text-align: center; color: #333; padding-top: 3px;">' . $file['title'] . '</div>';
             echo '</a>';
