@@ -61,8 +61,10 @@ class AdminBundle_Context extends Contener_Context
         
         $view = $this->getService('view');
         
-        if (($navigation = $view->navigation->menu(array('min_depth' => 2))) != '<ul class="navigation"></ul>') {
-            $this->area('left')->addModule('', $navigation);
+        $menu = $view->navigation->menu(array('min_depth' => 2));
+        
+        if ($menu != '<ul class="navigation"></ul>') {
+            $this->area('left')->addModule('', $menu);
         }
         
         return
