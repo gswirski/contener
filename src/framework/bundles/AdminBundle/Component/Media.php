@@ -161,7 +161,7 @@ class AdminBundle_Component_Media extends Contener_Component
         echo $view->slot->display($file);
         echo $view->slot->display($title);
         
-        echo '<br /><br /><input type="submit" name="edit-file" id="edit-file" value="Zapisz zmiany" />';
+        echo '<input type="submit" name="edit-file" id="edit-file" value="Zapisz zmiany" />';
         
         return '<h2>Edytuj obiekt</h2>' . ob_get_clean();
     }
