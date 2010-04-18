@@ -91,6 +91,7 @@ class AdminBundle_Component_Node extends AdminBundle_Component_Dashboard
                 $data['publish_status'] = (array_key_exists('publish_status', $data) && $data['publish_status'] == 'on') ? true : false;
                 
                 if ($node->isValid($data)) {
+                    $node->class = 'Contener_Node_Page';
                     $entity = $this->repository->store($node);
                     return new k_SeeOther($this->config('request.base_url') . '/admin/node?edit&id=' . $entity->id);
                 }
