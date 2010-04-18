@@ -44,6 +44,25 @@ function resizePanes(windowHeight) {
     $('.left-sidebar, .editor, .right-sidebar').height(windowHeight-90);
 }
 
+function getPosition(e) {
+    e = e || window.event;
+    var cursor = {x:0, y:0};
+    if (e.pageX || e.pageY) {
+        cursor.x = e.pageX;
+        cursor.y = e.pageY;
+    } 
+    else {
+        var de = document.documentElement;
+        var b = document.body;
+        cursor.x = e.clientX + 
+            (de.scrollLeft || b.scrollLeft) - (de.clientLeft || 0);
+        cursor.y = e.clientY + 
+            (de.scrollTop || b.scrollTop) - (de.clientTop || 0);
+    }
+    return cursor;
+}
+
+
 $(document).ready(function() {
     resizePanes($(window).height());
     $('a.preview').lightBox();
@@ -90,9 +109,30 @@ $(document).ready(function() {
         window.location = uri;
     });
     
-    $('.allow_swf').css('display', 'none').after('<div class="fieldset flash" id="fsUploadProgress"><span class="legend">Upload Queue</span></div><div id="divStatus">0 Files Uploaded</div><div><span id="spanButtonPlaceHolder"></span><input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" /></div>');
+    $('.allow_swf').css('display', 'none').after('<div class="fieldset flash" id="fsUploadProgress"><span class="legend"></span></div><div><span id="spanButtonPlaceHolder"></span><input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" /></div>');
     if ($('#fsUploadProgress').length) {
         swfu = new SWFUpload(settings);
     }
     
+    var clicked = false;
+    $("a[href^='/admin/media?edit']").each(function(index, value) {
+        $(this).attr('destination', $(this).attr('href'));
+        $(this).attr('href', '#');
+    }).click(function(e) {
+        $('.panel').remove();
+        if (clicked == this) {
+            clicked = false;
+        } else {
+            clicked = this;
+            
+            $.ajax({
+                url: $(clicked).attr('destination'),
+                cache: false,
+                success: function(html) {
+                    var position = getPosition(e);
+                    $('body').append('<div class="panel" style="top: '+position.y+'px; left: '+position.x+'px;"><form enctype="multipart/form-data" method="post" action="'+$(clicked).attr('destination')+'">'+html+'</form></div>');
+                }
+            });
+        }
+    });
 });

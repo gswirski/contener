@@ -73,9 +73,10 @@ textarea { width: 100%; height: 200px; }
 h3.opened:before { content: "▼"; display: inline-block; width: 13px; }
 h3.closed:before { content: "▶"; display: inline-block; width: 13px; }
 
-input.editable {
-    background: none; border: none; color: #28759A; text-shadow: #FFF 0px 1px 0px; margin: 0px; padding: 0px; display: block;
-}
+input.editable { background: none; border: none; color: #28759A; text-shadow: #FFF 0px 1px 0px; margin: 0px; padding: 0px; display: block; }
+
+a.file { float: left; width: 75px; height: 75px; -moz-box-shadow: 0 0 5px #888; margin: 5px; position: relative; z-index: 100; }
+.panel { position: absolute; background: white; z-index: 1000; padding: 10px; -moz-box-shadow: 0 0 5px #555; }
 
 /* -- Form Styles ------------------------------- */
 

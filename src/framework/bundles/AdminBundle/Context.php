@@ -51,6 +51,10 @@ class AdminBundle_Context extends Contener_Context
     
     function wrapHtml($content)
     {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+            return $content;
+        }
+        
         if ($actives = $this->area('menu')->findAllBy('path', $this->path())) {
             foreach ($actives as $active) {
                 $active->setActive(true);

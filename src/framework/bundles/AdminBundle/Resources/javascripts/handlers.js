@@ -182,7 +182,7 @@ function uploadComplete(file) {
 
 // This event comes from the Queue Plugin
 function queueComplete(numFilesUploaded) {
-	var status = document.getElementById("divStatus");
-	status.innerHTML = numFilesUploaded + " file" + (numFilesUploaded === 1 ? "" : "s") + " uploaded.";
+	//var status = document.getElementById("divStatus");
+	//status.innerHTML = numFilesUploaded + " file" + (numFilesUploaded === 1 ? "" : "s") + " uploaded.";
 	window.location = '/admin/media';
 }
