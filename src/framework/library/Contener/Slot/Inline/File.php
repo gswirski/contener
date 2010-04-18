@@ -45,7 +45,25 @@ class Contener_Slot_Inline_File extends Contener_Slot_Inline
             $handler = new Contener_Application_Data($file->tmp_name(), Contener_Application_Data::WEB);
             $handler->copy('uploads/' . $file->name());
             $this->setFile($file->name());
-            $this->setMimeType($file->type());
+            
+            $type = $file->type();
+            
+            if ($type == 'application/octet-stream') {
+                $parts = explode('.', $file->name());
+                $extension = array_pop($parts);
+                
+                switch ($extension) {
+                    case 'png':
+                        $type = 'image/png';
+                        break;
+                    case 'jpg':
+                    case 'jpeg':
+                        $type = 'image/jpeg';
+                        break;
+                }
+            }
+            
+            $this->setMimeType($type);
         }
         
         return parent::setValue(null);

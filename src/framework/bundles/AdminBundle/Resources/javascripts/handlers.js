@@ -184,4 +184,5 @@ function uploadComplete(file) {
 function queueComplete(numFilesUploaded) {
 	var status = document.getElementById("divStatus");
 	status.innerHTML = numFilesUploaded + " file" + (numFilesUploaded === 1 ? "" : "s") + " uploaded.";
+	window.location = '/admin/media';
 }

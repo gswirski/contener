@@ -129,8 +129,9 @@ class AdminBundle_Component_Media extends Contener_Component
             }
         }
         
+        echo '<div class="allow_swf">';
         echo $view->slot->display($slot);
-        echo '<br /><br /><input type="submit" name="save-file" id="save-file" value="Zapisz plik" />';
+        echo '<br /><br /><input type="submit" name="save-file" id="save-file" value="Zapisz plik" /></div>';
         return '<h2>Dodaj media</h2>' . ob_get_clean();
     }
     
@@ -174,6 +175,23 @@ class AdminBundle_Component_Media extends Contener_Component
             return $this->renderHtmlAdd($data);
         } else if (array_key_exists('edit-file', $data)) {
             return $this->renderHtmlEdit($data);
+        } else if (array_key_exists('Upload', $data)) {
+            $slot = new Contener_Slot_Inline_File(array('name' => 'Filedata'));
+            
+            if ($slot->isValid($data[$slot->getName()])) {
+                $entity = new Contener_Database_Model_Asset;
+                $entity['title'] = $slot->getFile();
+                $entity['file']  = $slot->getFile();
+                $entity['type']  = $slot->getMimeType();
+                $entity->save();
+                
+                if (array_key_exists('uploaded', $_SESSION)) {
+                    $_SESSION['uploaded'] .= ',' . $entity->id;
+                } else {
+                    $_SESSION['uploaded'] = $entity->id;
+                }
+            }
+            exit();
         } else {
             return $this->renderHtml($this->requestData());
         }

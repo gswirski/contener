@@ -2,7 +2,7 @@ var swfu;
 var settings = {
     flash_url : "/scripts/admin/swfupload/swfupload.swf",
     flash9_url : "/scripts/admin/swfupload/swfupload_fp9.swf",
-    upload_url: "/upload.php",
+    upload_url: "/admin/media?upload",
     post_params: {"PHPSESSID" : ""},
     file_size_limit : "100 MB",
     file_types : "*.*",
