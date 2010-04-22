@@ -57,50 +57,19 @@ class AdminBundle_Component_Media extends Contener_Component
         $files = $files->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
         
         foreach ($files as $file) {
+            $slot = new Contener_Slot_Inline_File(array('file' => $file['file']) );
+            
             echo '<a href="'.$view->url->build('admin/media?edit&id='.$file['id']). '" class="file">';
             if (substr($file['type'], 0, 5) == 'image') {
                 echo '<img src="'.$view->assets->getUrl('uploads/'.$file['file']). '" width="75" height="75" style="display: block" />';
             } else {
-                echo '<div style="height: 75px; width: 75px; overflow: hidden; text-align: center;">' . $file['type'] . '</div>';
+                echo '<div style="height: 75px; width: 75px; overflow: hidden; text-align: center;"><img style="display: block; margin: 7px auto;" src="' . $view->assets->getUrl($slot->getPreview()) . '" /></div>';
             }
             echo '<div style="text-align: center; color: #333; padding-top: 3px;">' . $file['title'] . '</div>';
             echo '</a>';
         }
         
         return '<h2>Media: '.$type.'</h2>' . ob_get_clean();
-        /*ob_start();
-        
-        $view = $this->getService('view');
-        $view->getHelperSet()->set(new Contener_View_Helper_Slot);
-        
-        $stackElement = new Contener_Slot_Container();
-        $stackElement->addSlot(new Contener_Slot_Inline_File(array('name' => 'file', 'label' => 'Plik')));
-        $stackElement->addSlot(new Contener_Slot_Inline_Text(array('name' => 'title', 'label' => 'Tytuł')));
-        
-        $slot = new Contener_Slot_Container_Stack(array('name' => 'files', 'label' => 'Wybierz pliki'));
-        $slot->setStackType($stackElement);
-        
-        $manager = new Contener_Slot_Manager();
-        $manager->addSlot($slot);
-        
-        if ($data) {
-            if ($manager->isValid($data['slots'])) {
-                $assets = $slot->getSlots();
-                foreach ($assets as $asset) {
-                    $data = $asset->getData();
-                    //print_r($data);
-                    $toSave = new Contener_Database_Model_Asset;
-                    $toSave['title'] = $data['slots']['title']->getValue();
-                    $toSave['file']  = $data['slots']['file']->getFile();
-                    $toSave['type']  = $data['slots']['file']->getMimeType();
-                    $toSave->save();
-                }
-            }
-        }
-        
-        echo $view->slot->display($manager);
-        echo '<input type="submit" />';
-        return '<h2>Media</h2><p>Przeglądanie listy plików</p>' . ob_get_clean();*/
     }
     
     public function renderFile($slot, $view)
@@ -162,7 +131,8 @@ class AdminBundle_Component_Media extends Contener_Component
         echo $view->slot->display($file);
         echo $view->slot->display($title);
         
-        echo '<input type="submit" name="edit-file" id="edit-file" value="Zapisz zmiany" />';
+        echo $file->getMimeType();
+        echo '<div class="line"><input style="float: left" type="submit" name="edit-file" id="edit-file" value="Zapisz zmiany" /><a href="'.$view->url->build('admin/media?delete&id=' . $this->query('id') ) . '" style="display: block; float: right; color: red;" class="delete">Usuń plik</a></div>';
         
         return '<h2>Edytuj obiekt</h2>' . ob_get_clean();
     }

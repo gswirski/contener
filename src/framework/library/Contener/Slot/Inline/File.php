@@ -63,6 +63,18 @@ class Contener_Slot_Inline_File extends Contener_Slot_Inline
         return parent::setValue(null);
     }
     
+    public function getPreview()
+    {
+        $parts = explode('.', $this->getFile());
+        $extension = array_pop($parts);
+        
+        foreach ($this->extensionTypes as $type => $extensions)
+            if ( in_array($extension, $extensions) )
+                return 'images/admin/crystal/' . $type . '.png';
+        
+        return 'images/admin/crystal/document.png';
+    }
+    
     public function editable()
     {
         return array_merge(parent::editable(),
@@ -146,5 +158,16 @@ class Contener_Slot_Inline_File extends Contener_Slot_Inline
         'odc' => 'application/vnd.oasis.opendocument.chart',
         'odb' => 'application/vnd.oasis.opendocument.database',
         'odf' => 'application/vnd.oasis.opendocument.formula'
+    );
+    
+    protected $extensionTypes = array(
+        'audio' => array('aac','ac3','aif','aiff','mp1','mp2','mp3','m3a','m4a','m4b','ogg','ram','wav','wma'),
+        'video' => array('asf','avi','divx','dv','mov','mpg','mpeg','mp4','mpv','ogm','qt','rm','vob','wmv', 'm4v'),
+        'document' => array('doc','docx','pages','odt','rtf','pdf'),
+        'spreadsheet' => array('xls','xlsx','numbers','ods'),
+        'interactive' => array('ppt','pptx','key','odp','swf'),
+        'text' => array('txt'),
+        'archive' => array('tar','bz2','gz','cab','dmg','rar','sea','sit','sqx','zip'),
+        'code' => array('css','html','php','js'),
     );
 }
