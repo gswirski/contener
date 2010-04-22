@@ -1,7 +1,7 @@
 var swfu;
 var settings = {
-    flash_url : "/scripts/admin/swfupload/swfupload.swf",
-    flash9_url : "/scripts/admin/swfupload/swfupload_fp9.swf",
+    flash_url : "/assets/admin/scripts/swfupload/swfupload.swf",
+    flash9_url : "/assets/admin/scripts/swfupload/swfupload_fp9.swf",
     upload_url: "/admin/media?upload",
     post_params: {"PHPSESSID" : ""},
     file_size_limit : "100 MB",
@@ -16,7 +16,7 @@ var settings = {
     debug: false,
     
     // Button settings
-    button_image_url: "/images/admin/upload_button.png",
+    button_image_url: "/assets/admin/images/upload_button.png",
     button_width: "65",
     button_height: "29",
     button_placeholder_id: "spanButtonPlaceHolder",

@@ -68,10 +68,22 @@ class Contener_View extends sfTemplateEngine
     
     public function installAsset($name, $path, $namespace = '')
     {
-        $destination = $this->getContainer()->getParameter('loader.base_dir').'/web/'.$namespace.'s/'.$name;
+        /*$destination = $this->getContainer()->getParameter('loader.base_dir').'/web/'.$namespace.'s/'.$name;
         
         $handler = new Contener_Application_Data($path, Contener_Application_Data::WEB);
-        $handler->copy($destination);
+        $handler->copy($destination);*/
+    }
+    
+    public function installAssets($name, $source = '')
+    {
+        if (!is_array($name)) {
+            $name = array($name => $source);
+        }
+        
+        foreach ($name as $destination => $source) {
+            $handler = new Contener_Application_Data($source, Contener_Application_Data::WEB);
+            $handler->symlink('assets/' . $destination);
+        }
     }
     
     public function uninstallAsset($name, $namespace = '')

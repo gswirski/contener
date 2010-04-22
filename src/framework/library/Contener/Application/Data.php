@@ -73,6 +73,18 @@ class Contener_Application_Data
         $this->_copy($this->getPath(), $destination);
     }
     
+    public function symlink($destination)
+    {
+        if (file_exists($destination)) {
+            return false;
+        }
+        
+        @mkdir(substr($destination, 0, strrpos($destination, '/')), 0777, true);
+        if (!symlink($this->getPath(), $destination)) {
+            $this->_copy($this->getPath(), $destination);
+        }
+    }
+    
     protected function _copy($source, $destination)
     {
         if (is_dir($source)) {

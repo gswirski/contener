@@ -70,9 +70,9 @@ class Contener_Slot_Inline_File extends Contener_Slot_Inline
         
         foreach ($this->extensionTypes as $type => $extensions)
             if ( in_array($extension, $extensions) )
-                return 'images/admin/crystal/' . $type . '.png';
+                return 'assets/admin/images/crystal/' . $type . '.png';
         
-        return 'images/admin/crystal/document.png';
+        return 'assets/admin/images/crystal/document.png';
     }
     
     public function editable()
